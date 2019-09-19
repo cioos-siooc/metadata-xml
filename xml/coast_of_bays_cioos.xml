@@ -1,0 +1,105 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<mdb:MD_Metadata xmlns="http://standards.iso.org/iso/19115/-3/mdb/1.0"
+  xmlns:dqc="http://standards.iso.org/iso/19157/-2/dqc/1.0"
+  xmlns:gco="http://standards.iso.org/iso/19115/-3/gco/1.0"
+  xmlns:lan="http://standards.iso.org/iso/19115/-3/lan/1.0"
+  xmlns:mcc="http://standards.iso.org/iso/19115/-3/mcc/1.0"
+  xmlns:mdb="http://standards.iso.org/iso/19115/-3/mdb/1.0"
+  xmlns:cit="http://standards.iso.org/iso/19115/-3/cit/1.0"
+  xmlns:mri="http://standards.iso.org/iso/19115/-3/mri/1.0"
+  xmlns:gex="http://standards.iso.org/iso/19115/-3/gex/1.0"
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="http://standards.iso.org/iso/19115/-3/mdb/1.0 mdb.xsd">
+  <mdb:contact>
+    <cit:CI_Responsibility>
+      <cit:role>
+        <cit:CI_RoleCode codeList="http://standards.iso.org/iso/19115/resources/Codelist/cat/codeLists.xml#CI_RoleCode" codeListValue="custodian">custodian</cit:CI_RoleCode>
+      </cit:role>
+      <cit:party>
+        <cit:CI_Organisation>
+        <!-- name or logo is mandatory by Schematron-enforced constraint -->
+          <cit:name>
+            <gco:CharacterString>Government of Canada; Fisheries and Oceans Canada; DFO</gco:CharacterString>
+          </cit:name>
+        </cit:CI_Organisation>
+      </cit:party>
+    </cit:CI_Responsibility>
+  </mdb:contact>
+  <mdb:dateInfo>
+    <cit:CI_Date>
+      <cit:date>
+        <gco:DateTime>2019-09-16T17:20:04</gco:DateTime>
+      </cit:date>
+      <cit:dateType>
+        <cit:CI_DateTypeCode codeList="http://standards.iso.org/iso/19115/resources/Codelist/cat/codeLists.xml#creation" codeListValue="Creation"/>
+      </cit:dateType>
+    </cit:CI_Date>
+  </mdb:dateInfo>
+  <mdb:identificationInfo>
+    <mri:MD_DataIdentification>
+      <mri:citation>
+        <cit:CI_Citation>
+          <cit:title>
+            <gco:CharacterString>Coast of Bays seawater vertical and horizontal structure: Hydrographic structure, spatial variability and seasonality, 2009-2013</gco:CharacterString>
+          </cit:title>
+          <!-- mandatory (dataType= creation) by constraint enforced by Schematron rule -->
+          <cit:date>
+            <cit:CI_Date>
+              ﻿<cit:date>
+                <gco:DateTime>2017-09-01</gco:DateTime>
+              </cit:date>
+              <cit:dateType>
+                <cit:CI_DateTypeCode codeList="http://standards.iso.org/iso/19115/resources/Codelist/cat/codeLists.xml#CI_DateTypeCode" codeListValue="publication">publication</cit:CI_DateTypeCode>
+              </cit:dateType>
+            </cit:CI_Date>
+          </cit:date>
+        </cit:CI_Citation>
+      </mri:citation>
+      <mri:abstract>
+        <gco:CharacterString>Upon a recent rapid increase of the finfish aquaculture industry in the Coast of Bays, an area of the South Coast of Newfoundland (9 fold production growth from 2003 to 2013), Fisheries and Oceans Canada (DFO) carried out a research project to better understand the physical oceanography of the area. This report is the second of a series aiming to provide an oceanographic knowledge baseline of the Coast of Bays (i.e., data and analyses) to help manage and ensure the sustainable growth of the aquaculture industry. This report presents the analysis of 790 water profiles of temperature, salinity and dissolved oxygen concentration sampled at 276 stations over the course of a 5-year oceanographic program (2009 13). The profiles were analyzed using along-channel vertical sections plots (i.e., transects), surface property maps and water masses statistics.</gco:CharacterString>
+      </mri:abstract>
+      <!-- mandatory since MD_MetadataScope is not specified, and defaults to 'dataset' enforced by Schematron rule -->
+      <mri:topicCategory>
+        <mri:MD_TopicCategoryCode>oceans</mri:MD_TopicCategoryCode>
+      </mri:topicCategory>
+      <!-- a bounding box is required because the mdb:MD_MetadataScope is not specified; enforced by Schematron rule-->
+      <mri:extent>
+        <gex:EX_Extent>
+          <gex:description gco:nilReason="missing">
+            <gco:CharacterString />
+          </gex:description>
+          <gex:geographicElement>
+            <gex:EX_GeographicBoundingBox>
+              <gex:extentTypeCode>
+                <gco:Boolean>false</gco:Boolean>
+              </gex:extentTypeCode>
+              <gex:westBoundLongitude>
+                <gco:Decimal>-56.5</gco:Decimal>
+              </gex:westBoundLongitude>
+              <gex:eastBoundLongitude>
+                <gco:Decimal>-54.5</gco:Decimal>
+              </gex:eastBoundLongitude>
+              <gex:southBoundLatitude>
+                <gco:Decimal>48</gco:Decimal>
+              </gex:southBoundLatitude>
+              <gex:northBoundLatitude>
+                <gco:Decimal>46.75</gco:Decimal>
+              </gex:northBoundLatitude>
+            </gex:EX_GeographicBoundingBox>
+          </gex:geographicElement>
+        </gex:EX_Extent>
+      </mri:extent>
+      <!-- mandatory if resource contains textual content (has to be enforced by inspection) -->
+      <mri:defaultLocale>
+        <lan:PT_Locale>
+          <lan:language>
+            <lan:LanguageCode codeList="http://standards.iso.org/iso/19115/resources/Codelist/lan/LanguageCode.xml" codeListValue="eng">English</lan:LanguageCode>
+          </lan:language>
+          <lan:characterEncoding>
+            <lan:MD_CharacterSetCode codeList="http://standards.iso.org/iso/19115/resources/Codelist/lan/CharacterSetCode.xml" codeListValue="utf8">UTF-8</lan:MD_CharacterSetCode>
+          </lan:characterEncoding>
+        </lan:PT_Locale>
+      </mri:defaultLocale>
+    </mri:MD_DataIdentification>
+  </mdb:identificationInfo>
+</mdb:MD_Metadata>
