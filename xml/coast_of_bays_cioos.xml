@@ -69,6 +69,21 @@
                 </lan:textGroup>
               </lan:PT_FreeText>
             </mco:useLimitation>
+            <mri:reference>
+              <cit:CI_Citation>
+                <cit:title>
+                  <gco:CharacterString>Coast of Bays seawater vertical and horizontal structure: Hydrographic structure, spatial variability and seasonality, 2009-2013</gco:CharacterString>                </cit:title>
+                <!-- mandatory (dataType= creation) by constraint enforced by Schematron rule -->
+                <cit:onlineResource>
+                  <cit:CI_OnlineResource>
+                    <cit:linkage>
+                            <gco:CharacterString>https://open.canada.ca/data/en/dataset/a650f132-7502-402f-a42e-7ba4dea3f829</gco:CharacterString>
+                    </cit:linkage>
+                    <!-- mandatory (dataType= creation) by constraint enforced by Schematron rule -->
+                  </cit:CI_OnlineResource>
+                </cit:onlineResource>
+              </cit:CI_Citation>
+            </mri:reference>
           </mco:MD_Constraints>
           <mco:MD_LegalConstraints>
             <mco:accessConstraints>
