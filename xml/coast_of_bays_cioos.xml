@@ -61,7 +61,7 @@
         <gco:CharacterString>Upon a recent rapid increase of the finfish aquaculture industry in the Coast of Bays, an area of the South Coast of Newfoundland (9 fold production growth from 2003 to 2013), Fisheries and Oceans Canada (DFO) carried out a research project to better understand the physical oceanography of the area. This report is the second of a series aiming to provide an oceanographic knowledge baseline of the Coast of Bays (i.e., data and analyses) to help manage and ensure the sustainable growth of the aquaculture industry. This report presents the analysis of 790 water profiles of temperature, salinity and dissolved oxygen concentration sampled at 276 stations over the course of a 5-year oceanographic program (2009 13). The profiles were analyzed using along-channel vertical sections plots (i.e., transects), surface property maps and water masses statistics.</gco:CharacterString>
       </mri:abstract>
       <mri:resourceConstraints>
-          <mco:MD_LegalConstraints>
+          <mco:MD_Constraints>
             <mco:useLimitation xsi:type="gmd:PT_FreeText_PropertyType">
               <gco:CharacterString>Open Government Licence - Canada (http://open.canada.ca/en/open-government-licence-canada)</gco:CharacterString>
               <gmd:PT_FreeText>
@@ -70,6 +70,8 @@
                 </gmd:textGroup>
               </gmd:PT_FreeText>
             </mco:useLimitation>
+          </mco:MD_Constraints>
+          <mco:MD_LegalConstraints>
             <mco:accessConstraints>
               <mco:MD_RestrictionCode codeList="http://nap.geogratis.gc.ca/metadata/register/napMetadataRegister.xml#IC_107" codeListValue="RI_606">license; licence</mco:MD_RestrictionCode>
             </mco:accessConstraints>
