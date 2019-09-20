@@ -2,11 +2,13 @@
 <mdb:MD_Metadata xmlns="http://standards.iso.org/iso/19115/-3/mdb/1.0"
   xmlns:dqc="http://standards.iso.org/iso/19157/-2/dqc/1.0"
   xmlns:gco="http://standards.iso.org/iso/19115/-3/gco/1.0"
+  xmlns:gmd="http://standards.iso.org/iso/19165//gmd"
   xmlns:lan="http://standards.iso.org/iso/19115/-3/lan/1.0"
   xmlns:mcc="http://standards.iso.org/iso/19115/-3/mcc/1.0"
   xmlns:mdb="http://standards.iso.org/iso/19115/-3/mdb/1.0"
   xmlns:cit="http://standards.iso.org/iso/19115/-3/cit/1.0"
   xmlns:mri="http://standards.iso.org/iso/19115/-3/mri/1.0"
+  xmlns:mco="http://standards.iso.org/iso/19115/-3/mco/1.0"
   xmlns:gex="http://standards.iso.org/iso/19115/-3/gex/1.0"
   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
   xsi:schemaLocation="http://standards.iso.org/iso/19115/-3/mdb/1.0 mdb.xsd">
@@ -58,32 +60,32 @@
       <mri:abstract>
         <gco:CharacterString>Upon a recent rapid increase of the finfish aquaculture industry in the Coast of Bays, an area of the South Coast of Newfoundland (9 fold production growth from 2003 to 2013), Fisheries and Oceans Canada (DFO) carried out a research project to better understand the physical oceanography of the area. This report is the second of a series aiming to provide an oceanographic knowledge baseline of the Coast of Bays (i.e., data and analyses) to help manage and ensure the sustainable growth of the aquaculture industry. This report presents the analysis of 790 water profiles of temperature, salinity and dissolved oxygen concentration sampled at 276 stations over the course of a 5-year oceanographic program (2009 13). The profiles were analyzed using along-channel vertical sections plots (i.e., transects), surface property maps and water masses statistics.</gco:CharacterString>
       </mri:abstract>
-      <gmd:resourceConstraints>
-          <gmd:MD_LegalConstraints>
-            <gmd:useLimitation xsi:type="gmd:PT_FreeText_PropertyType">
+      <mri:resourceConstraints>
+          <mco:MD_LegalConstraints>
+            <mco:useLimitation xsi:type="gmd:PT_FreeText_PropertyType">
               <gco:CharacterString>Open Government Licence - Canada (http://open.canada.ca/en/open-government-licence-canada)</gco:CharacterString>
               <gmd:PT_FreeText>
                 <gmd:textGroup>
                   <gmd:LocalisedCharacterString locale="#fra">Licence du gouvernement ouvert - Canada (http://ouvert.canada.ca/fr/licence-du-gouvernement-ouvert-canada)</gmd:LocalisedCharacterString>
                 </gmd:textGroup>
               </gmd:PT_FreeText>
-            </gmd:useLimitation>
-            <gmd:accessConstraints>
-              <gmd:MD_RestrictionCode codeList="http://nap.geogratis.gc.ca/metadata/register/napMetadataRegister.xml#IC_107" codeListValue="RI_606">license; licence</gmd:MD_RestrictionCode>
-            </gmd:accessConstraints>
-            <gmd:useConstraints>
-              <gmd:MD_RestrictionCode codeList="http://nap.geogratis.gc.ca/metadata/register/napMetadataRegister.xml#IC_107" codeListValue="RI_606">license; licence</gmd:MD_RestrictionCode>
-            </gmd:useConstraints>
-            <gmd:otherConstraints xsi:type="gmd:PT_FreeText_PropertyType" gco:nilReason="missing">
+            </mco:useLimitation>
+            <mco:accessConstraints>
+              <mco:MD_RestrictionCode codeList="http://nap.geogratis.gc.ca/metadata/register/napMetadataRegister.xml#IC_107" codeListValue="RI_606">license; licence</mco:MD_RestrictionCode>
+            </mco:accessConstraints>
+            <mco:useConstraints>
+              <mco:MD_RestrictionCode codeList="http://nap.geogratis.gc.ca/metadata/register/napMetadataRegister.xml#IC_107" codeListValue="RI_606">license; licence</mco:MD_RestrictionCode>
+            </mco:useConstraints>
+            <mco:otherConstraints xsi:type="gmd:PT_FreeText_PropertyType" gco:nilReason="missing">
               <gco:CharacterString />
               <gmd:PT_FreeText>
                 <gmd:textGroup>
                   <gmd:LocalisedCharacterString locale="#fra" />
                 </gmd:textGroup>
               </gmd:PT_FreeText>
-            </gmd:otherConstraints>
-          </gmd:MD_LegalConstraints>
-        </gmd:resourceConstraints>
+            </mco:otherConstraints>
+          </mco:MD_LegalConstraints>
+        </mri:resourceConstraints>
       <!-- mandatory since MD_MetadataScope is not specified, and defaults to 'dataset' enforced by Schematron rule -->
       <mri:topicCategory>
         <mri:MD_TopicCategoryCode>oceans</mri:MD_TopicCategoryCode>
