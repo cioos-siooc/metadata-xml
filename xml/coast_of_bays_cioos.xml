@@ -2,7 +2,6 @@
 <mdb:MD_Metadata xmlns="http://standards.iso.org/iso/19115/-3/mdb/1.0"
   xmlns:dqc="http://standards.iso.org/iso/19157/-2/dqc/1.0"
   xmlns:gco="http://standards.iso.org/iso/19115/-3/gco/1.0"
-  xmlns:gmd="http://standards.iso.org/iso/19165//gmd"
   xmlns:lan="http://standards.iso.org/iso/19115/-3/lan/1.0"
   xmlns:mcc="http://standards.iso.org/iso/19115/-3/mcc/1.0"
   xmlns:mdb="http://standards.iso.org/iso/19115/-3/mdb/1.0"
@@ -62,13 +61,13 @@
       </mri:abstract>
       <mri:resourceConstraints>
           <mco:MD_Constraints>
-            <mco:useLimitation xsi:type="gmd:PT_FreeText_PropertyType">
+            <mco:useLimitation xsi:type="lan:PT_FreeText_PropertyType">
               <gco:CharacterString>Open Government Licence - Canada (http://open.canada.ca/en/open-government-licence-canada)</gco:CharacterString>
-              <gmd:PT_FreeText>
-                <gmd:textGroup>
-                  <gmd:LocalisedCharacterString locale="#fra">Licence du gouvernement ouvert - Canada (http://ouvert.canada.ca/fr/licence-du-gouvernement-ouvert-canada)</gmd:LocalisedCharacterString>
-                </gmd:textGroup>
-              </gmd:PT_FreeText>
+              <lan:PT_FreeText>
+                <lan:textGroup>
+                  <lan:LocalisedCharacterString locale="#fra">Licence du gouvernement ouvert - Canada (http://ouvert.canada.ca/fr/licence-du-gouvernement-ouvert-canada)</lan:LocalisedCharacterString>
+                </lan:textGroup>
+              </lan:PT_FreeText>
             </mco:useLimitation>
           </mco:MD_Constraints>
           <mco:MD_LegalConstraints>
@@ -78,13 +77,13 @@
             <mco:useConstraints>
               <mco:MD_RestrictionCode codeList="http://nap.geogratis.gc.ca/metadata/register/napMetadataRegister.xml#IC_107" codeListValue="RI_606">license; licence</mco:MD_RestrictionCode>
             </mco:useConstraints>
-            <mco:otherConstraints xsi:type="gmd:PT_FreeText_PropertyType" gco:nilReason="missing">
+            <mco:otherConstraints xsi:type="lan:PT_FreeText_PropertyType" gco:nilReason="missing">
               <gco:CharacterString />
-              <gmd:PT_FreeText>
-                <gmd:textGroup>
-                  <gmd:LocalisedCharacterString locale="#fra" />
-                </gmd:textGroup>
-              </gmd:PT_FreeText>
+              <lan:PT_FreeText>
+                <lan:textGroup>
+                  <lan:LocalisedCharacterString locale="#fra" />
+                </lan:textGroup>
+              </lan:PT_FreeText>
             </mco:otherConstraints>
           </mco:MD_LegalConstraints>
         </mri:resourceConstraints>
