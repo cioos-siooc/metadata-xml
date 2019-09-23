@@ -77,7 +77,7 @@
                 <cit:onlineResource>
                   <cit:CI_OnlineResource>
                     <cit:linkage>
-                            <gco:CharacterString>https://open.canada.ca/data/en/dataset/a650f132-7502-402f-a42e-7ba4dea3f829</gco:CharacterString>
+                      <gco:CharacterString>https://open.canada.ca/data/en/dataset/a650f132-7502-402f-a42e-7ba4dea3f829</gco:CharacterString>
                     </cit:linkage>
                     <!-- mandatory (dataType= creation) by constraint enforced by Schematron rule -->
                   </cit:CI_OnlineResource>
