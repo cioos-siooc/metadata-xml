@@ -11,6 +11,29 @@
   xmlns:gex="http://standards.iso.org/iso/19115/-3/gex/1.0"
   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
   xsi:schemaLocation="http://standards.iso.org/iso/19115/-3/mdb/1.0 mdb.xsd">
+  <!-- metadataIdentifier: mandatory -->
+  <mdb:metadataIdentifier>
+    <!-- found MD_Identifier info in https://standards.iso.org/iso/19115/-3/mcc/1.0/commonClasses.xsd -->
+    <mcc:MD_Identifier>
+      <!-- code: mandatory -->
+      <mcc:code>
+        <!-- the original uuid for Coast of Bays dataset:
+        a650f132-7502-402f-a42e-7ba4dea3f829
+        New one generated at uuidgenerator.net/version4
+        -->
+        c2c3e218-7704-48fa-8c18-327a5a88e28e
+      </mcc:code>
+      <!-- authority: optional -->
+      <mcc:authority gco:nilReason="missing">
+        <cit:CI_Citation />
+      </mcc:authority>
+      <!-- description: optional -->
+      <mcc:description gco:nilReason="missing">
+        <gco:CharacterString />
+      </mcc:description>
+    </mcc:MD_Identifier>
+  </mdb:metadataIdentifier>
+  <!-- contact: mandatory -->
   <mdb:contact>
     <cit:CI_Responsibility>
       <cit:role>
