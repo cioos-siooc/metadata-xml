@@ -157,7 +157,7 @@ LI_Lineage
                         <characterString>
                       electronicMailAddress
                         <characterString>
-          processingInformation
+      processingInformation
         LE_Processing
           identifier
             MD_Identifier
@@ -216,11 +216,12 @@ LI_Lineage
               linkage
                 <characterString>
       sourceMetadata
-      identifier
+        identifier
           MD_Identifier
             code
               <characterString>
-          processedLevel
+    LE_Source
+      processedLevel
         MD_Identifier
           description
             <characterString>
