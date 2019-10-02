@@ -1,0 +1,98 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<mdb:MD_Metadata xmlns="http://standards.iso.org/iso/19115/-3/mdb/1.0"
+  xmlns:dqc="http://standards.iso.org/iso/19157/-2/dqc/1.0"
+  xmlns:gco="http://standards.iso.org/iso/19115/-3/gco/1.0"
+  xmlns:lan="http://standards.iso.org/iso/19115/-3/lan/1.0"
+  xmlns:mcc="http://standards.iso.org/iso/19115/-3/mcc/1.0"
+  xmlns:mdb="http://standards.iso.org/iso/19115/-3/mdb/1.0"
+  xmlns:cit="http://standards.iso.org/iso/19115/-3/cit/1.0"
+  xmlns:mri="http://standards.iso.org/iso/19115/-3/mri/1.0"
+  xmlns:mco="http://standards.iso.org/iso/19115/-3/mco/1.0"
+  xmlns:gex="http://standards.iso.org/iso/19115/-3/gex/1.0"
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="http://standards.iso.org/iso/19115/-3/mdb/1.0 mdb.xsd">
+  <!-- metadataIdentifier: mandatory -->
+  <mdb:metadataIdentifier>
+    <mcc:MD_Identifier>
+      <!-- code: mandatory -->
+      <mcc:code>
+        <gco:CharacterString>
+          <!-- MD_Metadata/metadataIdentifier/MD_Identifier/code/CharacterString -->
+        </gco:CharacterString>
+      </mcc:code>
+    </mcc:MD_Identifier>
+  </mdb:metadataIdentifier>
+  <!-- contact: mandatory -->
+  <mdb:contact>
+    <cit:CI_Responsibility>
+      <!-- role: mandatory -->
+      <cit:role>
+        <cit:CI_RoleCode>
+          <!-- MD_Metadata/contact/CI_Responsibility/role/CI_RoleCode -->
+        </cit:CI_RoleCode>
+      </cit:role>
+      <!-- party: mandatory -->
+      <cit:party>
+        <cit:CI_Party>
+          <!-- name: mandatory -->
+          <cit:name>
+            <gco:CharacterString>
+              <!-- MD_Metadata/contact/CI_Responsibility/party/CI_Party/name/CharacterString -->
+            </gco:CharacterString>
+          </cit:name>
+          <!-- contactInfo: mandatory -->
+          <cit:contactInfo>
+            <cit:CI_Contact>
+              <!-- address: mandatory -->
+              <cit:address>
+                <cit:CI_Address>
+                  <!-- country: mandatory -->
+                  <cit:country>
+                    <gco:CharacterString>
+                      <!-- MD_Metadata/contact/CI_Responsibility/party/contactInfo/CI_Contact/address/CI_Address/country/CharacterString -->
+                    </gco:CharacterString>
+                  </cit:country>
+                  <!-- electronicMailAddress: mandatory -->
+                  <cit:electronicMailAddress>
+                    <gco:CharacterString>
+                      <!-- MD_Metadata/contact/CI_Responsibility/party/contactInfo/CI_Contact/address/CI_Address/electronicMailAddress/CharacterString -->
+                    </gco:CharacterString>
+                  </cit:electronicMailAddress>
+                </cit:CI_Address>
+              </cit:address>
+            </cit:CI_Contact>
+          </cit:contactInfo>
+        </cit:CI_Party>
+      </cit:party>
+    </cit:CI_Responsibility>
+  </mdb:contact>
+  <!-- dateInfo: mandatory -->
+  <mdb:dateInfo>
+    <cit:CI_Date>
+      <!-- date: mandatory -->
+      <cit:date>
+        <gco:DateTime>
+          <!-- MD_Metadata/dateInfo/CI_Date/date/DateTime -->
+        </gco:DateTime>
+      </cit:date>
+      <!-- dateType: mandatory -->
+      <cit:dateType>
+        <cit:CI_DateTypeCode>
+          <!-- MD_Metadata/dateInfo/CI_Date/date/CI_DateTypeCode -->
+        </cit:CI_DateTypeCode>
+      </cit:dateType>
+    </cit:CI_Date>
+  </mdb:dateInfo>
+  <!-- defaultLocale: mandatory -->
+  <mdb:defaultLocale>
+    <lan:PT_Locale>
+      <lan:language>
+        <lan:LanguageCode>
+          <!-- MD_Metadata/defaultLocale/PT_Locale/language/LanguageCode -->
+        </lan:LanguageCode>
+      </lan:language>
+      <gmd
+    </lan:PT_Locale>
+
+
+      
