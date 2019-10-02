@@ -188,7 +188,7 @@ mrl:LI_Lineage
           gmi:name
             <gco:characterString>
   mrl:source
-    mrl:LI_Source
+    mrl:LE_Source
       mrl:description
         <gco:characterString>
       mrl:sourceSpatialResolution
@@ -217,28 +217,28 @@ mrl:LI_Lineage
                 <gco:characterString>
       mrl:sourceMetadata
         cit:CI_Citation
-          identifier
-            MD_Identifier
-              code
-                <characterString>
-            processedLevel
-          MD_Identifier
-            description
-              <characterString>
-            code
-              <characterString>
-            codeSpace
-              <characterString>
-            version
-              <characterString>
-            authority
-              CI_Citation
-                title
-                  <characterString>
-                edition
-                  <characterString>
-        resolution
-        LE_NominalResolution
+          cit:identifier
+            mcc:MD_Identifier
+              mcc:code
+                <gco:characterString>
+      mrl:processedLevel
+        mcc:MD_Identifier
+          mcc:description
+            <gco:characterString>
+          mcc:code
+            <gco:characterString>
+          mcc:codeSpace
+            <gco:characterString>
+          mcc:version
+            <gco:characterString>
+          mcc:authority
+            cit:CI_Citation
+              cit:title
+                <gco:characterString>
+              cit:edition
+                <gco:characterString>
+      mrl:resolution
+        mrl:LE_NominalResolution
           scanningResolution
             <distance>
           groundResolution
@@ -251,7 +251,7 @@ MI_AcquisitionInformation
       levelDescription
         MD_ScopeDescription
           dataset
-            <characterString>
+            <gco:characterString>
   environmentalConditions
     MI_EnvironmentalRecords
       averageAirTemperature
@@ -261,7 +261,7 @@ MI_AcquisitionInformation
       maxAltitude
         <real>
       meteorologicalConditions
-        <characterString>
+        <gco:characterString>
       solarAzimuth
         <real>
       solarElevation
@@ -271,7 +271,7 @@ MI_AcquisitionInformation
       citation
         CI_Citation
           title
-            <characterString>
+            <gco:characterString>
       identifier
         MD_Identifier
           authority
@@ -283,33 +283,33 @@ MI_AcquisitionInformation
                   party
                     CI_Party
                       name
-                        <characterString>
+                        <gco:characterString>
                       contactInfo
                         CI_Contact
                           contactInstructions
-                            <characterString>
+                            <gco:characterString>
                           phone
                             CI_Telephone
                               number
-                                <characterString>
+                                <gco:characterString>
                           address
                             CI_Address
                               city
-                                <characterString>
+                                <gco:characterString>
                               electronicMailAddress
-                                <characterString>
+                                <gco:characterString>
           code
-            <characterString>
+            <gco:characterString>
           codeSpace
-            <characterString>
+            <gco:characterString>
           version
-            <characterString>
+            <gco:characterString>
           description
-            <characterString>
+            <gco:characterString>
       type
-        <characterString>
+        <gco:characterString>
       description
-        <characterString>
+        <gco:characterString>
       mountedOn
         MI_Platform
       sensor
@@ -318,24 +318,24 @@ MI_AcquisitionInformation
         identifier
           MD_Identifier
             code
-              <characterString>
+              <gco:characterString>
             version
-              <characterString>
+              <gco:characterString>
             description
-              <characterString>
+              <gco:characterString>
       history
         MI_InstrumentationEventList
           description
-            <characterString>
+            <gco:characterString>
           MI_InstrumentEvent
             description
-              <characterString>
+              <gco:characterString>
             type
               <MI_EventTypeCode>
             revisionHistory
               MI_Revision
                 description
-                  <characterString>
+                  <gco:characterString>
                 responsibleParty
                   CI_Responsibility
                     role
@@ -343,21 +343,21 @@ MI_AcquisitionInformation
                     party
                       CI_Party
                         name
-                          <characterString>
+                          <gco:characterString>
                         contactInfo
                           CI_Contact
                             contactInstructions
-                              <characterString>
+                              <gco:characterString>
                             phone
                               CI_Telephone
                                 number
-                                  <characterString>
+                                  <gco:characterString>
                             address
                               CI_Address
                                 city
-                                  <characterString>
+                                  <gco:characterString>
                                 electronicMailAddress
-                                  <characterString>
+                                  <gco:characterString>
                 dateInfo
                   date
                     dateTime
@@ -366,11 +366,11 @@ MI_AcquisitionInformation
   operation
     MI_Operation
       description
-        <characterString>
+        <gco:characterString>
       citation
         CI_Citation
           title
-            <characterString>
+            <gco:characterString>
           date
             CI_Date
               date
@@ -396,11 +396,11 @@ MI_AcquisitionInformation
           identifier
             MD_Identifier
               description
-                <characterString>
+                <gco:characterString>
   platform
     MI_Platform
       description
-        <characterString>
+        <gco:characterString>
       sponsor
         CI_Responsibility
           role
@@ -408,21 +408,21 @@ MI_AcquisitionInformation
           party
             CI_Party
               name
-                <characterString>
+                <gco:characterString>
               contactInfo
                 CI_Contact
                   contactInstructions
-                    <characterString>
+                    <gco:characterString>
                   phone
                     CI_Telephone
                       number
-                        <characterString>
+                        <gco:characterString>
                   address
                     CI_Address
                       city
-                        <characterString>
+                        <gco:characterString>
                       electronicMailAddress
-                        <characterString>
+                        <gco:characterString>
       identifier
         MD_Identifier
           authority
@@ -434,34 +434,34 @@ MI_AcquisitionInformation
                   party
                     CI_Party
                       name
-                        <characterString>
+                        <gco:characterString>
                       contactInfo
                         CI_Contact
                           contactInstructions
-                            <characterString>
+                            <gco:characterString>
                           phone
                             CI_Telephone
                               number
-                                <characterString>
+                                <gco:characterString>
                           address
                             CI_Address
                               city
-                                <characterString>
+                                <gco:characterString>
                               electronicMailAddress
-                                <characterString>
+                                <gco:characterString>
       citation
         CI_Citation
           title
-            <characterString>
+            <gco:characterString>
           onlineResource
             CI_OnlineResource
               linkage
-                <characterString>
+                <gco:characterString>
 MD_DataIdentification
   citation
     CI_Citaion
       title
-        <characterString>
+        <gco:characterString>
       citedResponsibleParty
         CI_Responsibility
           role
@@ -469,11 +469,11 @@ MD_DataIdentification
           party
             CI_Party
               name
-                <characterString>
+                <gco:characterString>
   abstract
-    <characterString>
+    <gco:characterString>
   purpose
-    <characterString>
+    <gco:characterString>
   status
     <MD_ProgressCode>
   spatialRepresentationType
@@ -483,53 +483,53 @@ MD_DataIdentification
   processingLevel
     MD_Identifier
       code
-        <characterString>
+        <gco:characterString>
       version
-        <characterString>
+        <gco:characterString>
       description
-        <characterString>
+        <gco:characterString>
   pointOfContact
     CI_Responsibility
       party
         CI_Party
           name
-            <characterString>
+            <gco:characterString>
           contactInfo
             contactInstructions
-              <characterString>
+              <gco:characterString>
             onlineResource
               CI_OnlineResource
                 name
-                  <characterString>
+                  <gco:characterString>
                 description
-                  <characterString>
+                  <gco:characterString>
                 linkage
-                  <characterString>
+                  <gco:characterString>
             address
               CI_Address
                 electronicMailAddress
-                  <characterString>
+                  <gco:characterString>
   additionalDocumentation
     CI_Citation
       title
-        <characterString>
+        <gco:characterString>
       onlineResource
         CI_OnlineResource
           name
-            <characterString>
+            <gco:characterString>
           description
-            <characterString>
+            <gco:characterString>
           linkage
-            <characterString>
+            <gco:characterString>
 MD_Keywords
   keyword
-    <characterString>
+    <gco:characterString>
   thesaurusName
     CI_Citation
       title
-        <characterString>
+        <gco:characterString>
       edition
-        <characterString>
+        <gco:characterString>
       date
         CI_Date
           date
@@ -538,7 +538,7 @@ MD_Keywords
             <CI_DateTypeCode>
 EX_Extent
   description
-    <characterString>
+    <gco:characterString>
   geographicElement
     EX_GeographicExtent
       extentTypeCode
@@ -560,9 +560,9 @@ EX_Extent
         geographicIdentifier
           MD_Identifier
             code
-              <characterString>
+              <gco:characterString>
             description
-              <characterString>
+              <gco:characterString>
   temporalElement
     EX_TemporalExtent
       extent
@@ -594,16 +594,16 @@ EX_Extent
                       party
                         CI_Party
                           name
-                            <characterString>
+                            <gco:characterString>
 MD_Distribution
   distributionFormat
     MD_Format
       formatSpecificationCitation
         CI_Citation
           title
-            <characterString>
+            <gco:characterString>
           edition
-            <characterString>
+            <gco:characterString>
   distributor
     MD_Distributor
       distributorContact
@@ -613,28 +613,28 @@ MD_Distribution
           party
             CI_Party
               name
-                <characterString>
+                <gco:characterString>
               contactInfo
                 CI_Contact
                   address
                     CI_Address
                       electronicMailAddress
-                        <characterString>
+                        <gco:characterString>
   transferOptions
     MD_DigitalTransferOptions
       online
         CI_OnlineResource
           linkage
-            <characterString>
+            <gco:characterString>
           description
-            <characterString>
+            <gco:characterString>
       tranferSize
         <real>
 MD_MaintenanceInformation
   maintenanceAndUpdateFrequency
     <MD_MaintenanceFrequencyCode>
   maintenanceNote
-    <characterString>
+    <gco:characterString>
   contact
     CI_Responsibility
       role
@@ -642,16 +642,16 @@ MD_MaintenanceInformation
       party
         CI_Party
           name
-            <characterString>
+            <gco:characterString>
           contactInfo
             CI_Contact
               address
                 CI_Address
                   electronicMailAddress
-                    <characterString>
+                    <gco:characterString>
 MD_Constraints
   useLimitation
-    <characterString>
+    <gco:characterString>
   constraintApplicationScope
     MD_Scope
       level
@@ -661,19 +661,19 @@ MD_Constraints
   graphic
     MD_BrowseGraphic
       fileName
-        <characterString>
+        <gco:characterString>
   reference
     CI_Citation
       title
-        <characterString>
+        <gco:characterString>
       onlineResource
         CI_OnlineResource
           linkage
-            <characterString>
+            <gco:characterString>
   releasability
     MD_Releasability
       statement
-        <characterString>
+        <gco:characterString>
       disseminationConstraints
         <MD_RestrictionCode>
   responsibilityParty
@@ -683,6 +683,6 @@ MD_Constraints
       party
         CI_Party
           name
-            <characterString>
+            <gco:characterString>
   MD_LegalConstraints
     MD_Constraints
