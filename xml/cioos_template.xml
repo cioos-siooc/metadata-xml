@@ -76,10 +76,10 @@
     <cit:CI_Date>
       <!-- date: mandatory -->
       <cit:date>
-        <gco:DateTime>
+        <gco:Date>
           <!-- CIOOS core mandatory element -->
           <!-- MD_Metadata/dateInfo/CI_Date/date/DateTime -->
-        </gco:DateTime>
+        </gco:Date>
       </cit:date>
       <!-- dateType: mandatory -->
       <cit:dateType>
