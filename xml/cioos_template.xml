@@ -174,15 +174,15 @@
   </mdb:identificationInfo>
   <!-- metadataScope: mandatory -->
   <mdb:metadataScope>
-    <mdb:MI_MetadataScope>
+    <mdb:MD_MetadataScope>
       <!-- resourceScope: mandatory -->
       <mdb:resourceScope>
         <mdb:MD_ScopeCode>
           <!-- CIOOS core mandatory element -->
-          <!-- MI_Metadata/metadataScope/MI_MetadataScope/resourceScope/MD_ScopeCode -->
+          <!-- MI_Metadata/metadataScope/MD_MetadataScope/resourceScope/MD_ScopeCode -->
         </mdb:MD_ScopeCode>
       </mdb:resourceScope>
-    </mdb:MI_MetadataScope>
+    </mdb:MD_MetadataScope>
   </mdb:metadataScope>
   <!-- acquisitionInformation: mandatory -->
   <gmi:acquisitionInformation>
