@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<mdb:MI_Metadata xmlns="http://standards.iso.org/iso/19115/-3/mdb/1.0"
+<gmi:MI_Metadata xmlns="https://standards.iso.org/iso/19115/-2/gmi/1.0"
+  xmlns:mdb="http://standards.iso.org/iso/19115/-3/mdb/1.0"
   xmlns:dqc="http://standards.iso.org/iso/19157/-2/dqc/1.0"
   xmlns:gco="http://standards.iso.org/iso/19115/-3/gco/1.0"
   xmlns:lan="http://standards.iso.org/iso/19115/-3/lan/1.0"
@@ -10,7 +11,8 @@
   xmlns:mco="http://standards.iso.org/iso/19115/-3/mco/1.0"
   xmlns:gex="http://standards.iso.org/iso/19115/-3/gex/1.0"
   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-  xsi:schemaLocation="http://standards.iso.org/iso/19115/-3/mdb/1.0 mdb.xsd">
+  xmlns:mac="https://standards.iso.org/iso/19115/-3/mac/1.0"
+  xsi:schemaLocation="http://standards.iso.org/iso/19115/-2/gmi/1.0 gmi.xsd">
   <!-- metadataIdentifier: mandatory -->
   <mdb:metadataIdentifier>
     <mcc:MD_Identifier>
@@ -18,7 +20,7 @@
       <mcc:code>
         <gco:CharacterString>
           <!-- CIOOS core mandatory element -->
-          <!-- MD_Metadata/metadataIdentifier/MD_Identifier/code/CharacterString -->
+          <!-- MI_Metadata/metadataIdentifier/MD_Identifier/code/CharacterString -->
         </gco:CharacterString>
       </mcc:code>
     </mcc:MD_Identifier>
@@ -30,7 +32,7 @@
       <cit:role>
         <cit:CI_RoleCode>
           <!-- CIOOS core mandatory element -->
-          <!-- MD_Metadata/contact/CI_Responsibility/role/CI_RoleCode -->
+          <!-- MI_Metadata/contact/CI_Responsibility/role/CI_RoleCode -->
         </cit:CI_RoleCode>
       </cit:role>
       <!-- party: mandatory -->
@@ -40,7 +42,7 @@
           <cit:name>
             <gco:CharacterString>
               <!-- CIOOS core mandatory element -->
-              <!-- MD_Metadata/contact/CI_Responsibility/party/CI_Party/name/CharacterString -->
+              <!-- MI_Metadata/contact/CI_Responsibility/party/CI_Party/name/CharacterString -->
             </gco:CharacterString>
           </cit:name>
           <!-- contactInfo: mandatory -->
@@ -53,14 +55,14 @@
                   <cit:country>
                     <gco:CharacterString>
                       <!-- CIOOS core mandatory element -->
-                      <!-- MD_Metadata/contact/CI_Responsibility/party/contactInfo/CI_Contact/address/CI_Address/country/CharacterString -->
+                      <!-- MI_Metadata/contact/CI_Responsibility/party/contactInfo/CI_Contact/address/CI_Address/country/CharacterString -->
                     </gco:CharacterString>
                   </cit:country>
                   <!-- electronicMailAddress: mandatory -->
                   <cit:electronicMailAddress>
                     <gco:CharacterString>
                       <!-- CIOOS core mandatory element -->
-                      <!-- MD_Metadata/contact/CI_Responsibility/party/contactInfo/CI_Contact/address/CI_Address/electronicMailAddress/CharacterString -->
+                      <!-- MI_Metadata/contact/CI_Responsibility/party/contactInfo/CI_Contact/address/CI_Address/electronicMailAddress/CharacterString -->
                     </gco:CharacterString>
                   </cit:electronicMailAddress>
                 </cit:CI_Address>
@@ -78,14 +80,14 @@
       <cit:date>
         <gco:DateTime>
           <!-- CIOOS core mandatory element -->
-          <!-- MD_Metadata/dateInfo/CI_Date/date/DateTime -->
+          <!-- MI_Metadata/dateInfo/CI_Date/date/DateTime -->
         </gco:DateTime>
       </cit:date>
       <!-- dateType: mandatory -->
       <cit:dateType>
         <cit:CI_DateTypeCode>
           <!-- CIOOS core mandatory element -->
-          <!-- MD_Metadata/dateInfo/CI_Date/date/CI_DateTypeCode -->
+          <!-- MI_Metadata/dateInfo/CI_Date/date/CI_DateTypeCode -->
         </cit:CI_DateTypeCode>
       </cit:dateType>
     </cit:CI_Date>
@@ -97,21 +99,21 @@
       <lan:language>
         <lan:LanguageCode>
           <!-- CIOOS core mandatory element -->
-          <!-- MD_Metadata/defaultLocale/PT_Locale/language/LanguageCode (ISO639-2) -->
+          <!-- MI_Metadata/defaultLocale/PT_Locale/language/LanguageCode (ISO639-2) -->
         </lan:LanguageCode>
       </lan:language>
       <!-- country: mandatory -->
       <lan:country>
         <lan:CountryCode>
           <!-- CIOOS core mandatory element -->
-          <!-- MD_Metadata/defaultLocale/PT_Locale/country/CountryCode (ISO3166-1) -->
+          <!-- MI_Metadata/defaultLocale/PT_Locale/country/CountryCode (ISO3166-1) -->
         </lan:CountryCode>
       </lan:country>
       <!-- characterEncoding: mandatory -->
       <lan:characterEncoding>
         <lan:MD_CharacterSetCode>
           <!-- CIOOS core mandatory element -->
-          <!-- MD_Metadata/defaultLocale/PT_Locale/characterEncoding/MD_CharacterSetCode (UTF-8) -->
+          <!-- MI_Metadata/defaultLocale/PT_Locale/characterEncoding/MD_CharacterSetCode (UTF-8) -->
         </lan:MD_CharacterSetCode>
       </lan:characterEncoding>
     </lan:PT_Locale>
@@ -126,7 +128,7 @@
           <cit:title>
             <gco:CharacterString>
               <!-- CIOOS core mandatory element -->
-              <!-- MD_Metadata/identificationInfo/MD_DataIdentification/citation/CI_Citation/title/CharacterString -->
+              <!-- MI_Metadata/identificationInfo/MD_DataIdentification/citation/CI_Citation/title/CharacterString -->
             </gco:CharacterString>
           </cit:title>
           <!-- citedResponsibileParty: mandatory -->
@@ -136,7 +138,7 @@
               <cit:role>
                 <cit:CI_RoleCode>
                   <!-- CIOOS core mandatory element -->
-                  <!-- MD_Metadata/identificationInfo/MD_DataIdentification/citation/CI_Citation/role/CI_RoleCode -->
+                  <!-- MI_Metadata/identificationInfo/MD_DataIdentification/citation/CI_Citation/role/CI_RoleCode -->
                 </cit:CI_RoleCode>
               </cit:role>
               <!-- party: mandatory -->
@@ -146,7 +148,7 @@
                   <cit:name>
                     <gco:CharacterString>
                       <!-- CIOOS core mandatory element -->
-                      <!-- MD_Metadata/identificationInfo/MD_DataIdentification/citation/CI_Citation/party/CI_Party/name/CharacterString -->
+                      <!-- MI_Metadata/identificationInfo/MD_DataIdentification/citation/CI_Citation/party/CI_Party/name/CharacterString -->
                     </gco:CharacterString>
                   </cit:name>
                 </cit:CI_Party>
@@ -159,13 +161,13 @@
       <mri:abstract>
         <gco:CharacterString>
           <!-- CIOOS core mandatory element -->
-          <!-- MD_Metadata/identificationInfo/MD_DataIdentification/abstract/CharacterString -->
+          <!-- MI_Metadata/identificationInfo/MD_DataIdentification/abstract/CharacterString -->
         </gco:CharacterString>
       </mri:abstract>
       <mri:status>
         <mcc:MD_ProgressCode>
           <!-- CIOOS core mandatory element -->
-          <!-- MD_Metadata/identificationInfo/MD_DataIdentification/status/MD_ProgressCode -->
+          <!-- MI_Metadata/identificationInfo/MD_DataIdentification/status/MD_ProgressCode -->
         </mcc:MD_ProgressCode>
       </mri:status>
     </mri:MD_DataIdentification>
@@ -177,13 +179,13 @@
       <mdb:resourceScope>
         <mdb:MD_ScopeCode>
           <!-- CIOOS core mandatory element -->
-          <!-- MD_Metadata/metadataScope/MD_MetadataScope/resourceScope/MD_ScopeCode -->
+          <!-- MI_Metadata/metadataScope/MD_MetadataScope/resourceScope/MD_ScopeCode -->
         </mdb:MD_ScopeCode>
       </mdb:resourceScope>
     </mdb:MD_MetadataScope>
   </mdb:metadataScope>
   <!-- acquisitionInformation: mandatory -->
-  <mdb:acquisitionInformation>
+  <gmi:acquisitionInformation>
     <mac:MI_AcquisitionInformation>
       <!-- instrument: mandatory -->
       <mac:instrument>
@@ -322,5 +324,5 @@
         </mac:MI_Platform>
       </mac:platform>
     </mac:MI_AcquisitionInformation>
-  </mdb:acquisitionInformation>
-</mdb:MI_Metadata>
+  </gmi:acquisitionInformation>
+</gmi:MI_Metadata>
