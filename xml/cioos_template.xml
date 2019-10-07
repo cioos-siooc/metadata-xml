@@ -20,8 +20,12 @@
         <gco:CharacterString>
           <!-- CIOOS core mandatory element -->
           <!-- MI_Metadata/metadataIdentifier/MD_Identifier/code/CharacterString -->
+          {{ record['id'] }}
         </gco:CharacterString>
       </mcc:code>
+      <mcc:authority>
+        {{ record['naming_authority'] }}
+      </mcc:authority>
     </mcc:MD_Identifier>
   </mdb:metadataIdentifier>
   <!-- contact: mandatory -->
@@ -62,6 +66,7 @@
                     <gco:CharacterString>
                       <!-- CIOOS core mandatory element -->
                       <!-- MI_Metadata/contact/CI_Responsibility/party/contactInfo/CI_Contact/address/CI_Address/electronicMailAddress/CharacterString -->
+                      {{ record['publisher_email'] }}
                     </gco:CharacterString>
                   </cit:electronicMailAddress>
                 </cit:CI_Address>
@@ -73,24 +78,91 @@
     </cit:CI_Responsibility>
   </mdb:contact>
   <!-- dateInfo: mandatory -->
+
+    <mdb:dateInfo>
+      <cit:CI_Date>
+        <!-- date: mandatory -->
+        <cit:date>
+          {% if record['date_created']| length > 11 %}
+          <gco:DateTime>
+            <!-- CIOOS core mandatory element -->
+            <!-- MI_Metadata/dateInfo/CI_Date/date/DateTime -->
+            <!-- ACDD: [date_created=creation, date_modified=revision, date_issued=publication] -->
+            {{ record['date_created'] }}
+          </gco:DateTime>
+          {% else %}
+          <gco:Date>
+            {{ record['date_created'] }}
+          </gco:Date>
+          {% endif %}
+        </cit:date>
+        <!-- dateType: mandatory -->
+        <cit:dateType>
+          <cit:CI_DateTypeCode codeList="http://standards.iso.org/iso/19115/-3/cit/1.0/codelists.xml#CI_DateTypeCode" codeListValue="creation">
+            <!-- CIOOS core mandatory element -->
+            <!-- MI_Metadata/dateInfo/CI_Date/date/CI_DateTypeCode -->
+            creation
+          </cit:CI_DateTypeCode>
+        </cit:dateType>
+      </cit:CI_Date>
+    </mdb:dateInfo>
+
   <mdb:dateInfo>
     <cit:CI_Date>
       <!-- date: mandatory -->
       <cit:date>
+        {% if record['date_modified']| length > 11 %}
         <gco:DateTime>
           <!-- CIOOS core mandatory element -->
           <!-- MI_Metadata/dateInfo/CI_Date/date/DateTime -->
+          {{ record['date_modified'] }}
         </gco:DateTime>
+
+        {% else %}
+        <gco:Date>
+        {{ record['date_modified'] }}
+        </gco:Date>
+        {% endif %}
       </cit:date>
       <!-- dateType: mandatory -->
       <cit:dateType>
-        <cit:CI_DateTypeCode>
+        <cit:CI_DateTypeCode codeList="http://standards.iso.org/iso/19115/-3/cit/1.0/codelists.xml#CI_DateTypeCode" codeListValue="revision">
           <!-- CIOOS core mandatory element -->
           <!-- MI_Metadata/dateInfo/CI_Date/date/CI_DateTypeCode -->
+          revision
         </cit:CI_DateTypeCode>
       </cit:dateType>
     </cit:CI_Date>
   </mdb:dateInfo>
+
+  <mdb:dateInfo>
+    <cit:CI_Date>
+      <!-- date: mandatory -->
+      <cit:date>
+        {% if record['date_issued']| length > 11 %}
+        <gco:DateTime>
+          <!-- CIOOS core mandatory element -->
+          <!-- MI_Metadata/dateInfo/CI_Date/date/DateTime -->
+          <!-- ACDD: [date_created, date_modified=revision, date_issued=publication] -->
+          {{ record['date_issued'] }}
+        </gco:DateTime>
+        {% else %}
+        <gco:Date>
+          {{ record['date_issued'] }}
+        </gco:Date>
+        {% endif %}
+      </cit:date>
+      <!-- dateType: mandatory -->
+      <cit:dateType>
+        <cit:CI_DateTypeCode codeList="http://standards.iso.org/iso/19115/-3/cit/1.0/codelists.xml#CI_DateTypeCode" codeListValue="publication">
+          <!-- CIOOS core mandatory element -->
+          <!-- MI_Metadata/dateInfo/CI_Date/date/CI_DateTypeCode -->
+          publication
+        </cit:CI_DateTypeCode>
+      </cit:dateType>
+    </cit:CI_Date>
+  </mdb:dateInfo>
+
   <!-- defaultLocale: mandatory -->
   <mdb:defaultLocale>
     <lan:PT_Locale>
@@ -109,6 +181,11 @@
         </lan:CountryCode>
       </lan:country>
       <!-- characterEncoding: mandatory -->
+
+      <lan:characterEncoding>
+<lan:MD_CharacterSetCode codeList="http://standards.iso.org/iso/19115/resources/Codelist/lan/CharacterSetCode.xml" codeListValue="utf8">UTF-8</lan:MD_CharacterSetCode>
+</lan:characterEncoding>
+
       <lan:characterEncoding>
         <lan:MD_CharacterSetCode>
           <!-- CIOOS core mandatory element -->
@@ -120,6 +197,42 @@
   <!-- identificationInfo: mandatory -->
   <mdb:identificationInfo>
     <mri:MD_DataIdentification>
+      <mri:descriptiveKeywords>
+        <mri:MD_Keywords>
+          <mri:thesaurusName>
+          <cit:CI_Citation>
+
+            {% if record['keywords_vocabulary'].startswith('http') %}
+            <cit:onlineResource>
+            <cit:CI_OnlineResource>
+              <cit:linkage>
+              <gco:CharacterString>
+                {{ record['keywords_vocabulary'] }}
+              </gco:CharacterString>
+              </cit:linkage>
+            </cit:CI_OnlineResource>
+            </cit:onlineResource>
+            {% else %}
+            <cit:title>
+            <gco:CharacterString>
+              {{ record['keywords_vocabulary'] }}
+            </gco:CharacterString>
+            </cit:title>
+            {% endif%}
+
+          </cit:CI_Citation>
+
+          </mri:thesaurusName>
+
+          {% for keyword in record['keywords'].split(',') %}
+          <mri:keyword>
+            <gco:characterString>
+              {{ keyword }}
+            </gco:characterString>
+          </mri:keyword>
+          {% endfor %}
+        </mri:MD_Keywords>
+      </mri:descriptiveKeywords>
       <!-- citation: mandatory -->
       <mri:citation>
         <cit:CI_Citation>
@@ -128,30 +241,104 @@
             <gco:CharacterString>
               <!-- CIOOS core mandatory element -->
               <!-- MI_Metadata/identificationInfo/MD_DataIdentification/citation/CI_Citation/title/CharacterString -->
+              {{ record['title'] }}
             </gco:CharacterString>
           </cit:title>
           <!-- citedResponsibileParty: mandatory -->
           <cit:citedResponsibleParty>
+
+              <!-- contributor -->
+            <cit:CI_Responsibility>
+              <cit:role>
+                <cit:CI_RoleCode codeList="codeListLocation#CI_RoleCode" codeListValue="contributor"/>
+              </cit:role>
+              <cit:party>
+                  <cit:CI_Organisation>
+                      <cit:name>
+                        <gco:CharacterString>
+                        {{ record ['contributor_name'] }}
+                        </gco:CharacterString>
+                      </cit:name>
+                  </cit:CI_Organisation>
+              </cit:party>
+            </cit:CI_Responsibility>
+          </cit:citedResponsibleParty>
+          <cit:citedResponsibleParty>
+          <!-- funder -->
+            <cit:CI_Responsibility>
+              <cit:role>
+                <cit:CI_RoleCode codeList="codeListLocation#CI_RoleCode" codeListValue="funder"/>
+              </cit:role>
+              <cit:party>
+                  <cit:CI_Organisation>
+                    <cit:individual>
+                            <cit:CI_Individual>
+                                <cit:name>
+                                  <gco:CharacterString>
+                                  {{ record ['acknowledgement'] }}
+                                  </gco:CharacterString>
+                                </cit:name>
+                            </cit:CI_Individual>
+                    </cit:individual>
+                  </cit:CI_Organisation>
+              </cit:party>
+            </cit:CI_Responsibility>
+            </cit:citedResponsibleParty>
+          <cit:citedResponsibleParty>
+            <!-- originator -->
             <cit:CI_Responsibility>
               <!-- role: mandatory -->
               <cit:role>
-                <cit:CI_RoleCode>
+                <cit:CI_RoleCode codeList="codeListLocation#CI_RoleCode" codeListValue="originator">
                   <!-- CIOOS core mandatory element -->
                   <!-- MI_Metadata/identificationInfo/MD_DataIdentification/citation/CI_Citation/role/CI_RoleCode -->
                 </cit:CI_RoleCode>
               </cit:role>
               <!-- party: mandatory -->
               <cit:party>
+                <!-- TODO should this be in aseparate CI_Responsibility? -->
+              <cit:CI_Organisation>
+                <cit:name>
+                        <gco:CharacterString>
+                          {{ record['institution'] }}
+                        </gco:CharacterString>
+                </cit:name>
+              </cit:CI_Organisation>
+
                 <cit:CI_Party>
                   <!-- name: mandatory -->
                   <cit:name>
                     <gco:CharacterString>
                       <!-- CIOOS core mandatory element -->
                       <!-- MI_Metadata/identificationInfo/MD_DataIdentification/citation/CI_Citation/party/CI_Party/name/CharacterString -->
+                      {{ record['creator_name'] }}
                     </gco:CharacterString>
                   </cit:name>
+
                 </cit:CI_Party>
               </cit:party>
+              <cit:contactInfo>
+                <cit:CI_Contact>
+                  <cit:onlineResource>
+                    <cit:CI_OnlineResource>
+                      <cit:linkage>
+                        <gco:CharacterString>
+                          {{ record['creator_url'] }}
+                        </gco:CharacterString>
+                      </cit:linkage>
+                    </cit:CI_OnlineResource>
+                  </cit:onlineResource>
+                  <cit:address>
+                    <cit:CI_Address>
+                      <cit:electronicMailAddress>
+                        <gco:CharacterString>
+                          {{ record['creator_email'] }}
+                        </gco:CharacterString>
+                        </cit:electronicMailAddress>
+                      </cit:CI_Address>
+                    </cit:address>
+                </cit:CI_Contact>
+              </cit:contactInfo>
             </cit:CI_Responsibility>
           </cit:citedResponsibleParty>
         </cit:CI_Citation>
@@ -161,6 +348,7 @@
         <gco:CharacterString>
           <!-- CIOOS core mandatory element -->
           <!-- MI_Metadata/identificationInfo/MD_DataIdentification/abstract/CharacterString -->
+          {{ record['summary'] }}
         </gco:CharacterString>
       </mri:abstract>
       <mri:status>
