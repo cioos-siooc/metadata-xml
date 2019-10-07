@@ -2,7 +2,7 @@
 
 # This is the most basic code needed to load the template and write XML
 
-# Run: python iso_template.py
+# From this directory, run: python iso_template.py
 
 import jinja2
 import yaml
@@ -24,6 +24,16 @@ def iso_template(template_file, yaml_file):
     return outputText
 
 
-xml = iso_template("cioos_template.xml",  './record.yaml')
-file = open("record.xml", "w")
+# the record input as yaml file
+yaml_file_path = "record.yaml"
+
+# the jinja template file
+template_path = "cioos_template.xml"
+
+# The output file
+xml_file_path = "record.xml"
+
+xml = iso_template(template_path,  yaml_file_path)
+file = open(xml_file_path, "w")
+print("Wrote " + xml_file_path)
 file.write(xml)
