@@ -10,7 +10,7 @@
   xmlns:mco="http://standards.iso.org/iso/19115/-3/mco/1.0"
   xmlns:gex="http://standards.iso.org/iso/19115/-3/gex/1.0"
   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-  xmlns:mac="https://standards.iso.org/iso/19115/-3/mac/1.0"
+  xmlns:mac="http://standards.iso.org/iso/19115/-3/mac/1.0"
   xsi:schemaLocation="http://standards.iso.org/iso/19115/-2/gmi/1.0 gmi.xsd">
   <!-- metadataIdentifier: mandatory -->
   <mdb:metadataIdentifier>
