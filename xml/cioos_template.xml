@@ -59,6 +59,7 @@
                     <gco:CharacterString>
                       <!-- CIOOS core mandatory element -->
                       <!-- MI_Metadata/contact/CI_Responsibility/party/contactInfo/CI_Contact/address/CI_Address/country/CharacterString -->
+                      {{ record['publisher_country'] }}
                     </gco:CharacterString>
                   </cit:country>
                   <!-- electronicMailAddress: mandatory -->
@@ -171,6 +172,7 @@
         <lan:LanguageCode>
           <!-- CIOOS core mandatory element -->
           <!-- MI_Metadata/defaultLocale/PT_Locale/language/LanguageCode (ISO639-2) -->
+          {{ record['language'] }}
         </lan:LanguageCode>
       </lan:language>
       <!-- country: mandatory -->
@@ -178,6 +180,7 @@
         <lan:CountryCode>
           <!-- CIOOS core mandatory element -->
           <!-- MI_Metadata/defaultLocale/PT_Locale/country/CountryCode (ISO3166-1) -->
+          {{ record['language_country'] }}
         </lan:CountryCode>
       </lan:country>
       <!-- characterEncoding: mandatory -->
@@ -190,6 +193,7 @@
         <lan:MD_CharacterSetCode>
           <!-- CIOOS core mandatory element -->
           <!-- MI_Metadata/defaultLocale/PT_Locale/characterEncoding/MD_CharacterSetCode (UTF-8) -->
+          UTF-8
         </lan:MD_CharacterSetCode>
       </lan:characterEncoding>
     </lan:PT_Locale>
@@ -296,7 +300,7 @@
               </cit:role>
               <!-- party: mandatory -->
               <cit:party>
-                <!-- TODO should this be in aseparate CI_Responsibility? -->
+                <!-- TODO should this be in a separate CI_Responsibility? -->
               <cit:CI_Organisation>
                 <cit:name>
                         <gco:CharacterString>
@@ -352,7 +356,7 @@
         </gco:CharacterString>
       </mri:abstract>
       <mri:status>
-        <mcc:MD_ProgressCode>
+        <mcc:MD_ProgressCode codeList="http://standards.iso.org/iso/19115/resources/Codelist/cat/codeLists.xml#MD_ProgressCode" codeListValue="{{ record['status'] }}">
           <!-- CIOOS core mandatory element -->
           <!-- MI_Metadata/identificationInfo/MD_DataIdentification/status/MD_ProgressCode -->
         </mcc:MD_ProgressCode>
@@ -364,10 +368,10 @@
     <mdb:MD_MetadataScope>
       <!-- resourceScope: mandatory -->
       <mdb:resourceScope>
-        <mdb:MD_ScopeCode>
+        <mcc:MD_ScopeCode codeList="http://standards.iso.org/iso/19115/resources/Codelist/cat/codeLists.xml#MD_ScopeCode" codeListValue="{{ record['status'] }}">
           <!-- CIOOS core mandatory element -->
           <!-- MI_Metadata/metadataScope/MD_MetadataScope/resourceScope/MD_ScopeCode -->
-        </mdb:MD_ScopeCode>
+        </mcc:MD_ScopeCode>
       </mdb:resourceScope>
     </mdb:MD_MetadataScope>
   </mdb:metadataScope>
@@ -385,6 +389,7 @@
                 <gco:CharacterString>
                   <!-- CIOOS core mandatory element -->
                   <!-- MI_Metadata/acquisitionInformation/MI_AcquisitionInformation/instrument/MI_Instrument/identifier/MD_Identifier/code/CharacterString -->
+                  {{ record['instrument_id'] }}
                 </gco:CharacterString>
               </mcc:code>
               <!-- version: mandatory -->
@@ -392,6 +397,7 @@
                 <gco:CharacterString>
                   <!-- CIOOS core mandatory element -->
                   <!-- MI_Metadata/acquisitionInformation/MI_AcquisitionInformation/instrument/MI_Instrument/identifier/MD_Identifier/version/CharacterString -->
+                  {{ record['instrument_version'] }}
                 </gco:CharacterString>
               </mcc:version>
               <!-- description: mandatory -->
@@ -399,6 +405,7 @@
                 <gco:CharacterString>
                   <!-- CIOOS core mandatory element -->
                   <!-- MI_Metadata/acquisitionInformation/MI_AcquisitionInformation/instrument/MI_Instrument/identifier/MD_Identifier/description/CharacterString -->
+                  {{ record['instrument_description'] }}
                 </gco:CharacterString>
               </mcc:description>
             </mcc:MD_Identifier>
@@ -408,6 +415,7 @@
             <gco:CharacterString>
               <!-- CIOOS core mandatory element -->
               <!-- MI_Metadata/acquisitionInformation/MI_AcquisitionInformation/instrument/MI_Instrument/type/CharacterString -->
+              {{ record['instrument_type'] }}
             </gco:CharacterString>
           </mac:type>
           <!-- description: mandatory -->
@@ -415,6 +423,7 @@
             <gco:CharacterString>
               <!-- CIOOS core mandatory element -->
               <!-- MI_Metadata/acquisitionInformation/MI_AcquisitionInformation/instrument/MI_Instrument/description/CharacterString -->
+              {{ record['instrument_description_other'] }}
             </gco:CharacterString>
           </mac:description>
           <!-- mountedOn: mandatory? -->
@@ -434,6 +443,7 @@
                     <gco:CharacterString>
                       <!-- CIOOS core mandatory element -->
                       <!-- MI_Metadata/acquisitionInformation/MI_AcquisitionInformation/instrument/MI_Instrument/sensor/MI_Sensor/identifier/MD_Identifier/code/CharacterString -->
+                      {{ record['sensor_id'] }}
                     </gco:CharacterString>
                   </mcc:code>
                   <!-- version: mandatory -->
@@ -441,6 +451,7 @@
                     <gco:CharacterString>
                       <!-- CIOOS core mandatory element -->
                       <!-- MI_Metadata/acquisitionInformation/MI_AcquisitionInformation/instrument/MI_Instrument/sensor/MI_Sensor/identifier/MD_Identifier/version/CharacterString -->
+                      {{ record['sensor_version'] }}
                     </gco:CharacterString>
                   </mcc:version>
                   <!-- description: mandatory -->
@@ -448,6 +459,7 @@
                     <gco:CharacterString>
                       <!-- CIOOS core mandatory element -->
                       <!-- MI_Metadata/acquisitionInformation/MI_AcquisitionInformation/instrument/MI_Instrument/sensor/MI_Sensor/identifier/MD_Identifier/description/CharacterString -->
+                      {{ record['sensor_description'] }}
                     </gco:CharacterString>
                   </mcc:description>
                 </mcc:MD_Identifier>
@@ -465,6 +477,7 @@
             <gco:CharacterString>
               <!-- CIOOS core mandatory element -->
               <!-- MI_Metadata/acquisitionInformation/MI_AcquisitionInformation/platform/MI_Platform/description/CharacterString -->
+              {{ record['platform_description'] }}
             </gco:CharacterString>
           </mac:description>
           <!-- identifier: mandatory -->
@@ -481,6 +494,7 @@
                         <cit:CI_RoleCode>
                           <!-- CIOOS core mandatory element -->
                           <!-- MI_Metadata/acquisitionInformation/MI_AcquisitionInformation/platform/MI_Platform/identifier/MD_Identifier/authority/CI_Citation/citedResponsibleParty/CI_Responsibility/role/CI_RoleCode -->
+                          {{ record['platform_role'] }}
                         </cit:CI_RoleCode>
                       </cit:role>
                       <!-- party: mandatory -->
@@ -491,6 +505,7 @@
                             <gco:CharacterString>
                               <!-- CIOOS core mandatory element -->
                               <!-- MI_Metadata/acquisitionInformation/MI_AcquisitionInformation/platform/MI_Platform/identifier/MD_Identifier/authority/CI_Citation/citedResponsibleParty/CI_Responsibility/party/CI_Party/name/CharacterString -->
+                              {{ record['platform_id_authority'] }}
                             </gco:CharacterString>
                           </cit:name>
                         </cit:CI_Party>
@@ -504,6 +519,7 @@
                 <gco:CharacterString>
                   <!-- CIOOS core mandatory element -->
                   <!-- MI_Metadata/acquisitionInformation/MI_AcquisitionInformation/platform/MI_Platform/identifier/MD_Identifier/code/CharacterString -->
+                    {{ record['platform_id'] }}
                 </gco:CharacterString>
               </mcc:code>
             </mcc:MD_Identifier>
