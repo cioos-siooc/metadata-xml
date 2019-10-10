@@ -13,6 +13,24 @@
   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
   xsi:schemaLocation="http://standards.iso.org/iso/19115/-3/mdb/1.0 mdb.xsd">
 
+  <!-- metadataIdentifier: mandatory -->
+  <mdb:metadataIdentifier>
+    <mcc:MD_Identifier>
+      <!-- code: mandatory -->
+      <mcc:code>
+        <gco:CharacterString>
+          <!-- CIOOS core mandatory element -->
+          <!-- MI_Metadata/metadataIdentifier/MD_Identifier/code/CharacterString -->
+          {{ record['id'] }}
+        </gco:CharacterString>
+      </mcc:code>
+      <!-- TODO validator doesnt like 'authority' -->
+      <!-- <mcc:authority>
+        {{ record['naming_authority'] }}
+      </mcc:authority> -->
+    </mcc:MD_Identifier>
+  </mdb:metadataIdentifier>
+
     <!-- defaultLocale: mandatory -->
     <mdb:defaultLocale>
       <lan:PT_Locale>
@@ -204,6 +222,9 @@
                   </cit:party>
                 </cit:CI_Responsibility>
               </cit:citedResponsibleParty>
+
+
+
               <cit:citedResponsibleParty>
               <!-- funder -->
                 <cit:CI_Responsibility>
@@ -225,6 +246,31 @@
                   </cit:party>
                 </cit:CI_Responsibility>
                 </cit:citedResponsibleParty>
+
+              <cit:citedResponsibleParty>
+                <cit:CI_Responsibility>
+
+                  <!-- TODO should this be in a separate CI_Responsibility? -->
+                  <cit:role>
+                    <cit:CI_RoleCode codeList="http://standards.iso.org/iso/19115/resources/Codelists/cat/codelists.xml#CI_RoleCode" codeListValue="originator">
+                      <!-- CIOOS core mandatory element -->
+                      <!-- MI_Metadata/identificationInfo/MD_DataIdentification/citation/CI_Citation/role/CI_RoleCode -->
+                    </cit:CI_RoleCode>
+                  </cit:role>
+
+                  <cit:party>
+                  <cit:CI_Organisation>
+                  <cit:name>
+                          <gco:CharacterString>
+                            {{ record['institution'] }}
+                          </gco:CharacterString>
+                  </cit:name>
+
+                </cit:CI_Organisation>
+                </cit:party>
+              </cit:CI_Responsibility>
+              </cit:citedResponsibleParty>
+
               <cit:citedResponsibleParty>
                 <!-- originator -->
                 <cit:CI_Responsibility>
@@ -237,15 +283,6 @@
                   </cit:role>
                   <!-- party: mandatory -->
                   <cit:party>
-                    <!-- TODO should this be in a separate CI_Responsibility? -->
-                  <cit:CI_Organisation>
-                    <cit:name>
-                            <gco:CharacterString>
-                              {{ record['institution'] }}
-                            </gco:CharacterString>
-                    </cit:name>
-                  </cit:CI_Organisation>
-
                     <cit:CI_Individual>
                       <!-- name: mandatory -->
                       <cit:name>
@@ -258,6 +295,9 @@
 
                     </cit:CI_Individual>
                   </cit:party>
+
+                  <cit:party>
+                    <cit:CI_Individual>
                   <cit:contactInfo>
                     <cit:CI_Contact>
                       <cit:onlineResource>
@@ -269,6 +309,10 @@
                           </cit:linkage>
                         </cit:CI_OnlineResource>
                       </cit:onlineResource>
+                    </cit:CI_Contact>
+                  </cit:contactInfo>
+                  <cit:contactInfo>
+                    <cit:CI_Contact>
                       <cit:address>
                         <cit:CI_Address>
                           <cit:electronicMailAddress>
@@ -280,15 +324,51 @@
                         </cit:address>
                     </cit:CI_Contact>
                   </cit:contactInfo>
+                </cit:CI_Individual>
+                  </cit:party>
                 </cit:CI_Responsibility>
               </cit:citedResponsibleParty>
             </cit:CI_Citation>
           </mri:citation>
 
+
+          <!-- abstract: mandatory -->
+          <mri:abstract>
+            <gco:CharacterString>
+              <!-- CIOOS core mandatory element -->
+              <!-- MI_Metadata/identificationInfo/MD_DataIdentification/abstract/CharacterString -->
+              {{ record['summary'] }}
+            </gco:CharacterString>
+          </mri:abstract>
+
+
+          <mri:status>
+            <mcc:MD_ProgressCode codeList="http://standards.iso.org/iso/19115/resources/Codelists/cat/codelists.xml#MD_ProgressCode" codeListValue="{{ record['progress_code'] }}">
+
+              <!-- CIOOS core mandatory element -->
+              <!-- MI_Metadata/identificationInfo/MD_DataIdentification/status/MD_ProgressCode -->
+            </mcc:MD_ProgressCode>
+          </mri:status>
+
           <mri:descriptiveKeywords>
             <mri:MD_Keywords>
+
+              {% for keyword in record['keywords'].split(',') %}
+              <mri:keyword>
+                <gco:CharacterString>
+                  {{ keyword }}
+                </gco:CharacterString>
+              </mri:keyword>
+              {% endfor %}
+
               <mri:thesaurusName>
               <cit:CI_Citation>
+                <!-- validation requires title -->
+                <cit:title>
+                  <gco:CharacterString>
+                    {{ record['keywords_vocabulary'] }}
+                  </gco:CharacterString>
+                </cit:title>
 
                 {% if record['keywords_vocabulary'].startswith('http') %}
                 <cit:onlineResource>
@@ -300,62 +380,19 @@
                   </cit:linkage>
                 </cit:CI_OnlineResource>
                 </cit:onlineResource>
-                {% else %}
-                <cit:title>
-                <gco:CharacterString>
-                  {{ record['keywords_vocabulary'] }}
-                </gco:CharacterString>
-                </cit:title>
-                {% endif%}
+                {% endif %}
 
               </cit:CI_Citation>
 
               </mri:thesaurusName>
 
-              {% for keyword in record['keywords'].split(',') %}
-              <mri:keyword>
-                <gco:characterString>
-                  {{ keyword }}
-                </gco:characterString>
-              </mri:keyword>
-              {% endfor %}
             </mri:MD_Keywords>
           </mri:descriptiveKeywords>
 
-          <!-- abstract: mandatory -->
-          <mri:abstract>
-            <gco:CharacterString>
-              <!-- CIOOS core mandatory element -->
-              <!-- MI_Metadata/identificationInfo/MD_DataIdentification/abstract/CharacterString -->
-              {{ record['summary'] }}
-            </gco:CharacterString>
-          </mri:abstract>
-          <mri:status>
-            <mcc:MD_ProgressCode codeList="http://standards.iso.org/iso/19115/resources/Codelists/cat/codelists.xml#MD_ProgressCode" codeListValue="{{ record['progress_code'] }}">
-
-              <!-- CIOOS core mandatory element -->
-              <!-- MI_Metadata/identificationInfo/MD_DataIdentification/status/MD_ProgressCode -->
-            </mcc:MD_ProgressCode>
-          </mri:status>
         </mri:MD_DataIdentification>
       </mdb:identificationInfo>
 
-  <!-- metadataIdentifier: mandatory -->
-  <mdb:metadataIdentifier>
-    <mcc:MD_Identifier>
-      <!-- code: mandatory -->
-      <mcc:code>
-        <gco:CharacterString>
-          <!-- CIOOS core mandatory element -->
-          <!-- MI_Metadata/metadataIdentifier/MD_Identifier/code/CharacterString -->
-          {{ record['id'] }}
-        </gco:CharacterString>
-      </mcc:code>
-      <mcc:authority>
-        {{ record['naming_authority'] }}
-      </mcc:authority>
-    </mcc:MD_Identifier>
-  </mdb:metadataIdentifier>
+
 
 
 
@@ -470,6 +507,9 @@
               <!-- authority: mandatory -->
               <mcc:authority>
                 <cit:CI_Citation>
+                  <!-- validation says cit:CI_Citation requires title -->
+                  <cit:title></cit:title>
+                  
                   <!-- citedResponsibleParty: mandatory -->
                   <cit:citedResponsibleParty>
                     <cit:CI_Responsibility>
@@ -483,7 +523,7 @@
                       </cit:role>
                       <!-- party: mandatory -->
                       <cit:party>
-                        <cit:CI_Party>
+                        <cit:CI_Organisation>
                           <!-- name: mandatory -->
                           <cit:name>
                             <gco:CharacterString>
@@ -492,7 +532,7 @@
                               {{ record['platform_id_authority'] }}
                             </gco:CharacterString>
                           </cit:name>
-                        </cit:CI_Party>
+                        </cit:CI_Organisation>
                       </cit:party>
                     </cit:CI_Responsibility>
                   </cit:citedResponsibleParty>
