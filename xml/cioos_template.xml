@@ -50,7 +50,6 @@
       </lan:language>
       <!-- country: mandatory -->
       <lan:country>
-        <!-- TODO: not sure about codeList value,but validator requires one -->
         <lan:CountryCode codeList="http://standards.iso.org/iso/19115/resources/Codelists/cat/codelists.xml" codeListValue="  {{ record['language_country'] }}">
           <!-- CIOOS core mandatory element -->
           <!-- MI_Metadata/defaultLocale/PT_Locale/country/CountryCode (ISO3166-1) -->
@@ -253,7 +252,6 @@
           <cit:citedResponsibleParty>
             <cit:CI_Responsibility>
 
-              <!-- TODO should this be in a separate CI_Responsibility? -->
               <cit:role>
                 <cit:CI_RoleCode codeList="http://standards.iso.org/iso/19115/resources/Codelists/cat/codelists.xml#CI_RoleCode" codeListValue="originator">
                   <!-- CIOOS core mandatory element -->
