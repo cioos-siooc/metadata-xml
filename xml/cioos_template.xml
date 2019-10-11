@@ -66,6 +66,19 @@
     </lan:PT_Locale>
   </mdb:defaultLocale>
 
+  <!-- metadataScope: mandatory -->
+  <mdb:metadataScope>
+    <mdb:MD_MetadataScope>
+      <!-- resourceScope: mandatory -->
+      <mdb:resourceScope>
+        <mcc:MD_ScopeCode codeList="http://standards.iso.org/iso/19115/resources/Codelists/cat/codelists.xml#MD_ScopeCode" codeListValue="{{ record['scope_code'] }}">
+          <!-- CIOOS core mandatory element -->
+          <!-- MI_Metadata/metadataScope/MD_MetadataScope/resourceScope/MD_ScopeCode -->
+        </mcc:MD_ScopeCode>
+      </mdb:resourceScope>
+    </mdb:MD_MetadataScope>
+  </mdb:metadataScope>
+
   <!-- contact: mandatory -->
   <mdb:contact>
     <cit:CI_Responsibility>
