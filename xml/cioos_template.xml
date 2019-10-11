@@ -91,6 +91,7 @@
     <cit:CI_Responsibility>
       <!-- role: mandatory -->
       <cit:role>
+        <!-- placeholder, didn't know what value to put here -->
         <cit:CI_RoleCode codeList="http://standards.iso.org/iso/19115/resources/Codelists/cat/codelists.xml#CI_RoleCode" codeListValue="{{ record[''] }}">
           <!-- CIOOS core mandatory element -->
           <!-- MI_Metadata/contact/CI_Responsibility/role/CI_RoleCode -->
@@ -104,6 +105,7 @@
             <gco:CharacterString>
               <!-- CIOOS core mandatory element -->
               <!-- MI_Metadata/contact/CI_Responsibility/party/CI_Party/name/CharacterString -->
+              <!-- placeholder, didn't know what value to put here -->
               {{ record[''] }}
             </gco:CharacterString>
           </cit:name>
