@@ -46,7 +46,7 @@ geospatial_vertical_positive: "vertical"
 coverage_content_type: "image"
 
 # These ones are made up
-language_country: "CA"
+language_country: "CAN"
 language: "eng" # or fra
 publisher_country: "publisher_country"
 progress_code: "completed"
