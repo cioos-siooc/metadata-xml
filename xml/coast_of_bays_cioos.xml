@@ -21,7 +21,9 @@
         a650f132-7502-402f-a42e-7ba4dea3f829
         New one generated at uuidgenerator.net/version4
         -->
-        c2c3e218-7704-48fa-8c18-327a5a88e28e
+        <gco:CharacterString>
+          c2c3e218-7704-48fa-8c18-327a5a88e28e
+        </gco:CharacterString>  
       </mcc:code>
       <!-- authority: optional -->
       <mcc:authority gco:nilReason="missing">
