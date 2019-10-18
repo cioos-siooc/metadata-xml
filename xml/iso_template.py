@@ -4,8 +4,25 @@
 
 # From this directory, run: python iso_template.py
 
-import jinja2
+
+from jinja2 import Environment, FileSystemLoader
 import yaml
+import re
+
+
+# eg if we have: {title_fr:"le title"}
+# get_alternate_text('title') will return [("fr", "le title")]
+# returns an array because it supports multilingual, not just bilingual
+def get_alternate_text_wrapper(record):
+    def get_alternate_text(key):
+        # for this key, eg title, look for 3 letter suffixes using record
+        matching_keys = list(filter(lambda k: re.search("^" + key + "_\w{3}$",
+                                                        k[0]), record.items()))
+        # formats tuples like [('fr','les courants')]
+        tuples_with_lang_code = list(map(lambda k: (k[0][-3:], k[1]),
+                                         matching_keys))
+        return tuples_with_lang_code
+    return get_alternate_text
 
 
 def iso_template(template_file, yaml_file):
@@ -13,15 +30,22 @@ def iso_template(template_file, yaml_file):
     outputs XML'''
     TEMPLATE_FOLDER = "./"
 
-    templateLoader = jinja2.FileSystemLoader(searchpath=TEMPLATE_FOLDER)
-    templateEnv = jinja2.Environment(loader=templateLoader)
+    template_loader = FileSystemLoader(searchpath=TEMPLATE_FOLDER)
+    template_env = Environment(loader=template_loader, trim_blocks=True,
+                               lstrip_blocks=True)
 
-    template = templateEnv.get_template(template_file)
+    template = template_env.get_template(template_file)
 
     with open(yaml_file) as stream:
         yaml_data = yaml.safe_load(stream)
-        outputText = template.render({"record": yaml_data})
-    return outputText
+        data = {"record": yaml_data}
+        get_alternate_text = get_alternate_text_wrapper(yaml_data)
+        template_env.filters['get_alternate_text'] = get_alternate_text
+        template_env.globals.update(get_alternate_text=get_alternate_text)
+
+        xml = template.render(data)
+
+    return xml
 
 
 # the record input as yaml file

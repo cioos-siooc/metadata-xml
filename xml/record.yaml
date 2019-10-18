@@ -1,20 +1,34 @@
-title: "title"
-summary: "summary"
-keywords: "kw1,kw2,kw3"
+# in this record, french is the default language
+# if english were the default language, there would be title_fr,summary_fr, etc
+
+language: "fra" # or eng
+title: "le titre français"
+title_eng: "the title in english"
+summary: "cet ensemble de données concerne..."
+summary_eng: "dataset description in english"
+keywords: "mot-clé 1 en français,mot-clé 2 en français,mot-clé 3 en français"
+keywords_eng: "kw1 in english,kw2 in english,kw3 in english"
 id: "id"
-naming_authority: "naming_authority"
+naming_authority: "autorité de dénomination"
+naming_authority_eng: "naming authority in english"
 keywords_vocabulary: "http://example.com/keywords"
 cdm_data_type: "cdm_data_type"
-history: "history"
-comment: "comment"
+history: "le histoire"
+history_eng: "the history in english"
+comment: "c'est un commentaire"
+comment_eng: "a comment in english"
+
 date_created: "2010-01-22"
 creator_name: "creator_name"
 creator_url: "creator_url"
 creator_email: "nobody@example.com"
 institution: "institution"
-project: "project"
-processing_level: "processing_level"
-acknowledgement: "acknowledgement"
+project: "le projet"
+project_eng: "the project's name in english"
+processing_level: "niveau de traitement"
+processing_level_eng: "processing level"
+acknowledgement: "reconnaissance"
+acknowledgement_eng: "acknowledgement"
 geospatial_bounds: "POLYGON ((-90 -180, 90 -180, 90 180, -90 180, -90 -180))"
 geospatial_lat_min: -89.975
 geospatial_lat_max: 89.975
@@ -23,12 +37,14 @@ geospatial_lon_max: 179.975
 geospatial_vertical_min: "geospatial_vertical_min"
 geospatial_vertical_max: "geospatial_vertical_max"
 time_coverage_start: "1985-03-25T12:00:00Z"
-time_coverage_end: "1985-04-25T12:00:00Z"
+time_coverage_engd: "1985-04-25T12:00:00Z"
 # copied these from https://coastwatch.pfeg.noaa.gov/erddap/info/NOAA_DHW/index.html
 time_coverage_duration: "P1D"
 time_coverage_resolution: "P1D"
 standard_name_vocabulary: "standard_name_vocabulary"
-license: "license"
+license: "la licence"
+license_eng: "license"
+
 contributor_name: "contributor_name"
 contributor_role: "contributor_role"
 publisher_name: "publisher_name"
@@ -47,17 +63,21 @@ coverage_content_type: "image"
 
 # These ones are made up
 language_country: "CAN"
-language: "eng" # or fra
+
 publisher_country: "publisher_country"
 progress_code: "completed"
 scope_code: "dataset"
 instrument_id: "instrument_id"
 instrument_version: "instrument_version"
 instrument_description_other: "instrument_description_other"
+instrument_description_other_fr: "la description de l'instrument"
+
 instrument_type: "instrument_type"
 sensor_id: "sensor_id"
 sensor_version: "sensor_version"
-sensor_description: "sensor_description"
+sensor_description: "le capteur est.."
+sensor_description_eng: "english sensor description"
+
 platform_name: "platform_name" # from cf
 platform_id: "platform_id" # from cf
 platform_role: "owner"
