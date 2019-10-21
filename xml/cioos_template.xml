@@ -1,49 +1,124 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<gmi:MI_Metadata xmlns:gmi="https://standards.iso.org/iso/19115/-2/gmi/1.0"
-  xmlns:mdb="http://standards.iso.org/iso/19115/-3/mdb/1.0"
-  xmlns:dqc="http://standards.iso.org/iso/19157/-2/dqc/1.0"
+{% macro multi_lang(record_key) %}
+  {% set alternates = get_alternate_text(record_key) %}
+  {% if record[record_key] %}
+    {# text in the default language #}
+    <gco:CharacterString>{{ record[record_key] }}</gco:CharacterString>
+  {% endif %}
+  {% if alternates | length > 0 %}
+    <lan:PT_FreeText>
+      {% for lang_code, lang_text in alternates %}
+        <lan:textGroup>
+          {# text in an alternate language #}
+          <lan:LocalisedCharacterString locale="{{ lang_code }}">{{ lang_text }}</lan:LocalisedCharacterString>
+        </lan:textGroup>
+      {% endfor %}
+    </lan:PT_FreeText>
+  {% endif %}
+{% endmacro %}
+<mdb:MD_Metadata
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="http://standards.iso.org/iso/19115/-3/mdb/2.0 https://standards.iso.org/iso/19115/-3/mds/2.0/mds.xsd"
+  xmlns:mpc="http://standards.iso.org/iso/19115/-3/mpc/1.0"
+  xmlns:mri="http://standards.iso.org/iso/19115/-3/mri/1.0"
+  xmlns:mrl="http://standards.iso.org/iso/19115/-3/mrl/2.0"
+  xmlns:mmi="http://standards.iso.org/iso/19115/-3/mmi/1.0"
+  xmlns:mdb="http://standards.iso.org/iso/19115/-3/mdb/2.0"
+  xmlns:mcc="http://standards.iso.org/iso/19115/-3/mcc/1.0"
+  xmlns:msr="http://standards.iso.org/iso/19115/-3/msr/2.0"
+  xmlns:mac="http://standards.iso.org/iso/19115/-3/mac/2.0"
+  xmlns:cit="http://standards.iso.org/iso/19115/-3/cit/2.0"
+  xmlns:mrs="http://standards.iso.org/iso/19115/-3/mrs/1.0"
   xmlns:gco="http://standards.iso.org/iso/19115/-3/gco/1.0"
   xmlns:lan="http://standards.iso.org/iso/19115/-3/lan/1.0"
-  xmlns:mcc="http://standards.iso.org/iso/19115/-3/mcc/1.0"
-  xmlns:mdb="http://standards.iso.org/iso/19115/-3/mdb/1.0"
-  xmlns:cit="http://standards.iso.org/iso/19115/-3/cit/1.0"
-  xmlns:mri="http://standards.iso.org/iso/19115/-3/mri/1.0"
   xmlns:mco="http://standards.iso.org/iso/19115/-3/mco/1.0"
   xmlns:gex="http://standards.iso.org/iso/19115/-3/gex/1.0"
-  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-  xmlns:mac="https://standards.iso.org/iso/19115/-3/mac/1.0"
-  xsi:schemaLocation="http://standards.iso.org/iso/19115/-2/gmi/1.0 gmi.xsd">
+  xmlns:mdq="http://standards.iso.org/iso/19157/-2/mdq/1.0"
+  xmlns:mas="http://standards.iso.org/iso/19115/-3/mas/1.0"
+  xmlns:mrd="http://standards.iso.org/iso/19115/-3/mrd/1.0"
+  xmlns:mrc="http://standards.iso.org/iso/19115/-3/mrc/2.0">
+
   <!-- metadataIdentifier: mandatory -->
   <mdb:metadataIdentifier>
+
     <mcc:MD_Identifier>
+      <mcc:authority>
+        <cit:CI_Citation>
+          <cit:title xsi:type="lan:PT_FreeText_PropertyType">
+            {{ multi_lang('naming_authority') }}
+          </cit:title>
+        </cit:CI_Citation>
+      </mcc:authority>
+
       <!-- code: mandatory -->
-      <mcc:code>
-        <gco:CharacterString>
-          <!-- CIOOS core mandatory element -->
-          <!-- MI_Metadata/metadataIdentifier/MD_Identifier/code/CharacterString -->
-        </gco:CharacterString>
+      <mcc:code xsi:type="lan:PT_FreeText_PropertyType">
+        <!-- CIOOS core mandatory element -->
+        <!-- MI_Metadata/metadataIdentifier/MD_Identifier/code/CharacterString -->
+        {{ multi_lang('id') }}
       </mcc:code>
     </mcc:MD_Identifier>
   </mdb:metadataIdentifier>
+
+  <!-- defaultLocale: mandatory -->
+  <mdb:defaultLocale>
+    <lan:PT_Locale>
+      <!-- language: mandatory -->
+      <lan:language>
+        <lan:LanguageCode codeList="http://standards.iso.org/iso/19115/resources/Codelist/lan/LanguageCode.xml" codeListValue="{{ record['language'] }}">
+          <!-- CIOOS core mandatory element -->
+          <!-- MI_Metadata/defaultLocale/PT_Locale/language/LanguageCode (ISO639-2) -->
+        </lan:LanguageCode>
+      </lan:language>
+      <!-- country: mandatory -->
+      <lan:country>
+        <lan:CountryCode codeList="http://standards.iso.org/iso/19115/resources/Codelists/cat/codelists.xml" codeListValue="{{ record['language_country'] }}">
+          <!-- CIOOS core mandatory element -->
+          <!-- MI_Metadata/defaultLocale/PT_Locale/country/CountryCode (ISO3166-1) -->
+        </lan:CountryCode>
+      </lan:country>
+      <!-- characterEncoding: mandatory -->
+      <lan:characterEncoding>
+        <lan:MD_CharacterSetCode codeList="http://standards.iso.org/iso/19115/resources/Codelist/lan/CharacterSetCode.xml" codeListValue="utf8">
+          <!-- CIOOS core mandatory element -->
+          <!-- MI_Metadata/defaultLocale/PT_Locale/characterEncoding/MD_CharacterSetCode (UTF-8) -->
+          UTF-8
+        </lan:MD_CharacterSetCode>
+      </lan:characterEncoding>
+    </lan:PT_Locale>
+  </mdb:defaultLocale>
+
+  <!-- metadataScope: mandatory -->
+  <mdb:metadataScope>
+    <mdb:MD_MetadataScope>
+      <!-- resourceScope: mandatory -->
+      <mdb:resourceScope>
+        <mcc:MD_ScopeCode codeList="http://standards.iso.org/iso/19115/resources/Codelists/cat/codelists.xml#MD_ScopeCode" codeListValue="{{ record['scope_code'] }}">
+          <!-- CIOOS core mandatory element -->
+          <!-- MI_Metadata/metadataScope/MD_MetadataScope/resourceScope/MD_ScopeCode -->
+        </mcc:MD_ScopeCode>
+      </mdb:resourceScope>
+    </mdb:MD_MetadataScope>
+  </mdb:metadataScope>
+
   <!-- contact: mandatory -->
   <mdb:contact>
     <cit:CI_Responsibility>
       <!-- role: mandatory -->
       <cit:role>
-        <cit:CI_RoleCode>
+        <!-- placeholder, didn't know what value to put here -->
+        <cit:CI_RoleCode codeList="http://standards.iso.org/iso/19115/resources/Codelists/cat/codelists.xml#CI_RoleCode" codeListValue="{{ record[''] }}">
           <!-- CIOOS core mandatory element -->
           <!-- MI_Metadata/contact/CI_Responsibility/role/CI_RoleCode -->
         </cit:CI_RoleCode>
       </cit:role>
       <!-- party: mandatory -->
       <cit:party>
-        <cit:CI_Party>
+        <cit:CI_Individual>
           <!-- name: mandatory -->
-          <cit:name>
-            <gco:CharacterString>
-              <!-- CIOOS core mandatory element -->
-              <!-- MI_Metadata/contact/CI_Responsibility/party/CI_Party/name/CharacterString -->
-            </gco:CharacterString>
+          <cit:name xsi:type="lan:PT_FreeText_PropertyType">
+            <!-- CIOOS core mandatory element -->
+            <!-- MI_Metadata/contact/CI_Responsibility/party/CI_Party/name/CharacterString -->
+            <!-- placeholder, didn't know what value to put here -->
+            {# {{ multi_lang('') }} #}
           </cit:name>
           <!-- contactInfo: mandatory -->
           <cit:contactInfo>
@@ -52,277 +127,423 @@
               <cit:address>
                 <cit:CI_Address>
                   <!-- country: mandatory -->
-                  <cit:country>
-                    <gco:CharacterString>
-                      <!-- CIOOS core mandatory element -->
-                      <!-- MI_Metadata/contact/CI_Responsibility/party/contactInfo/CI_Contact/address/CI_Address/country/CharacterString -->
-                    </gco:CharacterString>
+                  <cit:country xsi:type="lan:PT_FreeText_PropertyType">
+                    <!-- CIOOS core mandatory element -->
+                    <!-- MI_Metadata/contact/CI_Responsibility/party/contactInfo/CI_Contact/address/CI_Address/country/CharacterString -->
+                    {{ multi_lang('publisher_country') }}
                   </cit:country>
                   <!-- electronicMailAddress: mandatory -->
-                  <cit:electronicMailAddress>
-                    <gco:CharacterString>
-                      <!-- CIOOS core mandatory element -->
-                      <!-- MI_Metadata/contact/CI_Responsibility/party/contactInfo/CI_Contact/address/CI_Address/electronicMailAddress/CharacterString -->
-                    </gco:CharacterString>
+                  <cit:electronicMailAddress xsi:type="lan:PT_FreeText_PropertyType">
+                    <!-- CIOOS core mandatory element -->
+                    <!-- MI_Metadata/contact/CI_Responsibility/party/contactInfo/CI_Contact/address/CI_Address/electronicMailAddress/CharacterString -->
+                    {{ multi_lang('publisher_email') }}
                   </cit:electronicMailAddress>
                 </cit:CI_Address>
               </cit:address>
             </cit:CI_Contact>
           </cit:contactInfo>
-        </cit:CI_Party>
+        </cit:CI_Individual>
       </cit:party>
     </cit:CI_Responsibility>
   </mdb:contact>
+
   <!-- dateInfo: mandatory -->
+
   <mdb:dateInfo>
     <cit:CI_Date>
       <!-- date: mandatory -->
       <cit:date>
-        <gco:DateTime>
+        {% if record['date_created'] | length > 11 %}
           <!-- CIOOS core mandatory element -->
           <!-- MI_Metadata/dateInfo/CI_Date/date/DateTime -->
-        </gco:DateTime>
+          <!-- ACDD: [date_created=creation, date_modified=revision, date_issued=publication] -->
+          <gco:DateTime>{{ record['date_created'] }}</gco:DateTime>
+        {% else %}
+          <gco:Date>{{ record['date_created'] }}</gco:Date>
+        {% endif %}
       </cit:date>
       <!-- dateType: mandatory -->
       <cit:dateType>
-        <cit:CI_DateTypeCode>
+        <cit:CI_DateTypeCode codeList="http://standards.iso.org/iso/19115/resources/Codelists/cat/codelists.xml#CI_DateTypeCode" codeListValue="creation">
           <!-- CIOOS core mandatory element -->
           <!-- MI_Metadata/dateInfo/CI_Date/date/CI_DateTypeCode -->
+          creation
         </cit:CI_DateTypeCode>
       </cit:dateType>
     </cit:CI_Date>
   </mdb:dateInfo>
-  <!-- defaultLocale: mandatory -->
-  <mdb:defaultLocale>
-    <lan:PT_Locale>
-      <!-- language: mandatory -->
-      <lan:language>
-        <lan:LanguageCode>
+
+  <mdb:dateInfo>
+    <cit:CI_Date>
+      <!-- date: mandatory -->
+      <cit:date>
+        {% if record['date_modified'] | length > 11 %}
           <!-- CIOOS core mandatory element -->
-          <!-- MI_Metadata/defaultLocale/PT_Locale/language/LanguageCode (ISO639-2) -->
-        </lan:LanguageCode>
-      </lan:language>
-      <!-- country: mandatory -->
-      <lan:country>
-        <lan:CountryCode>
+          <!-- MI_Metadata/dateInfo/CI_Date/date/DateTime -->
+          <gco:DateTime>{{ record['date_modified'] }}</gco:DateTime>
+
+        {% else %}
+          <gco:Date>{{ record['date_modified'] }}</gco:Date>
+        {% endif %}
+      </cit:date>
+      <!-- dateType: mandatory -->
+      <cit:dateType>
+        <cit:CI_DateTypeCode codeList="http://standards.iso.org/iso/19115/resources/Codelists/cat/codelists.xml#CI_DateTypeCode" codeListValue="revision">
           <!-- CIOOS core mandatory element -->
-          <!-- MI_Metadata/defaultLocale/PT_Locale/country/CountryCode (ISO3166-1) -->
-        </lan:CountryCode>
-      </lan:country>
-      <!-- characterEncoding: mandatory -->
-      <lan:characterEncoding>
-        <lan:MD_CharacterSetCode>
+          <!-- MI_Metadata/dateInfo/CI_Date/date/CI_DateTypeCode -->
+          revision
+        </cit:CI_DateTypeCode>
+      </cit:dateType>
+    </cit:CI_Date>
+  </mdb:dateInfo>
+
+  <mdb:dateInfo>
+    <cit:CI_Date>
+      <!-- date: mandatory -->
+      <cit:date>
+        {% if record['date_issued'] | length > 11 %}
           <!-- CIOOS core mandatory element -->
-          <!-- MI_Metadata/defaultLocale/PT_Locale/characterEncoding/MD_CharacterSetCode (UTF-8) -->
-        </lan:MD_CharacterSetCode>
-      </lan:characterEncoding>
-    </lan:PT_Locale>
-  </mdb:defaultLocale>
+          <!-- MI_Metadata/dateInfo/CI_Date/date/DateTime -->
+          <!-- ACDD: [date_created, date_modified=revision, date_issued=publication] -->
+          <gco:DateTime>{{ record['date_issued'] }}</gco:DateTime>
+        {% else %}
+          <gco:Date>{{ record['date_issued'] }}</gco:Date>
+        {% endif %}
+      </cit:date>
+      <!-- dateType: mandatory -->
+      <cit:dateType>
+        <cit:CI_DateTypeCode codeList="http://standards.iso.org/iso/19115/resources/Codelists/cat/codelists.xml#CI_DateTypeCode" codeListValue="publication">
+          <!-- CIOOS core mandatory element -->
+          <!-- MI_Metadata/dateInfo/CI_Date/date/CI_DateTypeCode -->
+          publication
+        </cit:CI_DateTypeCode>
+      </cit:dateType>
+    </cit:CI_Date>
+  </mdb:dateInfo>
+
   <!-- identificationInfo: mandatory -->
   <mdb:identificationInfo>
     <mri:MD_DataIdentification>
+
       <!-- citation: mandatory -->
       <mri:citation>
         <cit:CI_Citation>
           <!-- title: mandatory -->
-          <cit:title>
-            <gco:CharacterString>
-              <!-- CIOOS core mandatory element -->
-              <!-- MI_Metadata/identificationInfo/MD_DataIdentification/citation/CI_Citation/title/CharacterString -->
-            </gco:CharacterString>
+          <cit:title xsi:type="lan:PT_FreeText_PropertyType">
+            <!-- CIOOS core mandatory element -->
+            <!-- MI_Metadata/identificationInfo/MD_DataIdentification/citation/CI_Citation/title/CharacterString -->
+            {{ multi_lang('title') }}
           </cit:title>
           <!-- citedResponsibileParty: mandatory -->
           <cit:citedResponsibleParty>
+
+            <!-- contributor -->
+            <cit:CI_Responsibility>
+              <cit:role>
+                <cit:CI_RoleCode codeList="http://standards.iso.org/iso/19115/resources/Codelists/cat/codelists.xml#CI_RoleCode" codeListValue="contributor"/>
+              </cit:role>
+              <cit:party>
+                <cit:CI_Organisation>
+                  <cit:name xsi:type="lan:PT_FreeText_PropertyType">
+                    {{ multi_lang('contributor_name') }}
+                  </cit:name>
+                </cit:CI_Organisation>
+              </cit:party>
+            </cit:CI_Responsibility>
+          </cit:citedResponsibleParty>
+
+          <cit:citedResponsibleParty>
+            <!-- funder -->
+            <cit:CI_Responsibility>
+              <cit:role>
+                <cit:CI_RoleCode codeList="http://standards.iso.org/iso/19115/resources/Codelists/cat/codelists.xml#CI_RoleCode" codeListValue="funder"/>
+              </cit:role>
+              <cit:party>
+                <cit:CI_Organisation>
+                      <cit:name xsi:type="lan:PT_FreeText_PropertyType">
+                        {{ multi_lang('acknowledgement') }}
+                      </cit:name>
+                </cit:CI_Organisation>
+              </cit:party>
+            </cit:CI_Responsibility>
+          </cit:citedResponsibleParty>
+
+          <cit:citedResponsibleParty>
+            <cit:CI_Responsibility>
+
+              <cit:role>
+                <cit:CI_RoleCode codeList="http://standards.iso.org/iso/19115/resources/Codelists/cat/codelists.xml#CI_RoleCode" codeListValue="originator">
+                  <!-- CIOOS core mandatory element -->
+                  <!-- MI_Metadata/identificationInfo/MD_DataIdentification/citation/CI_Citation/role/CI_RoleCode -->
+                </cit:CI_RoleCode>
+              </cit:role>
+
+              <cit:party>
+                <cit:CI_Organisation>
+                  <cit:name xsi:type="lan:PT_FreeText_PropertyType">
+                    {{ multi_lang('institution') }}
+                  </cit:name>
+
+                </cit:CI_Organisation>
+              </cit:party>
+            </cit:CI_Responsibility>
+          </cit:citedResponsibleParty>
+
+          <cit:citedResponsibleParty>
+            <!-- originator -->
             <cit:CI_Responsibility>
               <!-- role: mandatory -->
               <cit:role>
-                <cit:CI_RoleCode>
+                <cit:CI_RoleCode codeList="http://standards.iso.org/iso/19115/resources/Codelists/cat/codelists.xml#CI_RoleCode" codeListValue="originator">
                   <!-- CIOOS core mandatory element -->
                   <!-- MI_Metadata/identificationInfo/MD_DataIdentification/citation/CI_Citation/role/CI_RoleCode -->
                 </cit:CI_RoleCode>
               </cit:role>
               <!-- party: mandatory -->
               <cit:party>
-                <cit:CI_Party>
+                <cit:CI_Individual>
                   <!-- name: mandatory -->
-                  <cit:name>
-                    <gco:CharacterString>
-                      <!-- CIOOS core mandatory element -->
-                      <!-- MI_Metadata/identificationInfo/MD_DataIdentification/citation/CI_Citation/party/CI_Party/name/CharacterString -->
-                    </gco:CharacterString>
+                  <cit:name xsi:type="lan:PT_FreeText_PropertyType">
+                    <!-- CIOOS core mandatory element -->
+                    <!-- MI_Metadata/identificationInfo/MD_DataIdentification/citation/CI_Citation/party/CI_Party/name/CharacterString -->
+                    {{ multi_lang('creator_name') }}
                   </cit:name>
-                </cit:CI_Party>
+
+                </cit:CI_Individual>
+              </cit:party>
+
+              <cit:party>
+                <cit:CI_Individual>
+                  <cit:contactInfo>
+                    <cit:CI_Contact>
+                      <cit:onlineResource>
+                        <cit:CI_OnlineResource>
+                          <cit:linkage xsi:type="lan:PT_FreeText_PropertyType">
+                            {{ multi_lang('creator_url') }}
+                          </cit:linkage>
+                        </cit:CI_OnlineResource>
+                      </cit:onlineResource>
+                    </cit:CI_Contact>
+                  </cit:contactInfo>
+                  <cit:contactInfo>
+                    <cit:CI_Contact>
+                      <cit:address>
+                        <cit:CI_Address>
+                          <cit:electronicMailAddress xsi:type="lan:PT_FreeText_PropertyType">
+                            {{ multi_lang('creator_email') }}
+                          </cit:electronicMailAddress>
+                        </cit:CI_Address>
+                      </cit:address>
+                    </cit:CI_Contact>
+                  </cit:contactInfo>
+                </cit:CI_Individual>
               </cit:party>
             </cit:CI_Responsibility>
           </cit:citedResponsibleParty>
         </cit:CI_Citation>
       </mri:citation>
+
       <!-- abstract: mandatory -->
-      <mri:abstract>
-        <gco:CharacterString>
-          <!-- CIOOS core mandatory element -->
-          <!-- MI_Metadata/identificationInfo/MD_DataIdentification/abstract/CharacterString -->
-        </gco:CharacterString>
+      <mri:abstract xsi:type="lan:PT_FreeText_PropertyType">
+        <!-- CIOOS core mandatory element -->
+        <!-- MI_Metadata/identificationInfo/MD_DataIdentification/abstract/CharacterString -->
+        {{ multi_lang('summary') }}
       </mri:abstract>
+
       <mri:status>
-        <mcc:MD_ProgressCode>
+        <mcc:MD_ProgressCode codeList="http://standards.iso.org/iso/19115/resources/Codelists/cat/codelists.xml#MD_ProgressCode" codeListValue="{{ record['progress_code'] }}">
+
           <!-- CIOOS core mandatory element -->
           <!-- MI_Metadata/identificationInfo/MD_DataIdentification/status/MD_ProgressCode -->
         </mcc:MD_ProgressCode>
       </mri:status>
+
+      <mri:descriptiveKeywords>
+        <mri:MD_Keywords>
+          {# keywords in default language #}
+          {% for keyword in record['keywords'].split(',') %}
+            <mri:keyword>
+              <gco:CharacterString>
+                {{ keyword }}
+              </gco:CharacterString>
+            </mri:keyword>
+          {% endfor %}
+          {# for each alternate language: #}
+          {% for lang, keyword_csv in get_alternate_text('keywords') %}
+            {# for each keyword in that alternate language: #}
+            {% for keyword in keyword_csv.split(',') %}
+              <mri:keyword xsi:type="lan:PT_FreeText_PropertyType">
+                <lan:PT_FreeText>
+                  <lan:textGroup>
+                    <lan:LocalisedCharacterString locale="{{ lang }}">{{ keyword }}</lan:LocalisedCharacterString>
+                  </lan:textGroup>
+                </lan:PT_FreeText>
+              </mri:keyword>
+            {% endfor %}
+          {% endfor %}
+          <mri:thesaurusName>
+            <cit:CI_Citation>
+              <!-- validation requires title -->
+              <cit:title xsi:type="lan:PT_FreeText_PropertyType">
+                {{ multi_lang('keywords_vocabulary') }}
+              </cit:title>
+
+              {% if record['keywords_vocabulary'].startswith('http') %}
+                <cit:onlineResource>
+                  <cit:CI_OnlineResource>
+                    <cit:linkage xsi:type="lan:PT_FreeText_PropertyType">
+                      {{ multi_lang('keywords_vocabulary') }}
+                    </cit:linkage>
+                  </cit:CI_OnlineResource>
+                </cit:onlineResource>
+              {% endif %}
+
+            </cit:CI_Citation>
+          </mri:thesaurusName>
+        </mri:MD_Keywords>
+      </mri:descriptiveKeywords>
+
     </mri:MD_DataIdentification>
   </mdb:identificationInfo>
-  <!-- metadataScope: mandatory -->
-  <mdb:metadataScope>
-    <mdb:MD_MetadataScope>
-      <!-- resourceScope: mandatory -->
-      <mdb:resourceScope>
-        <mdb:MD_ScopeCode>
-          <!-- CIOOS core mandatory element -->
-          <!-- MI_Metadata/metadataScope/MD_MetadataScope/resourceScope/MD_ScopeCode -->
-        </mdb:MD_ScopeCode>
-      </mdb:resourceScope>
-    </mdb:MD_MetadataScope>
-  </mdb:metadataScope>
+
   <!-- acquisitionInformation: mandatory -->
-  <gmi:acquisitionInformation>
+  <mdb:acquisitionInformation>
     <mac:MI_AcquisitionInformation>
+      <mac:scope></mac:scope>
       <!-- instrument: mandatory -->
-      <mac:instrument>
-        <mac:MI_Instrument>
-          <!-- identifier: mandatory -->
-          <mac:identifier>
-            <mcc:MD_Identifier>
-              <!-- code: mandatory -->
-              <mcc:code>
-                <gco:CharacterString>
-                  <!-- CIOOS core mandatory element -->
-                  <!-- MI_Metadata/acquisitionInformation/MI_AcquisitionInformation/instrument/MI_Instrument/identifier/MD_Identifier/code/CharacterString -->
-                </gco:CharacterString>
-              </mcc:code>
-              <!-- version: mandatory -->
-              <mcc:version>
-                <gco:CharacterString>
-                  <!-- CIOOS core mandatory element -->
-                  <!-- MI_Metadata/acquisitionInformation/MI_AcquisitionInformation/instrument/MI_Instrument/identifier/MD_Identifier/version/CharacterString -->
-                </gco:CharacterString>
-              </mcc:version>
-              <!-- description: mandatory -->
-              <mcc:description>
-                <gco:CharacterString>
-                  <!-- CIOOS core mandatory element -->
-                  <!-- MI_Metadata/acquisitionInformation/MI_AcquisitionInformation/instrument/MI_Instrument/identifier/MD_Identifier/description/CharacterString -->
-                </gco:CharacterString>
-              </mcc:description>
-            </mcc:MD_Identifier>
-          </mac:identifier>
-          <!-- type: mandatory -->
-          <mac:type>
-            <gco:CharacterString>
-              <!-- CIOOS core mandatory element -->
-              <!-- MI_Metadata/acquisitionInformation/MI_AcquisitionInformation/instrument/MI_Instrument/type/CharacterString -->
-            </gco:CharacterString>
-          </mac:type>
-          <!-- description: mandatory -->
-          <mac:description>
-            <gco:CharacterString>
-              <!-- CIOOS core mandatory element -->
-              <!-- MI_Metadata/acquisitionInformation/MI_AcquisitionInformation/instrument/MI_Instrument/description/CharacterString -->
-            </gco:CharacterString>
-          </mac:description>
-          <!-- mountedOn: mandatory? -->
-          <mac:mountedOn nilReason="missing"/>
-          <!-- sensor: mandatory -->
-          <mac:sensor>
-            <mac:MI_Sensor>
-              <!-- hosted: mandatory -->
-              <mac:hosted>
-                <!-- mac:MI_Instrument is an association to parent MI_Instrument really needed in this case? -->
-              </mac:hosted>
-              <!-- identifier: mandatory -->
-              <mac:identifier>
-                <mcc:MD_Identifier>
-                  <!-- code: mandatory -->
-                  <mcc:code>
-                    <gco:CharacterString>
-                      <!-- CIOOS core mandatory element -->
-                      <!-- MI_Metadata/acquisitionInformation/MI_AcquisitionInformation/instrument/MI_Instrument/sensor/MI_Sensor/identifier/MD_Identifier/code/CharacterString -->
-                    </gco:CharacterString>
-                  </mcc:code>
-                  <!-- version: mandatory -->
-                  <mcc:version>
-                    <gco:CharacterString>
-                      <!-- CIOOS core mandatory element -->
-                      <!-- MI_Metadata/acquisitionInformation/MI_AcquisitionInformation/instrument/MI_Instrument/sensor/MI_Sensor/identifier/MD_Identifier/version/CharacterString -->
-                    </gco:CharacterString>
-                  </mcc:version>
-                  <!-- description: mandatory -->
-                  <mcc:description>
-                    <gco:CharacterString>
-                      <!-- CIOOS core mandatory element -->
-                      <!-- MI_Metadata/acquisitionInformation/MI_AcquisitionInformation/instrument/MI_Instrument/sensor/MI_Sensor/identifier/MD_Identifier/description/CharacterString -->
-                    </gco:CharacterString>
-                  </mcc:description>
-                </mcc:MD_Identifier>
-              </mac:identifier>
-            </mac:MI_Sensor>
-          </mac:sensor>
-        </mac:MI_Instrument>
-      </mac:instrument>
       <!-- platform is set to mandatory, presumably should be conditional? e.g. either have a platform or an instrument at top level? -->
       <!-- platform: mandatory -->
       <mac:platform>
         <mac:MI_Platform>
-          <!-- description: mandatory -->
-          <mac:description>
-            <gco:CharacterString>
-              <!-- CIOOS core mandatory element -->
-              <!-- MI_Metadata/acquisitionInformation/MI_AcquisitionInformation/platform/MI_Platform/description/CharacterString -->
-            </gco:CharacterString>
-          </mac:description>
+
           <!-- identifier: mandatory -->
           <mac:identifier>
             <mcc:MD_Identifier>
               <!-- authority: mandatory -->
               <mcc:authority>
                 <cit:CI_Citation>
+                  <!-- validation says cit:CI_Citation requires title -->
+                  <cit:title></cit:title>
+
                   <!-- citedResponsibleParty: mandatory -->
                   <cit:citedResponsibleParty>
                     <cit:CI_Responsibility>
                       <!-- role: mandatory -->
                       <cit:role>
-                        <cit:CI_RoleCode>
+                        <cit:CI_RoleCode codeList="http://standards.iso.org/iso/19115/resources/Codelists/cat/codelists.xml#CI_RoleCode" codeListValue="{{ record['platform_role'] }}">
                           <!-- CIOOS core mandatory element -->
                           <!-- MI_Metadata/acquisitionInformation/MI_AcquisitionInformation/platform/MI_Platform/identifier/MD_Identifier/authority/CI_Citation/citedResponsibleParty/CI_Responsibility/role/CI_RoleCode -->
+
                         </cit:CI_RoleCode>
                       </cit:role>
                       <!-- party: mandatory -->
                       <cit:party>
-                        <cit:CI_Party>
+                        <cit:CI_Organisation>
                           <!-- name: mandatory -->
-                          <cit:name>
-                            <gco:CharacterString>
-                              <!-- CIOOS core mandatory element -->
-                              <!-- MI_Metadata/acquisitionInformation/MI_AcquisitionInformation/platform/MI_Platform/identifier/MD_Identifier/authority/CI_Citation/citedResponsibleParty/CI_Responsibility/party/CI_Party/name/CharacterString -->
-                            </gco:CharacterString>
+                          <cit:name xsi:type="lan:PT_FreeText_PropertyType">
+                            <!-- CIOOS core mandatory element -->
+                            <!-- MI_Metadata/acquisitionInformation/MI_AcquisitionInformation/platform/MI_Platform/identifier/MD_Identifier/authority/CI_Citation/citedResponsibleParty/CI_Responsibility/party/CI_Party/name/CharacterString -->
+                            {{ multi_lang('platform_id_authority') }}
                           </cit:name>
-                        </cit:CI_Party>
+                        </cit:CI_Organisation>
                       </cit:party>
                     </cit:CI_Responsibility>
                   </cit:citedResponsibleParty>
                 </cit:CI_Citation>
               </mcc:authority>
               <!-- code: mandatory -->
-              <mcc:code>
-                <gco:CharacterString>
-                  <!-- CIOOS core mandatory element -->
-                  <!-- MI_Metadata/acquisitionInformation/MI_AcquisitionInformation/platform/MI_Platform/identifier/MD_Identifier/code/CharacterString -->
-                </gco:CharacterString>
+              <mcc:code xsi:type="lan:PT_FreeText_PropertyType">
+                <!-- CIOOS core mandatory element -->
+                <!-- MI_Metadata/acquisitionInformation/MI_AcquisitionInformation/platform/MI_Platform/identifier/MD_Identifier/code/CharacterString -->
+                {{ multi_lang('platform_id') }}
               </mcc:code>
             </mcc:MD_Identifier>
           </mac:identifier>
+
+          <!-- description: mandatory -->
+          <mac:description xsi:type="lan:PT_FreeText_PropertyType">
+            <!-- CIOOS core mandatory element -->
+            <!-- MI_Metadata/acquisitionInformation/MI_AcquisitionInformation/platform/MI_Platform/description/CharacterString -->
+            {{ multi_lang('platform_description') }}
+          </mac:description>
+
+          <mac:instrument>
+            <mac:MI_Instrument>
+              <!-- identifier: mandatory -->
+              <mac:identifier>
+                <mcc:MD_Identifier>
+                  <!-- code: mandatory -->
+                  <mcc:code xsi:type="lan:PT_FreeText_PropertyType">
+                    <!-- CIOOS core mandatory element -->
+                    <!-- MI_Metadata/acquisitionInformation/MI_AcquisitionInformation/instrument/MI_Instrument/identifier/MD_Identifier/code/CharacterString -->
+                    {{ multi_lang('instrument_id') }}
+                  </mcc:code>
+                  <!-- version: mandatory -->
+                  <mcc:version xsi:type="lan:PT_FreeText_PropertyType">
+                    <!-- CIOOS core mandatory element -->
+                    <!-- MI_Metadata/acquisitionInformation/MI_AcquisitionInformation/instrument/MI_Instrument/identifier/MD_Identifier/version/CharacterString -->
+                    {{ multi_lang('instrument_version') }}
+                  </mcc:version>
+                  <!-- description: mandatory -->
+                  <mcc:description xsi:type="lan:PT_FreeText_PropertyType">
+                    <!-- CIOOS core mandatory element -->
+                    <!-- MI_Metadata/acquisitionInformation/MI_AcquisitionInformation/instrument/MI_Instrument/identifier/MD_Identifier/description/CharacterString -->
+                    {{ multi_lang('instrument_description') }}
+                  </mcc:description>
+                </mcc:MD_Identifier>
+              </mac:identifier>
+              <!-- type: mandatory -->
+              <mac:type xsi:type="lan:PT_FreeText_PropertyType">
+                <!-- CIOOS core mandatory element -->
+                <!-- MI_Metadata/acquisitionInformation/MI_AcquisitionInformation/instrument/MI_Instrument/type/CharacterString -->
+                {{ multi_lang('instrument_type') }}
+              </mac:type>
+              <!-- description: mandatory -->
+              <mac:description xsi:type="lan:PT_FreeText_PropertyType">
+                <!-- CIOOS core mandatory element -->
+                <!-- MI_Metadata/acquisitionInformation/MI_AcquisitionInformation/instrument/MI_Instrument/description/CharacterString -->
+                {{ multi_lang('instrument_description_other') }}
+              </mac:description>
+              <!-- mountedOn: mandatory? -->
+              <mac:mountedOn/>
+              <!-- sensor: mandatory -->
+              <mac:sensor>
+                <mac:MI_Sensor>
+
+                  <!-- identifier: mandatory -->
+                  <mac:identifier>
+                    <mcc:MD_Identifier>
+                      <!-- code: mandatory -->
+                      <mcc:code xsi:type="lan:PT_FreeText_PropertyType">
+                        <!-- CIOOS core mandatory element -->
+                        <!-- MI_Metadata/acquisitionInformation/MI_AcquisitionInformation/instrument/MI_Instrument/sensor/MI_Sensor/identifier/MD_Identifier/code/CharacterString -->
+                        {{ multi_lang('sensor_id') }}
+                      </mcc:code>
+                      <!-- version: mandatory -->
+                      <mcc:version xsi:type="lan:PT_FreeText_PropertyType">
+                        <!-- CIOOS core mandatory element -->
+                        <!-- MI_Metadata/acquisitionInformation/MI_AcquisitionInformation/instrument/MI_Instrument/sensor/MI_Sensor/identifier/MD_Identifier/version/CharacterString -->
+                        {{ multi_lang('sensor_version') }}
+                      </mcc:version>
+                      <!-- description: mandatory -->
+                      <mcc:description xsi:type="lan:PT_FreeText_PropertyType">
+                        <!-- CIOOS core mandatory element -->
+                        <!-- MI_Metadata/acquisitionInformation/MI_AcquisitionInformation/instrument/MI_Instrument/sensor/MI_Sensor/identifier/MD_Identifier/description/CharacterString -->
+                        {{ multi_lang('sensor_description') }}
+                      </mcc:description>
+                    </mcc:MD_Identifier>
+                  </mac:identifier>
+                  <mac:type/>
+                  <!-- hosted: mandatory -->
+                  <mac:hosted>
+                    <!-- mac:MI_Instrument is an association to parent MI_Instrument really needed in this case? -->
+                  </mac:hosted>
+                </mac:MI_Sensor>
+              </mac:sensor>
+            </mac:MI_Instrument>
+          </mac:instrument>
         </mac:MI_Platform>
       </mac:platform>
     </mac:MI_AcquisitionInformation>
-  </gmi:acquisitionInformation>
-</gmi:MI_Metadata>
+  </mdb:acquisitionInformation>
+</mdb:MD_Metadata>
