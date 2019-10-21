@@ -11,17 +11,32 @@ import re
 from lxml import etree
 
 
-# eg if we have: {title_fr:"le title"}
-# get_alternate_text('title') will return [("fr", "le title")]
+# eg if we have: {title_fra:"le title"}
+# get_alternate_text('title') will return [("fra", "le title")]
 # returns an array because it supports multilingual, not just bilingual
 def get_alternate_text_wrapper(record):
+    default_language = record['language']
+    if not default_language:
+        raise Exception("Variable language is required")
+
     def get_alternate_text(key):
         # for this key, eg title, look for 3 letter suffixes using record
         matching_keys = list(filter(lambda k: re.search("^" + key + "_\w{3}$",
                                                         k[0]), record.items()))
-        # formats tuples like [('fr','les courants')]
+        # formats tuples like [('fra','les courants')]
         tuples_with_lang_code = list(map(lambda k: (k[0][-3:], k[1]),
                                          matching_keys))
+
+        # list of all the languages given for this key
+        matching_languages = list(map(lambda k: k[0], tuples_with_lang_code))
+
+        # eg if language="fra" there cant be a title_fra variable
+        if(default_language in matching_languages):
+            raise Exception('Default language is "{}", field "{}" '
+                            'cannot have suffix "{}"'
+                            .format(default_language, key, "_" +
+                                    default_language))
+
         return tuples_with_lang_code
     return get_alternate_text
 
