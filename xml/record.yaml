@@ -1,5 +1,5 @@
 # in this record, french is the default language
-# if english were the default language, there would be title_fr,summary_fr, etc
+# if english were the default language, there would be title_fra,summary_fra, etc
 
 language: "fra" # or eng
 title: "title in french"
