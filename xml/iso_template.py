@@ -49,10 +49,12 @@ def pretty_xml(ugly_xml):
                              remove_blank_text=True)
 
     tree = etree.ElementTree(etree.fromstring(ugly_xml, parser=parser))
-    xml_pretty_str = etree.tostring(tree.getroot(),
-                                    pretty_print=True,
-                                    xml_declaration=True,
-                                    encoding='UTF-8')
+    xml_pretty_str = etree.tostring(
+        tree.getroot(),
+        pretty_print=True,
+        # not using xml_declaration as it uses single quotes
+        doctype='<?xml version="1.0" encoding="UTF-8"?>',
+        encoding='UTF-8')
     return xml_pretty_str
 
 
