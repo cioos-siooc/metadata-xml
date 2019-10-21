@@ -8,6 +8,7 @@
 from jinja2 import Environment, FileSystemLoader
 import yaml
 import re
+from lxml import etree
 
 
 # eg if we have: {title_fr:"le title"}
@@ -23,6 +24,21 @@ def get_alternate_text_wrapper(record):
                                          matching_keys))
         return tuples_with_lang_code
     return get_alternate_text
+
+
+def pretty_xml(ugly_xml):
+    'Beautifies an XML string, adds the XML declaration line'
+    parser = etree.XMLParser(ns_clean=True,
+                             # Keeping in comments for now
+                             remove_comments=False,
+                             remove_blank_text=True)
+
+    tree = etree.ElementTree(etree.fromstring(ugly_xml, parser=parser))
+    xml_pretty_str = etree.tostring(tree.getroot(),
+                                    pretty_print=True,
+                                    xml_declaration=True,
+                                    encoding='UTF-8')
+    return xml_pretty_str
 
 
 def iso_template(template_file, yaml_file):
@@ -57,7 +73,7 @@ template_path = "cioos_template.xml"
 # The output file
 xml_file_path = "record.xml"
 
-xml = iso_template(template_path,  yaml_file_path)
-file = open(xml_file_path, "w")
-print("Wrote " + xml_file_path)
+xml = pretty_xml(iso_template(template_path,  yaml_file_path))
+file = open(xml_file_path, "wb")
 file.write(xml)
+print("Wrote " + xml_file_path)
