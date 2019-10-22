@@ -2,7 +2,7 @@
 # if english were the default language, there would be title_fra,summary_fra, etc
 
 language: "fra" # or eng
-title: "title in french"
+title: "title in french ééé"
 title_eng: "title in english"
 summary: "summary in french"
 summary_eng: "summary in english"
@@ -67,16 +67,15 @@ language_country: "CAN"
 publisher_country: "publisher_country"
 progress_code: "completed"
 scope_code: "dataset"
-instrument_id: "instrument_id"
-instrument_version: "instrument_version"
-instrument_description_other: "instrument_description_other"
-instrument_description_other_fr: "instrument_description_other in french"
 
-instrument_type: "instrument_type"
-sensor_id: "sensor_id"
-sensor_version: "sensor_version"
-sensor_description: "sensor_description in french"
-sensor_description_eng: "sensor_description in english"
+instrument_1_id: instrument_1_id
+instrument_1_version: instrument_1_version
+instrument_1_type: instrument_1_type
+instrument_1_description: instrument_1_description
+
+instrument_1_sensor_1_id: instrument_1_sensor_1_id
+instrument_1_sensor_1_version: instrument_1_sensor_1_version
+instrument_1_sensor_1_description: instrument_1_sensor_1_description
 
 platform_name: "platform_name" # from cf
 platform_id: "platform_id" # from cf
