@@ -411,6 +411,24 @@
         </mri:extent>
       {% endif %}
 
+
+    {% if record['geospatial_vertical_min'] and record['geospatial_vertical_max'] %}
+      <mri:extent>
+        <gex:EX_Extent>
+          <gex:verticalElement>
+            <gex:EX_VerticalExtent>
+              <gex:minimumValue>
+                <gco:Real>{{ record['geospatial_vertical_min'] }}</gco:Real>
+              </gex:minimumValue>
+              <gex:maximumValue>
+                <gco:Real>{{ record['geospatial_vertical_max'] }}</gco:Real>
+              </gex:maximumValue>
+            </gex:EX_VerticalExtent>
+          </gex:verticalElement>
+        </gex:EX_Extent>
+      </mri:extent>
+    {% endif %}
+
       <mri:extent>
         <gex:EX_Extent>
           <gex:temporalElement>
