@@ -328,7 +328,9 @@
                       <cit:onlineResource>
                         <cit:CI_OnlineResource>
                           <cit:linkage xsi:type="lan:PT_FreeText_PropertyType">
-                            {{ multi_lang('creator_url') }}
+                            <gco:CharacterString>
+                              {{ record['creator_url'] }}
+                            </gco:CharacterString>
                           </cit:linkage>
                         </cit:CI_OnlineResource>
                       </cit:onlineResource>
