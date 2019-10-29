@@ -10,7 +10,7 @@ from lxml import etree
 import os
 import argparse
 
-TEMPLATE_FILE = './cioos_template.xml'
+TEMPLATE_FILE = './cioos_template.jinja2'
 
 
 def get_instruments_from_record(record):
