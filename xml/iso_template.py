@@ -18,7 +18,7 @@ def get_instruments_from_record(record):
     '''
     instruments = {}
     for key, val in record.items():
-        matches_instrument = re.search('^instrument_(\d)+_?(\w+)?', key)
+        matches_instrument = re.search(r'^instrument_(\d)+_?(\w+)?', key)
         if not matches_instrument:
             continue
 
@@ -30,7 +30,7 @@ def get_instruments_from_record(record):
 
         instrument_field = matches_instrument[2]
 
-        matches_sensor = re.search('^sensor_(\d)+_?(\w+)?', instrument_field)
+        matches_sensor = re.search(r'^sensor_(\d)+_?(\w+)?', instrument_field)
         if matches_sensor:
             sensor_num = matches_sensor[1]
             sensor_field = matches_sensor[2]
@@ -85,7 +85,7 @@ def get_alternate_text_wrapper(record):
         returns an array because it supports multilingual, not just bilingual
     """
     if 'language' not in record:
-        raise Exception("missing variable 'langauge' in record")
+        raise Exception("missing variable 'language' in record")
 
     default_language = record['language']
 
