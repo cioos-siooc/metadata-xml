@@ -77,6 +77,9 @@ def check_mandatory_fields(record):
             if record[field] is None:
                 pass_test = 0
                 missing_fields.append(field)
+        elif field not in record:
+            pass_test = 0
+            missing_fields.append(field)
 
     if pass_test is 0:
         raise Exception("Missing required fields/values: '{}'".format(missing_fields))
