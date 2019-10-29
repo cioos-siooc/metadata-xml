@@ -8,6 +8,7 @@ import yaml
 import re
 from lxml import etree
 import os
+import argparse
 
 TEMPLATE_FILE = './cioos_template.xml'
 
@@ -164,11 +165,16 @@ def iso_template(record):
     return xml
 
 
-if(__name__ == '__main__'):
-    with open("record.yaml") as stream:
+if (__name__ == '__main__'):
+    parser = argparse.ArgumentParser(description="Convert yaml and Jinja template into xml.")
+    parser.add_argument("string")
+    args = parser.parse_args()
+    filename = args.string
+    print("Input filename as: "+filename.split('.')[0])
+    with open(args.string) as stream:
         yaml_data = yaml.safe_load(stream)
 
         xml = iso_template(yaml_data)
-        file = open("record.xml", "w")
+        file = open(filename.split('.')[0] + ".xml", "w")
         file.write(xml)
         print("Wrote " + file.name)
