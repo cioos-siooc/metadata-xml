@@ -170,7 +170,8 @@ def iso_template(record):
 
 if (__name__ == '__main__'):
     parser = argparse.ArgumentParser(description="Convert yaml and Jinja template into xml.")
-    parser.add_argument("string")
+    parser.add_argument('-f', type=str, dest="string", default="record.yaml",
+                        help="Enter filename of yaml file. (default = record.yaml)")
     args = parser.parse_args()
     filename = args.string
     print("Input filename as: "+filename.split('.')[0])
