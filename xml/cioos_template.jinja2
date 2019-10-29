@@ -465,7 +465,9 @@
               <mcc:authority>
                 <cit:CI_Citation>
                   <!-- validation says cit:CI_Citation requires title -->
-                  <cit:title></cit:title>
+                  <cit:title xsi:type="lan:PT_FreeText_PropertyType">
+                    <gco:CharacterString>{{ record['platform_name'] }}</gco:CharacterString>
+                  </cit:title>
 
                   <!-- citedResponsibleParty: mandatory -->
                   <cit:citedResponsibleParty>
