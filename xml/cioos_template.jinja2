@@ -372,6 +372,41 @@
       <mri:temporalResolution>
         <gco:TM_PeriodDuration>{{ record['time_coverage_resolution'] }}</gco:TM_PeriodDuration>
       </mri:temporalResolution>
+
+      {% if record['geospatial_lon_min'] and
+            record['geospatial_lon_max'] and
+            record['geospatial_lat_min'] and
+            record['geospatial_lat_max'] %}
+        <mri:extent>
+          <gex:EX_Extent>
+
+            <gex:geographicElement>
+              <gex:EX_GeographicBoundingBox>
+                <gex:westBoundLongitude>
+                  <gco:Decimal>
+                    {{ record['geospatial_lon_max'] }}
+                  </gco:Decimal>
+                </gex:westBoundLongitude>
+                <gex:eastBoundLongitude>
+                  <gco:Decimal>
+                    {{ record['geospatial_lon_min'] }}
+                  </gco:Decimal>
+                </gex:eastBoundLongitude>
+                <gex:southBoundLatitude>
+                  <gco:Decimal>
+                    {{ record['geospatial_lat_min'] }}
+                  </gco:Decimal>
+                </gex:southBoundLatitude>
+                <gex:northBoundLatitude>
+                  <gco:Decimal>
+                    {{ record['geospatial_lat_max'] }}
+                  </gco:Decimal>
+                </gex:northBoundLatitude>
+              </gex:EX_GeographicBoundingBox>
+            </gex:geographicElement>
+
+          </gex:EX_Extent>
+        </mri:extent>
       {% endif %}
 
       <mri:extent>
