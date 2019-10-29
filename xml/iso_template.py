@@ -69,9 +69,17 @@ def check_mandatory_fields(record):
         # 'platform_role',
         # 'platform_id_authority'
     ]
+    pass_test = 1
+    missing_fields = []
     for field in mandatory_fields:
-        if field not in record:
-            raise Exception("Missing required field: '{}'".format(field))
+        if field in record:
+            if record[field] is None:
+                pass_test = 0
+                missing_fields.append(field)
+
+    if pass_test is 0:
+        raise Exception("Missing required fields/values: '{}'".format(missing_fields))
+    return pass_test
 
 
 def get_alternate_text_wrapper(record):
@@ -104,7 +112,7 @@ def get_alternate_text_wrapper(record):
         matching_languages = list(map(lambda k: k[0], tuples_with_lang_code))
 
         # eg if language="fra" there cant be a title_fra variable
-        if(default_language in matching_languages):
+        if (default_language in matching_languages):
             raise Exception('Default language is "{}", field "{}" '
                             'cannot have suffix "{}"'
                             .format(default_language, key, "_" +
