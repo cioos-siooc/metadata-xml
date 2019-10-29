@@ -417,6 +417,16 @@
     </mri:MD_DataIdentification>
   </mdb:identificationInfo>
 
+  {% if record['history'] %}
+  <mdb:resourceLineage>
+    <mrl:LI_Lineage>
+      <mrl:statement xsi:type="lan:PT_FreeText_PropertyType">
+        {{ multi_lang('history') }}
+      </mrl:statement>
+    </mrl:LI_Lineage>
+  </mdb:resourceLineage>
+  {% endif %}
+
   <!-- acquisitionInformation: mandatory -->
   <mdb:acquisitionInformation>
     <mac:MI_AcquisitionInformation>
