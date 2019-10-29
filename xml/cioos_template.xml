@@ -41,13 +41,15 @@
   <mdb:metadataIdentifier>
 
     <mcc:MD_Identifier>
-      <mcc:authority>
-        <cit:CI_Citation>
-          <cit:title xsi:type="lan:PT_FreeText_PropertyType">
-            {{ multi_lang('naming_authority') }}
-          </cit:title>
-        </cit:CI_Citation>
-      </mcc:authority>
+      {% if 'naming_authority' in record %}
+        <mcc:authority>
+          <cit:CI_Citation>
+            <cit:title xsi:type="lan:PT_FreeText_PropertyType">
+              {{ multi_lang('naming_authority') }}
+            </cit:title>
+          </cit:CI_Citation>
+        </mcc:authority>
+      {% endif %}
 
       <!-- code: mandatory -->
       <mcc:code xsi:type="lan:PT_FreeText_PropertyType">
@@ -260,9 +262,9 @@
               </cit:role>
               <cit:party>
                 <cit:CI_Organisation>
-                      <cit:name xsi:type="lan:PT_FreeText_PropertyType">
-                        {{ multi_lang('acknowledgement') }}
-                      </cit:name>
+                  <cit:name xsi:type="lan:PT_FreeText_PropertyType">
+                    {{ multi_lang('acknowledgement') }}
+                  </cit:name>
                 </cit:CI_Organisation>
               </cit:party>
             </cit:CI_Responsibility>
@@ -467,81 +469,85 @@
             {{ multi_lang('platform_description') }}
           </mac:description>
 
-          <mac:instrument>
-            <mac:MI_Instrument>
-              <!-- identifier: mandatory -->
-              <mac:identifier>
-                <mcc:MD_Identifier>
-                  <!-- code: mandatory -->
-                  <mcc:code xsi:type="lan:PT_FreeText_PropertyType">
-                    <!-- CIOOS core mandatory element -->
-                    <!-- MI_Metadata/acquisitionInformation/MI_AcquisitionInformation/instrument/MI_Instrument/identifier/MD_Identifier/code/CharacterString -->
-                    {{ multi_lang('instrument_id') }}
-                  </mcc:code>
-                  <!-- version: mandatory -->
-                  <mcc:version xsi:type="lan:PT_FreeText_PropertyType">
-                    <!-- CIOOS core mandatory element -->
-                    <!-- MI_Metadata/acquisitionInformation/MI_AcquisitionInformation/instrument/MI_Instrument/identifier/MD_Identifier/version/CharacterString -->
-                    {{ multi_lang('instrument_version') }}
-                  </mcc:version>
-                  <!-- description: mandatory -->
-                  <mcc:description xsi:type="lan:PT_FreeText_PropertyType">
-                    <!-- CIOOS core mandatory element -->
-                    <!-- MI_Metadata/acquisitionInformation/MI_AcquisitionInformation/instrument/MI_Instrument/identifier/MD_Identifier/description/CharacterString -->
-                    {{ multi_lang('instrument_description') }}
-                  </mcc:description>
-                </mcc:MD_Identifier>
-              </mac:identifier>
-              <!-- type: mandatory -->
-              <mac:type xsi:type="lan:PT_FreeText_PropertyType">
-                <!-- CIOOS core mandatory element -->
-                <!-- MI_Metadata/acquisitionInformation/MI_AcquisitionInformation/instrument/MI_Instrument/type/CharacterString -->
-                {{ multi_lang('instrument_type') }}
-              </mac:type>
-              <!-- description: mandatory -->
-              <mac:description xsi:type="lan:PT_FreeText_PropertyType">
-                <!-- CIOOS core mandatory element -->
-                <!-- MI_Metadata/acquisitionInformation/MI_AcquisitionInformation/instrument/MI_Instrument/description/CharacterString -->
-                {{ multi_lang('instrument_description_other') }}
-              </mac:description>
-              <!-- mountedOn: mandatory? -->
-              <mac:mountedOn/>
-              <!-- sensor: mandatory -->
-              <mac:sensor>
-                <mac:MI_Sensor>
+          {% for num, instrument in instruments.items() %}
+            <mac:instrument>
+              <mac:MI_Instrument>
+                <!-- identifier: mandatory -->
+                <mac:identifier>
+                  <mcc:MD_Identifier>
+                    <!-- code: mandatory -->
+                    <mcc:code xsi:type="lan:PT_FreeText_PropertyType">
+                      <!-- CIOOS core mandatory element -->
+                      <!-- MI_Metadata/acquisitionInformation/MI_AcquisitionInformation/instrument/MI_Instrument/identifier/MD_Identifier/code/CharacterString -->
+                      <gco:CharacterString>{{ instrument.id }}</gco:CharacterString>
+                    </mcc:code>
+                    <!-- version: mandatory -->
+                    <mcc:version xsi:type="lan:PT_FreeText_PropertyType">
+                      <!-- CIOOS core mandatory element -->
+                      <!-- MI_Metadata/acquisitionInformation/MI_AcquisitionInformation/instrument/MI_Instrument/identifier/MD_Identifier/version/CharacterString -->
+                      <gco:CharacterString>{{ instrument.version }}</gco:CharacterString>
+                    </mcc:version>
+                    <!-- description: mandatory -->
+                    <mcc:description xsi:type="lan:PT_FreeText_PropertyType">
+                      <!-- CIOOS core mandatory element -->
+                      <!-- MI_Metadata/acquisitionInformation/MI_AcquisitionInformation/instrument/MI_Instrument/identifier/MD_Identifier/description/CharacterString -->
+                      <gco:CharacterString>{{ instrument.description }}</gco:CharacterString>
+                    </mcc:description>
+                  </mcc:MD_Identifier>
+                </mac:identifier>
+                <!-- type: mandatory -->
+                <mac:type xsi:type="lan:PT_FreeText_PropertyType">
+                  <!-- CIOOS core mandatory element -->
+                  <!-- MI_Metadata/acquisitionInformation/MI_AcquisitionInformation/instrument/MI_Instrument/type/CharacterString -->
+                  <gco:CharacterString>{{ instrument.type }}</gco:CharacterString>
+                </mac:type>
+                <!-- description: mandatory -->
+                <mac:description xsi:type="lan:PT_FreeText_PropertyType">
+                  <!-- CIOOS core mandatory element -->
+                  <!-- MI_Metadata/acquisitionInformation/MI_AcquisitionInformation/instrument/MI_Instrument/description/CharacterString -->
+                  <gco:CharacterString>{{ instrument.description_other }}</gco:CharacterString>
+                </mac:description>
+                <!-- mountedOn: mandatory? -->
+                <mac:mountedOn/>
+                {% for num, sensor in instrument.sensor.items() %}
+                  <!-- sensor: mandatory -->
+                  <mac:sensor>
+                    <mac:MI_Sensor>
 
-                  <!-- identifier: mandatory -->
-                  <mac:identifier>
-                    <mcc:MD_Identifier>
-                      <!-- code: mandatory -->
-                      <mcc:code xsi:type="lan:PT_FreeText_PropertyType">
-                        <!-- CIOOS core mandatory element -->
-                        <!-- MI_Metadata/acquisitionInformation/MI_AcquisitionInformation/instrument/MI_Instrument/sensor/MI_Sensor/identifier/MD_Identifier/code/CharacterString -->
-                        {{ multi_lang('sensor_id') }}
-                      </mcc:code>
-                      <!-- version: mandatory -->
-                      <mcc:version xsi:type="lan:PT_FreeText_PropertyType">
-                        <!-- CIOOS core mandatory element -->
-                        <!-- MI_Metadata/acquisitionInformation/MI_AcquisitionInformation/instrument/MI_Instrument/sensor/MI_Sensor/identifier/MD_Identifier/version/CharacterString -->
-                        {{ multi_lang('sensor_version') }}
-                      </mcc:version>
-                      <!-- description: mandatory -->
-                      <mcc:description xsi:type="lan:PT_FreeText_PropertyType">
-                        <!-- CIOOS core mandatory element -->
-                        <!-- MI_Metadata/acquisitionInformation/MI_AcquisitionInformation/instrument/MI_Instrument/sensor/MI_Sensor/identifier/MD_Identifier/description/CharacterString -->
-                        {{ multi_lang('sensor_description') }}
-                      </mcc:description>
-                    </mcc:MD_Identifier>
-                  </mac:identifier>
-                  <mac:type/>
-                  <!-- hosted: mandatory -->
-                  <mac:hosted>
-                    <!-- mac:MI_Instrument is an association to parent MI_Instrument really needed in this case? -->
-                  </mac:hosted>
-                </mac:MI_Sensor>
-              </mac:sensor>
-            </mac:MI_Instrument>
-          </mac:instrument>
+                      <!-- identifier: mandatory -->
+                      <mac:identifier>
+                        <mcc:MD_Identifier>
+                          <!-- code: mandatory -->
+                          <mcc:code xsi:type="lan:PT_FreeText_PropertyType">
+                            <!-- CIOOS core mandatory element -->
+                            <!-- MI_Metadata/acquisitionInformation/MI_AcquisitionInformation/instrument/MI_Instrument/sensor/MI_Sensor/identifier/MD_Identifier/code/CharacterString -->
+                            <gco:CharacterString>{{ sensor.id }}</gco:CharacterString>
+                          </mcc:code>
+                          <!-- version: mandatory -->
+                          <mcc:version xsi:type="lan:PT_FreeText_PropertyType">
+                            <!-- CIOOS core mandatory element -->
+                            <!-- MI_Metadata/acquisitionInformation/MI_AcquisitionInformation/instrument/MI_Instrument/sensor/MI_Sensor/identifier/MD_Identifier/version/CharacterString -->
+                            <gco:CharacterString>{{ sensor.version }}</gco:CharacterString>
+                          </mcc:version>
+                          <!-- description: mandatory -->
+                          <mcc:description xsi:type="lan:PT_FreeText_PropertyType">
+                            <!-- CIOOS core mandatory element -->
+                            <!-- MI_Metadata/acquisitionInformation/MI_AcquisitionInformation/instrument/MI_Instrument/sensor/MI_Sensor/identifier/MD_Identifier/description/CharacterString -->
+                            <gco:CharacterString>{{ sensor.description }}</gco:CharacterString>
+                          </mcc:description>
+                        </mcc:MD_Identifier>
+                      </mac:identifier>
+                      <mac:type/>
+                      <!-- hosted: mandatory -->
+                      <mac:hosted>
+                        <!-- mac:MI_Instrument is an association to parent MI_Instrument really needed in this case? -->
+                      </mac:hosted>
+                    </mac:MI_Sensor>
+                  </mac:sensor>
+                {% endfor %}
+              </mac:MI_Instrument>
+            </mac:instrument>
+          {% endfor %}
         </mac:MI_Platform>
       </mac:platform>
     </mac:MI_AcquisitionInformation>

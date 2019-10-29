@@ -2,7 +2,7 @@
 # if english were the default language, there would be title_fra,summary_fra, etc
 
 language: "fra" # or eng
-title: "title in french"
+title: "title in french ééé"
 title_eng: "title in english"
 summary: "summary in french"
 summary_eng: "summary in english"
@@ -23,8 +23,8 @@ creator_name: "creator_name"
 creator_url: "creator_url"
 creator_email: "nobody@example.com"
 institution: "institution"
-project: "project in french"
-project_eng: "project in english"
+project: "project1 in french,project2 in french"
+project_eng: "project1 in english,project2 in english"
 processing_level: "processing level in french"
 processing_level_eng: "processing level in english"
 acknowledgement: "acknowledgement in french"
@@ -34,10 +34,10 @@ geospatial_lat_min: -89.975
 geospatial_lat_max: 89.975
 geospatial_lon_min: -179.975
 geospatial_lon_max: 179.975
-geospatial_vertical_min: "geospatial_vertical_min"
-geospatial_vertical_max: "geospatial_vertical_max"
+geospatial_vertical_min: 1.23
+geospatial_vertical_max: 5.67
 time_coverage_start: "1985-03-25T12:00:00Z"
-time_coverage_engd: "1985-04-25T12:00:00Z"
+time_coverage_end: "1985-04-25T12:00:00Z"
 # copied these from https://coastwatch.pfeg.noaa.gov/erddap/info/NOAA_DHW/index.html
 time_coverage_duration: "P1D"
 time_coverage_resolution: "P1D"
@@ -53,9 +53,9 @@ publisher_email: "publisher_email"
 date_modified: "2019-10-07T21:27:22Z"
 date_issued: "2010-01-24"
 geospatial_lat_units: "degrees_north"
-geospatial_lat_resolution: "geospatial_lat_resolution"
+geospatial_lat_resolution: "1.23"
 geospatial_lon_units: "geospatial_lon_units"
-geospatial_lon_resolution: "geospatial_lon_resolution"
+geospatial_lon_resolution: "4.56"
 geospatial_vertical_units: "geospatial_vertical_units"
 geospatial_vertical_resolution: "geospatial_vertical_resolution"
 geospatial_vertical_positive: "vertical"
@@ -67,16 +67,15 @@ language_country: "CAN"
 publisher_country: "publisher_country"
 progress_code: "completed"
 scope_code: "dataset"
-instrument_id: "instrument_id"
-instrument_version: "instrument_version"
-instrument_description_other: "instrument_description_other"
-instrument_description_other_fr: "instrument_description_other in french"
 
-instrument_type: "instrument_type"
-sensor_id: "sensor_id"
-sensor_version: "sensor_version"
-sensor_description: "sensor_description in french"
-sensor_description_eng: "sensor_description in english"
+instrument_1_id: instrument_1_id
+instrument_1_version: instrument_1_version
+instrument_1_type: instrument_1_type
+instrument_1_description: instrument_1_description
+
+instrument_1_sensor_1_id: instrument_1_sensor_1_id
+instrument_1_sensor_1_version: instrument_1_sensor_1_version
+instrument_1_sensor_1_description: instrument_1_sensor_1_description
 
 platform_name: "platform_name" # from cf
 platform_id: "platform_id" # from cf
