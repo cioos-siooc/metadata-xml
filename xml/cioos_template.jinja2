@@ -465,6 +465,13 @@
           </mri:type>
         </mri:MD_Keywords>
       </mri:descriptiveKeywords>
+
+      {% if record['comment'] %}
+      <mri:supplementalInformation xsi:type="lan:PT_FreeText_PropertyType">
+        {{ multi_lang('comment') }}
+      </mri:supplementalInformation>
+      {% endif %}
+
     </mri:MD_DataIdentification>
   </mdb:identificationInfo>
 
