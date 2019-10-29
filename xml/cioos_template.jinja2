@@ -368,10 +368,12 @@
           <!-- MI_Metadata/identificationInfo/MD_DataIdentification/status/MD_ProgressCode -->
         </mcc:MD_ProgressCode>
       </mri:status>
+
       {% if record['time_coverage_resolution'] %}
-      <mri:temporalResolution>
-        <gco:TM_PeriodDuration>{{ record['time_coverage_resolution'] }}</gco:TM_PeriodDuration>
-      </mri:temporalResolution>
+        <mri:temporalResolution>
+          <gco:TM_PeriodDuration>{{ record['time_coverage_resolution'] }}</gco:TM_PeriodDuration>
+        </mri:temporalResolution>
+      {% endif %}
 
       {% if record['geospatial_lon_min'] and
             record['geospatial_lon_max'] and
@@ -415,9 +417,9 @@
             <gex:EX_TemporalExtent>
               <gex:extent>
                 <gml:TimePeriod gml:id="time_period">
-                  <gml:beginPosition>{{ record['time_coverage_start' ]}}</gml:beginPosition>
-                  <gml:endPosition>{{ record['time_coverage_end' ]}}</gml:endPosition>
-                  <gml:duration>{{ record['time_coverage_duration' ]}}</gml:duration>
+                  <gml:beginPosition>{{ record['time_coverage_start'] }}</gml:beginPosition>
+                  <gml:endPosition>{{ record['time_coverage_end'] }}</gml:endPosition>
+                  <gml:duration>{{ record['time_coverage_duration'] }}</gml:duration>
                 </gml:TimePeriod>
               </gex:extent>
             </gex:EX_TemporalExtent>
@@ -502,22 +504,22 @@
       </mri:descriptiveKeywords>
 
       {% if record['comment'] %}
-      <mri:supplementalInformation xsi:type="lan:PT_FreeText_PropertyType">
-        {{ multi_lang('comment') }}
-      </mri:supplementalInformation>
+        <mri:supplementalInformation xsi:type="lan:PT_FreeText_PropertyType">
+          {{ multi_lang('comment') }}
+        </mri:supplementalInformation>
       {% endif %}
 
     </mri:MD_DataIdentification>
   </mdb:identificationInfo>
 
   {% if record['history'] %}
-  <mdb:resourceLineage>
-    <mrl:LI_Lineage>
-      <mrl:statement xsi:type="lan:PT_FreeText_PropertyType">
-        {{ multi_lang('history') }}
-      </mrl:statement>
-    </mrl:LI_Lineage>
-  </mdb:resourceLineage>
+    <mdb:resourceLineage>
+      <mrl:LI_Lineage>
+        <mrl:statement xsi:type="lan:PT_FreeText_PropertyType">
+          {{ multi_lang('history') }}
+        </mrl:statement>
+      </mrl:LI_Lineage>
+    </mdb:resourceLineage>
   {% endif %}
 
   <!-- acquisitionInformation: mandatory -->
