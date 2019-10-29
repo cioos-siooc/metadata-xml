@@ -435,6 +435,36 @@
         </mri:MD_Keywords>
       </mri:descriptiveKeywords>
 
+      <mri:descriptiveKeywords>
+        <mri:MD_Keywords>
+
+          {# project in default language #}
+          {% for project in record['project'].split(',') %}
+            <mri:keyword>
+              <gco:CharacterString>
+                {{ project }}
+              </gco:CharacterString>
+            </mri:keyword>
+          {% endfor %}
+          {# for each alternate language: #}
+          {% for lang, project_csv in get_alternate_text('project') %}
+            {# for each keyword in that alternate language: #}
+            {% for project in project_csv.split(',') %}
+              <mri:keyword xsi:type="lan:PT_FreeText_PropertyType">
+                <lan:PT_FreeText>
+                  <lan:textGroup>
+                    <lan:LocalisedCharacterString locale="{{ lang }}">{{ project }}</lan:LocalisedCharacterString>
+                  </lan:textGroup>
+                </lan:PT_FreeText>
+              </mri:keyword>
+            {% endfor %}
+          {% endfor %}
+
+          <mri:type>
+            <mri:MD_KeywordTypeCode codeList="https://standards.iso.org/iso/19115/resources/Codelists/cat/codelists.xml#MD_KeywordTypeCode" codeListValue="project">project</mri:MD_KeywordTypeCode>
+          </mri:type>
+        </mri:MD_Keywords>
+      </mri:descriptiveKeywords>
     </mri:MD_DataIdentification>
   </mdb:identificationInfo>
 
