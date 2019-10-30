@@ -18,6 +18,7 @@
 <mdb:MD_Metadata
   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
   xsi:schemaLocation="http://standards.iso.org/iso/19115/-3/mdb/2.0 https://standards.iso.org/iso/19115/-3/mds/2.0/mds.xsd"
+  xmlns:gml="http://www.opengis.net/gml/3.2"
   xmlns:mpc="http://standards.iso.org/iso/19115/-3/mpc/1.0"
   xmlns:mri="http://standards.iso.org/iso/19115/-3/mri/1.0"
   xmlns:mrl="http://standards.iso.org/iso/19115/-3/mrl/2.0"
@@ -119,9 +120,9 @@
           <cit:name xsi:type="lan:PT_FreeText_PropertyType">
             <!-- CIOOS core mandatory element -->
             <!-- MI_Metadata/contact/CI_Responsibility/party/CI_Party/name/CharacterString -->
-            <!-- placeholder, didn't know what value to put here -->
-            {# {{ multi_lang('') }} #}
+            <gco:CharacterString>{{ record['publisher_name'] }}</gco:CharacterString>
           </cit:name>
+
           <!-- contactInfo: mandatory -->
           <cit:contactInfo>
             <cit:CI_Contact>
@@ -138,10 +139,17 @@
                   <cit:electronicMailAddress xsi:type="lan:PT_FreeText_PropertyType">
                     <!-- CIOOS core mandatory element -->
                     <!-- MI_Metadata/contact/CI_Responsibility/party/contactInfo/CI_Contact/address/CI_Address/electronicMailAddress/CharacterString -->
-                    {{ multi_lang('publisher_email') }}
+                    <gco:CharacterString>{{ record['publisher_email'] }}</gco:CharacterString>
                   </cit:electronicMailAddress>
                 </cit:CI_Address>
               </cit:address>
+              <cit:onlineResource>
+                <cit:CI_OnlineResource>
+                  <cit:linkage xsi:type="lan:PT_FreeText_PropertyType">
+                    <gco:CharacterString>{{ record['publisher_url'] }}</gco:CharacterString>
+                  </cit:linkage>
+                </cit:CI_OnlineResource>
+              </cit:onlineResource>
             </cit:CI_Contact>
           </cit:contactInfo>
         </cit:CI_Individual>
@@ -321,7 +329,9 @@
                       <cit:onlineResource>
                         <cit:CI_OnlineResource>
                           <cit:linkage xsi:type="lan:PT_FreeText_PropertyType">
-                            {{ multi_lang('creator_url') }}
+                            <gco:CharacterString>
+                              {{ record['creator_url'] }}
+                            </gco:CharacterString>
                           </cit:linkage>
                         </cit:CI_OnlineResource>
                       </cit:onlineResource>
@@ -359,6 +369,82 @@
           <!-- MI_Metadata/identificationInfo/MD_DataIdentification/status/MD_ProgressCode -->
         </mcc:MD_ProgressCode>
       </mri:status>
+
+      {% if record['time_coverage_resolution'] %}
+        <mri:temporalResolution>
+          <gco:TM_PeriodDuration>{{ record['time_coverage_resolution'] }}</gco:TM_PeriodDuration>
+        </mri:temporalResolution>
+      {% endif %}
+
+      {% if record['geospatial_lon_min'] and
+            record['geospatial_lon_max'] and
+            record['geospatial_lat_min'] and
+            record['geospatial_lat_max'] %}
+        <mri:extent>
+          <gex:EX_Extent>
+
+            <gex:geographicElement>
+              <gex:EX_GeographicBoundingBox>
+                <gex:westBoundLongitude>
+                  <gco:Decimal>
+                    {{ record['geospatial_lon_max'] }}
+                  </gco:Decimal>
+                </gex:westBoundLongitude>
+                <gex:eastBoundLongitude>
+                  <gco:Decimal>
+                    {{ record['geospatial_lon_min'] }}
+                  </gco:Decimal>
+                </gex:eastBoundLongitude>
+                <gex:southBoundLatitude>
+                  <gco:Decimal>
+                    {{ record['geospatial_lat_min'] }}
+                  </gco:Decimal>
+                </gex:southBoundLatitude>
+                <gex:northBoundLatitude>
+                  <gco:Decimal>
+                    {{ record['geospatial_lat_max'] }}
+                  </gco:Decimal>
+                </gex:northBoundLatitude>
+              </gex:EX_GeographicBoundingBox>
+            </gex:geographicElement>
+
+          </gex:EX_Extent>
+        </mri:extent>
+      {% endif %}
+
+
+    {% if record['geospatial_vertical_min'] and record['geospatial_vertical_max'] %}
+      <mri:extent>
+        <gex:EX_Extent>
+          <gex:verticalElement>
+            <gex:EX_VerticalExtent>
+              <gex:minimumValue>
+                <gco:Real>{{ record['geospatial_vertical_min'] }}</gco:Real>
+              </gex:minimumValue>
+              <gex:maximumValue>
+                <gco:Real>{{ record['geospatial_vertical_max'] }}</gco:Real>
+              </gex:maximumValue>
+            </gex:EX_VerticalExtent>
+          </gex:verticalElement>
+        </gex:EX_Extent>
+      </mri:extent>
+    {% endif %}
+
+      <mri:extent>
+        <gex:EX_Extent>
+          <gex:temporalElement>
+            <gex:EX_TemporalExtent>
+              <gex:extent>
+                <gml:TimePeriod gml:id="time_period">
+                  <gml:beginPosition>{{ record['time_coverage_start'] }}</gml:beginPosition>
+                  <gml:endPosition>{{ record['time_coverage_end'] }}</gml:endPosition>
+                  <gml:duration>{{ record['time_coverage_duration'] }}</gml:duration>
+                </gml:TimePeriod>
+              </gex:extent>
+            </gex:EX_TemporalExtent>
+          </gex:temporalElement>
+        </gex:EX_Extent>
+      </mri:extent>
 
       <mri:descriptiveKeywords>
         <mri:MD_Keywords>
@@ -405,8 +491,55 @@
         </mri:MD_Keywords>
       </mri:descriptiveKeywords>
 
+      <mri:descriptiveKeywords>
+        <mri:MD_Keywords>
+
+          {# project in default language #}
+          {% for project in record['project'].split(',') %}
+            <mri:keyword>
+              <gco:CharacterString>
+                {{ project }}
+              </gco:CharacterString>
+            </mri:keyword>
+          {% endfor %}
+          {# for each alternate language: #}
+          {% for lang, project_csv in get_alternate_text('project') %}
+            {# for each keyword in that alternate language: #}
+            {% for project in project_csv.split(',') %}
+              <mri:keyword xsi:type="lan:PT_FreeText_PropertyType">
+                <lan:PT_FreeText>
+                  <lan:textGroup>
+                    <lan:LocalisedCharacterString locale="{{ lang }}">{{ project }}</lan:LocalisedCharacterString>
+                  </lan:textGroup>
+                </lan:PT_FreeText>
+              </mri:keyword>
+            {% endfor %}
+          {% endfor %}
+
+          <mri:type>
+            <mri:MD_KeywordTypeCode codeList="https://standards.iso.org/iso/19115/resources/Codelists/cat/codelists.xml#MD_KeywordTypeCode" codeListValue="project">project</mri:MD_KeywordTypeCode>
+          </mri:type>
+        </mri:MD_Keywords>
+      </mri:descriptiveKeywords>
+
+      {% if record['comment'] %}
+        <mri:supplementalInformation xsi:type="lan:PT_FreeText_PropertyType">
+          {{ multi_lang('comment') }}
+        </mri:supplementalInformation>
+      {% endif %}
+
     </mri:MD_DataIdentification>
   </mdb:identificationInfo>
+
+  {% if record['history'] %}
+    <mdb:resourceLineage>
+      <mrl:LI_Lineage>
+        <mrl:statement xsi:type="lan:PT_FreeText_PropertyType">
+          {{ multi_lang('history') }}
+        </mrl:statement>
+      </mrl:LI_Lineage>
+    </mdb:resourceLineage>
+  {% endif %}
 
   <!-- acquisitionInformation: mandatory -->
   <mdb:acquisitionInformation>
@@ -425,7 +558,9 @@
               <mcc:authority>
                 <cit:CI_Citation>
                   <!-- validation says cit:CI_Citation requires title -->
-                  <cit:title></cit:title>
+                  <cit:title xsi:type="lan:PT_FreeText_PropertyType">
+                    <gco:CharacterString>{{ record['platform_name'] }}</gco:CharacterString>
+                  </cit:title>
 
                   <!-- citedResponsibleParty: mandatory -->
                   <cit:citedResponsibleParty>
