@@ -8,8 +8,9 @@ import yaml
 import re
 from lxml import etree
 import os
+import argparse
 
-TEMPLATE_FILE = './cioos_template.xml'
+TEMPLATE_FILE = './cioos_template.jinja2'
 
 
 def get_instruments_from_record(record):
@@ -69,9 +70,20 @@ def check_mandatory_fields(record):
         # 'platform_role',
         # 'platform_id_authority'
     ]
+    pass_test = 1
+    missing_fields = []
     for field in mandatory_fields:
-        if field not in record:
-            raise Exception("Missing required field: '{}'".format(field))
+        if field in record:
+            if record[field] is None:
+                pass_test = 0
+                missing_fields.append(field)
+        elif field not in record:
+            pass_test = 0
+            missing_fields.append(field)
+
+    if pass_test is 0:
+        raise Exception("Missing required fields/values: '{}'".format(missing_fields))
+    return pass_test
 
 
 def get_alternate_text_wrapper(record):
@@ -104,7 +116,7 @@ def get_alternate_text_wrapper(record):
         matching_languages = list(map(lambda k: k[0], tuples_with_lang_code))
 
         # eg if language="fra" there cant be a title_fra variable
-        if(default_language in matching_languages):
+        if (default_language in matching_languages):
             raise Exception('Default language is "{}", field "{}" '
                             'cannot have suffix "{}"'
                             .format(default_language, key, "_" +
@@ -156,11 +168,17 @@ def iso_template(record):
     return xml
 
 
-if(__name__ == '__main__'):
-    with open("record.yaml") as stream:
+if (__name__ == '__main__'):
+    parser = argparse.ArgumentParser(description="Convert yaml and Jinja template into xml.")
+    parser.add_argument('-f', type=str, dest="string", default="record.yaml",
+                        help="Enter filename of yaml file. (default = record.yaml)")
+    args = parser.parse_args()
+    filename = args.string
+    print("Input filename as: "+filename.split('.')[0])
+    with open(args.string) as stream:
         yaml_data = yaml.safe_load(stream)
 
         xml = iso_template(yaml_data)
-        file = open("record.xml", "w")
+        file = open(filename.split('.')[0] + ".xml", "w")
         file.write(xml)
         print("Wrote " + file.name)
