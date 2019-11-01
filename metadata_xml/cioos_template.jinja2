@@ -370,8 +370,8 @@
       </mri:abstract>
 
       {% if record['acknowledgement'] %}
-      <mri:credit>
-        <gco:CharacterString>{{ multi_lang('acknowledgement') }}</gco:CharacterString>
+      <mri:credit xsi:type="lan:PT_FreeText_PropertyType">
+        {{ multi_lang('acknowledgement') }}
       </mri:credit>
       {% endif %}
 
