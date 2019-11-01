@@ -287,24 +287,6 @@
           </cit:citedResponsibleParty>
           {% endif %}
 
-          {% if record['acknowledgement'] %}
-          <cit:citedResponsibleParty>
-            <!-- funder -->
-            <cit:CI_Responsibility>
-              <cit:role>
-                <cit:CI_RoleCode codeList="http://standards.iso.org/iso/19115/resources/Codelists/cat/codelists.xml#CI_RoleCode" codeListValue="funder"/>
-              </cit:role>
-              <cit:party>
-                <cit:CI_Organisation>
-                  <cit:name xsi:type="lan:PT_FreeText_PropertyType">
-                    {{ multi_lang('acknowledgement') }}
-                  </cit:name>
-                </cit:CI_Organisation>
-              </cit:party>
-            </cit:CI_Responsibility>
-          </cit:citedResponsibleParty>
-          {% endif %}
-
           {% if record['institution'] %}
           <cit:citedResponsibleParty>
             <cit:CI_Responsibility>
@@ -386,6 +368,12 @@
         <!-- MI_Metadata/identificationInfo/MD_DataIdentification/abstract/CharacterString -->
         {{ multi_lang('summary') }}
       </mri:abstract>
+
+      {% if record['acknowledgement'] %}
+      <mri:credit>
+        <gco:CharacterString>{{ multi_lang('acknowledgement') }}</gco:CharacterString>
+      </mri:credit>
+      {% endif %}
 
       {% if record['progress_code'] %}
       <mri:status>
