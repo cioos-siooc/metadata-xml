@@ -149,7 +149,7 @@ def pretty_xml(ugly_xml):
     return xml_pretty_str
 
 
-def iso_template(record):
+def iso_template(record, use_validation=True):
     '''Takes a Jinja template file and a dictionary and
     outputs XML'''
 
@@ -161,7 +161,8 @@ def iso_template(record):
 
     template = template_env.get_template(TEMPLATE_FILE)
 
-    check_mandatory_fields(record)
+    if use_validation:
+        check_mandatory_fields(record)
     get_alternate_text = get_alternate_text_wrapper(record)
     template_env.filters['get_alternate_text'] = get_alternate_text
     template_env.globals.update(get_alternate_text=get_alternate_text)
