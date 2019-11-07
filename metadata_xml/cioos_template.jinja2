@@ -88,11 +88,9 @@
       {% endif %}
       {# characterEncoding: mandatory #}
       <lan:characterEncoding>
-        <lan:MD_CharacterSetCode codeList="http://standards.iso.org/iso/19115/resources/Codelist/lan/CharacterSetCode.xml" codeListValue="utf8">
+        <lan:MD_CharacterSetCode codeList="http://standards.iso.org/iso/19115/resources/Codelist/lan/CharacterSetCode.xml" codeListValue="utf8"/>
           {# CIOOS core mandatory element #}
           {# MI_Metadata/defaultLocale/PT_Locale/characterEncoding/MD_CharacterSetCode (UTF-8) #}
-          UTF-8
-        </lan:MD_CharacterSetCode>
       </lan:characterEncoding>
     </lan:PT_Locale>
   </mdb:defaultLocale>
@@ -104,10 +102,9 @@
     <mdb:MD_MetadataScope>
       {# resourceScope: mandatory #}
       <mdb:resourceScope>
-        <mcc:MD_ScopeCode codeList="http://standards.iso.org/iso/19115/resources/Codelists/cat/codelists.xml#MD_ScopeCode" codeListValue="{{ record['scope_code'] }}">
+        <mcc:MD_ScopeCode codeList="http://standards.iso.org/iso/19115/resources/Codelists/cat/codelists.xml#MD_ScopeCode" codeListValue="{{ record['scope_code'] }}"/>
           {# CIOOS core mandatory element #}
           {# MI_Metadata/metadataScope/MD_MetadataScope/resourceScope/MD_ScopeCode #}
-        </mcc:MD_ScopeCode>
       </mdb:resourceScope>
     </mdb:MD_MetadataScope>
   </mdb:metadataScope>
@@ -118,10 +115,9 @@
     <cit:CI_Responsibility>
       {# role: mandatory #}
       <cit:role>
-        <cit:CI_RoleCode codeList="http://standards.iso.org/iso/19115/resources/Codelists/cat/codelists.xml#CI_RoleCode" codeListValue="publisher">
+        <cit:CI_RoleCode codeList="http://standards.iso.org/iso/19115/resources/Codelists/cat/codelists.xml#CI_RoleCode" codeListValue="publisher"/>
           {# CIOOS core mandatory element #}
           {# MI_Metadata/contact/CI_Responsibility/role/CI_RoleCode #}
-        </cit:CI_RoleCode>
       </cit:role>
       {# party: mandatory #}
       <cit:party>
@@ -195,11 +191,9 @@
       </cit:date>
       {# dateType: mandatory #}
       <cit:dateType>
-        <cit:CI_DateTypeCode codeList="http://standards.iso.org/iso/19115/resources/Codelists/cat/codelists.xml#CI_DateTypeCode" codeListValue="creation">
-          {# CIOOS core mandatory element #}
-          {# MI_Metadata/dateInfo/CI_Date/date/CI_DateTypeCode #}
-          creation
-        </cit:CI_DateTypeCode>
+      {# CIOOS core mandatory element #}
+      {# MI_Metadata/dateInfo/CI_Date/date/CI_DateTypeCode #}
+        <cit:CI_DateTypeCode codeList="http://standards.iso.org/iso/19115/resources/Codelists/cat/codelists.xml#CI_DateTypeCode" codeListValue="creation">creation</cit:CI_DateTypeCode>
       </cit:dateType>
     </cit:CI_Date>
     {% endif %}
@@ -221,11 +215,9 @@
       </cit:date>
       {# dateType: mandatory #}
       <cit:dateType>
-        <cit:CI_DateTypeCode codeList="http://standards.iso.org/iso/19115/resources/Codelists/cat/codelists.xml#CI_DateTypeCode" codeListValue="revision">
-          {# CIOOS core mandatory element #}
-          {# MI_Metadata/dateInfo/CI_Date/date/CI_DateTypeCode #}
-          revision
-        </cit:CI_DateTypeCode>
+      {# CIOOS core mandatory element #}
+      {# MI_Metadata/dateInfo/CI_Date/date/CI_DateTypeCode #}
+        <cit:CI_DateTypeCode codeList="http://standards.iso.org/iso/19115/resources/Codelists/cat/codelists.xml#CI_DateTypeCode" codeListValue="revision">revision</cit:CI_DateTypeCode>
       </cit:dateType>
     </cit:CI_Date>
   </mdb:dateInfo>
@@ -247,11 +239,9 @@
       </cit:date>
       {# dateType: mandatory #}
       <cit:dateType>
-        <cit:CI_DateTypeCode codeList="http://standards.iso.org/iso/19115/resources/Codelists/cat/codelists.xml#CI_DateTypeCode" codeListValue="publication">
-          {# CIOOS core mandatory element #}
-          {# MI_Metadata/dateInfo/CI_Date/date/CI_DateTypeCode #}
-          publication
-        </cit:CI_DateTypeCode>
+      {# CIOOS core mandatory element #}
+      {# MI_Metadata/dateInfo/CI_Date/date/CI_DateTypeCode #}
+        <cit:CI_DateTypeCode codeList="http://standards.iso.org/iso/19115/resources/Codelists/cat/codelists.xml#CI_DateTypeCode" codeListValue="publication">publication</cit:CI_DateTypeCode>
       </cit:dateType>
     </cit:CI_Date>
   </mdb:dateInfo>
@@ -294,18 +284,14 @@
             <cit:CI_Responsibility>
 
               <cit:role>
-                <cit:CI_RoleCode codeList="http://standards.iso.org/iso/19115/resources/Codelists/cat/codelists.xml#CI_RoleCode" codeListValue="originator">
-                  {# CIOOS core mandatory element #}
-                  {# MI_Metadata/identificationInfo/MD_DataIdentification/citation/CI_Citation/role/CI_RoleCode #}
-                </cit:CI_RoleCode>
+              {# CIOOS core mandatory element #}
+              {# MI_Metadata/identificationInfo/MD_DataIdentification/citation/CI_Citation/role/CI_RoleCode #}
+                <cit:CI_RoleCode codeList="http://standards.iso.org/iso/19115/resources/Codelists/cat/codelists.xml#CI_RoleCode" codeListValue="originator"/>
               </cit:role>
 
               <cit:party>
                 <cit:CI_Organisation>
-                  <cit:name xsi:type="lan:PT_FreeText_PropertyType">
-                    {{ multi_lang('institution') }}
-                  </cit:name>
-
+                  <cit:name xsi:type="lan:PT_FreeText_PropertyType">{{ multi_lang('institution') }}</cit:name>
                 </cit:CI_Organisation>
               </cit:party>
             </cit:CI_Responsibility>
@@ -318,10 +304,9 @@
             <cit:CI_Responsibility>
               {# role: mandatory #}
               <cit:role>
-                <cit:CI_RoleCode codeList="http://standards.iso.org/iso/19115/resources/Codelists/cat/codelists.xml#CI_RoleCode" codeListValue="originator">
+                <cit:CI_RoleCode codeList="http://standards.iso.org/iso/19115/resources/Codelists/cat/codelists.xml#CI_RoleCode" codeListValue="originator"/>
                   {# CIOOS core mandatory element #}
                   {# MI_Metadata/identificationInfo/MD_DataIdentification/citation/CI_Citation/role/CI_RoleCode #}
-                </cit:CI_RoleCode>
               </cit:role>
               {# party: mandatory #}
               <cit:party>
@@ -337,9 +322,7 @@
                       <cit:onlineResource>
                         <cit:CI_OnlineResource>
                           <cit:linkage xsi:type="lan:PT_FreeText_PropertyType">
-                            <gco:CharacterString>
-                              {{ record['creator_url'] }}
-                            </gco:CharacterString>
+                            <gco:CharacterString>{{ record['creator_url'] }}</gco:CharacterString>
                           </cit:linkage>
                         </cit:CI_OnlineResource>
                       </cit:onlineResource>
@@ -402,24 +385,16 @@
             <gex:geographicElement>
               <gex:EX_GeographicBoundingBox>
                 <gex:westBoundLongitude>
-                  <gco:Decimal>
-                    {{ record['geospatial_lon_max'] }}
-                  </gco:Decimal>
+                  <gco:Decimal>{{ record['geospatial_lon_max'] }}</gco:Decimal>
                 </gex:westBoundLongitude>
                 <gex:eastBoundLongitude>
-                  <gco:Decimal>
-                    {{ record['geospatial_lon_min'] }}
-                  </gco:Decimal>
+                  <gco:Decimal>{{ record['geospatial_lon_min'] }}</gco:Decimal>
                 </gex:eastBoundLongitude>
                 <gex:southBoundLatitude>
-                  <gco:Decimal>
-                    {{ record['geospatial_lat_min'] }}
-                  </gco:Decimal>
+                  <gco:Decimal>{{ record['geospatial_lat_min'] }}</gco:Decimal>
                 </gex:southBoundLatitude>
                 <gex:northBoundLatitude>
-                  <gco:Decimal>
-                    {{ record['geospatial_lat_max'] }}
-                  </gco:Decimal>
+                  <gco:Decimal>{{ record['geospatial_lat_max'] }}</gco:Decimal>
                 </gex:northBoundLatitude>
               </gex:EX_GeographicBoundingBox>
             </gex:geographicElement>
@@ -472,9 +447,7 @@
           {# keywords in default language #}
           {% for keyword in record['keywords'].split(',') %}
             <mri:keyword>
-              <gco:CharacterString>
-                {{ keyword }}
-              </gco:CharacterString>
+              <gco:CharacterString>{{ keyword }}</gco:CharacterString>
             </mri:keyword>
           {% endfor %}
           {# for each alternate language: #}
@@ -522,9 +495,7 @@
           {# project in default language #}
           {% for project in record['project'].split(',') %}
             <mri:keyword>
-              <gco:CharacterString>
-                {{ project }}
-              </gco:CharacterString>
+              <gco:CharacterString>{{ project }}</gco:CharacterString>
             </mri:keyword>
           {% endfor %}
           {# for each alternate language: #}
@@ -595,11 +566,9 @@
                     <cit:CI_Responsibility>
                       {# role: mandatory #}
                       <cit:role>
-                        <cit:CI_RoleCode codeList="http://standards.iso.org/iso/19115/resources/Codelists/cat/codelists.xml#CI_RoleCode" codeListValue="{{ record['platform_role'] }}">
+                        <cit:CI_RoleCode codeList="http://standards.iso.org/iso/19115/resources/Codelists/cat/codelists.xml#CI_RoleCode" codeListValue="{{ record['platform_role'] }}"/>
                           {# CIOOS core mandatory element #}
                           {# MI_Metadata/acquisitionInformation/MI_AcquisitionInformation/platform/MI_Platform/identifier/MD_Identifier/authority/CI_Citation/citedResponsibleParty/CI_Responsibility/role/CI_RoleCode #}
-
-                        </cit:CI_RoleCode>
                       </cit:role>
                       {# party: mandatory #}
                       <cit:party>
