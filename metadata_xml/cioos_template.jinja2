@@ -40,7 +40,7 @@
   xmlns:xlink="http://www.w3.org/1999/xlink">
 
 {% if record['id'] %}
-  <!-- metadataIdentifier: mandatory -->
+  {# metadataIdentifier: mandatory #}
   <mdb:metadataIdentifier>
 
     <mcc:MD_Identifier>
@@ -55,10 +55,10 @@
       {% endif %}
 
     {% if record['id'] %}
-      <!-- code: mandatory -->
+      {# code: mandatory #}
       <mcc:code xsi:type="lan:PT_FreeText_PropertyType">
-        <!-- CIOOS core mandatory element -->
-        <!-- MI_Metadata/metadataIdentifier/MD_Identifier/code/CharacterString -->
+        {# CIOOS core mandatory element #}
+        {# MI_Metadata/metadataIdentifier/MD_Identifier/code/CharacterString #}
         {{ multi_lang('id') }}
       </mcc:code>
       {% endif %}
@@ -67,94 +67,90 @@
 {% endif %}
 
 {% if record['language'] %}
-  <!-- defaultLocale: mandatory -->
+  {# defaultLocale: mandatory #}
   <mdb:defaultLocale>
     <lan:PT_Locale>
-      <!-- language: mandatory -->
+      {# language: mandatory #}
       <lan:language>
         <lan:LanguageCode codeList="http://standards.iso.org/iso/19115/resources/Codelist/lan/LanguageCode.xml" codeListValue="{{ record['language'] }}">
-          <!-- CIOOS core mandatory element -->
-          <!-- MI_Metadata/defaultLocale/PT_Locale/language/LanguageCode (ISO639-2) -->
+          {# CIOOS core mandatory element #}
+          {# MI_Metadata/defaultLocale/PT_Locale/language/LanguageCode (ISO639-2) #}
         </lan:LanguageCode>
       </lan:language>
-      <!-- country: mandatory -->
+      {# country: mandatory #}
       {% if record['language_country'] %}
       <lan:country>
         <lan:CountryCode codeList="http://standards.iso.org/iso/19115/resources/Codelists/cat/codelists.xml" codeListValue="{{ record['language_country'] }}">
-          <!-- CIOOS core mandatory element -->
-          <!-- MI_Metadata/defaultLocale/PT_Locale/country/CountryCode (ISO3166-1) -->
+          {# CIOOS core mandatory element #}
+          {# MI_Metadata/defaultLocale/PT_Locale/country/CountryCode (ISO3166-1) #}
         </lan:CountryCode>
       </lan:country>
       {% endif %}
-      <!-- characterEncoding: mandatory -->
+      {# characterEncoding: mandatory #}
       <lan:characterEncoding>
-        <lan:MD_CharacterSetCode codeList="http://standards.iso.org/iso/19115/resources/Codelist/lan/CharacterSetCode.xml" codeListValue="utf8">
-          <!-- CIOOS core mandatory element -->
-          <!-- MI_Metadata/defaultLocale/PT_Locale/characterEncoding/MD_CharacterSetCode (UTF-8) -->
-          UTF-8
-        </lan:MD_CharacterSetCode>
+        <lan:MD_CharacterSetCode codeList="http://standards.iso.org/iso/19115/resources/Codelist/lan/CharacterSetCode.xml" codeListValue="utf8"/>
+          {# CIOOS core mandatory element #}
+          {# MI_Metadata/defaultLocale/PT_Locale/characterEncoding/MD_CharacterSetCode (UTF-8) #}
       </lan:characterEncoding>
     </lan:PT_Locale>
   </mdb:defaultLocale>
   {% endif %}
 
   {% if record['scope_code'] %}
-  <!-- metadataScope: mandatory -->
+  {# metadataScope: mandatory #}
   <mdb:metadataScope>
     <mdb:MD_MetadataScope>
-      <!-- resourceScope: mandatory -->
+      {# resourceScope: mandatory #}
       <mdb:resourceScope>
-        <mcc:MD_ScopeCode codeList="http://standards.iso.org/iso/19115/resources/Codelists/cat/codelists.xml#MD_ScopeCode" codeListValue="{{ record['scope_code'] }}">
-          <!-- CIOOS core mandatory element -->
-          <!-- MI_Metadata/metadataScope/MD_MetadataScope/resourceScope/MD_ScopeCode -->
-        </mcc:MD_ScopeCode>
+        <mcc:MD_ScopeCode codeList="http://standards.iso.org/iso/19115/resources/Codelists/cat/codelists.xml#MD_ScopeCode" codeListValue="{{ record['scope_code'] }}"/>
+          {# CIOOS core mandatory element #}
+          {# MI_Metadata/metadataScope/MD_MetadataScope/resourceScope/MD_ScopeCode #}
       </mdb:resourceScope>
     </mdb:MD_MetadataScope>
   </mdb:metadataScope>
   {% endif %}
 
-  <!-- contact: mandatory -->
+  {# contact: mandatory #}
   <mdb:contact>
     <cit:CI_Responsibility>
-      <!-- role: mandatory -->
+      {# role: mandatory #}
       <cit:role>
-        <cit:CI_RoleCode codeList="http://standards.iso.org/iso/19115/resources/Codelists/cat/codelists.xml#CI_RoleCode" codeListValue="publisher">
-          <!-- CIOOS core mandatory element -->
-          <!-- MI_Metadata/contact/CI_Responsibility/role/CI_RoleCode -->
-        </cit:CI_RoleCode>
+        <cit:CI_RoleCode codeList="http://standards.iso.org/iso/19115/resources/Codelists/cat/codelists.xml#CI_RoleCode" codeListValue="publisher"/>
+          {# CIOOS core mandatory element #}
+          {# MI_Metadata/contact/CI_Responsibility/role/CI_RoleCode #}
       </cit:role>
-      <!-- party: mandatory -->
+      {# party: mandatory #}
       <cit:party>
         <cit:CI_Individual>
-          <!-- name: mandatory -->
+          {# name: mandatory #}
           {% if record['publisher_name'] %}
           <cit:name xsi:type="lan:PT_FreeText_PropertyType">
-            <!-- CIOOS core mandatory element -->
-            <!-- MI_Metadata/contact/CI_Responsibility/party/CI_Party/name/CharacterString -->
+            {# CIOOS core mandatory element #}
+            {# MI_Metadata/contact/CI_Responsibility/party/CI_Party/name/CharacterString #}
             <gco:CharacterString>{{ record['publisher_name'] }}</gco:CharacterString>
           </cit:name>
           {% endif %}
 
-          <!-- contactInfo: mandatory -->
+          {# contactInfo: mandatory #}
           <cit:contactInfo>
             <cit:CI_Contact>
-              <!-- address: mandatory -->
+              {# address: mandatory #}
               <cit:address>
                 <cit:CI_Address>
-                  <!-- country: mandatory -->
+                  {# country: mandatory #}
                   {% if record['publisher_country'] %}
                   <cit:country xsi:type="lan:PT_FreeText_PropertyType">
-                    <!-- CIOOS core mandatory element -->
-                    <!-- MI_Metadata/contact/CI_Responsibility/party/contactInfo/CI_Contact/address/CI_Address/country/CharacterString -->
+                    {# CIOOS core mandatory element #}
+                    {# MI_Metadata/contact/CI_Responsibility/party/contactInfo/CI_Contact/address/CI_Address/country/CharacterString #}
                     {{ multi_lang('publisher_country') }}
                   </cit:country>
                   {% endif %}
-                  <!-- electronicMailAddress: mandatory -->
+                  {# electronicMailAddress: mandatory #}
 
                   {% if record['publisher_email'] %}
                   <cit:electronicMailAddress xsi:type="lan:PT_FreeText_PropertyType">
-                    <!-- CIOOS core mandatory element -->
-                    <!-- MI_Metadata/contact/CI_Responsibility/party/contactInfo/CI_Contact/address/CI_Address/electronicMailAddress/CharacterString -->
+                    {# CIOOS core mandatory element #}
+                    {# MI_Metadata/contact/CI_Responsibility/party/contactInfo/CI_Contact/address/CI_Address/electronicMailAddress/CharacterString #}
                     <gco:CharacterString>{{ record['publisher_email'] }}</gco:CharacterString>
                   </cit:electronicMailAddress>
                   {% endif %}
@@ -178,52 +174,50 @@
   </mdb:contact>
 
   {# schema requires at least one mdb:dateInfo field #}
-  <!-- dateInfo: mandatory -->
+  {# dateInfo: mandatory #}
   <mdb:dateInfo>
+  {% if record['date_created'] %}
     <cit:CI_Date>
-      <!-- date: mandatory -->
+      {# date: mandatory #}
       <cit:date>
         {% if record['date_created'] | length > 11 %}
-          <!-- CIOOS core mandatory element -->
-          <!-- MI_Metadata/dateInfo/CI_Date/date/DateTime -->
-          <!-- ACDD: [date_created=creation, date_modified=revision, date_issued=publication] -->
+          {# CIOOS core mandatory element #}
+          {# MI_Metadata/dateInfo/CI_Date/date/DateTime #}
+          {# ACDD: [date_created=creation, date_modified=revision, date_issued=publication] #}
           <gco:DateTime>{{ record['date_created'] }}</gco:DateTime>
         {% else %}
           <gco:Date>{{ record['date_created'] }}</gco:Date>
         {% endif %}
       </cit:date>
-      <!-- dateType: mandatory -->
+      {# dateType: mandatory #}
       <cit:dateType>
-        <cit:CI_DateTypeCode codeList="http://standards.iso.org/iso/19115/resources/Codelists/cat/codelists.xml#CI_DateTypeCode" codeListValue="creation">
-          <!-- CIOOS core mandatory element -->
-          <!-- MI_Metadata/dateInfo/CI_Date/date/CI_DateTypeCode -->
-          creation
-        </cit:CI_DateTypeCode>
+      {# CIOOS core mandatory element #}
+      {# MI_Metadata/dateInfo/CI_Date/date/CI_DateTypeCode #}
+        <cit:CI_DateTypeCode codeList="http://standards.iso.org/iso/19115/resources/Codelists/cat/codelists.xml#CI_DateTypeCode" codeListValue="creation">creation</cit:CI_DateTypeCode>
       </cit:dateType>
     </cit:CI_Date>
+    {% endif %}
   </mdb:dateInfo>
 
   {% if record['date_modified'] %}
   <mdb:dateInfo>
     <cit:CI_Date>
-      <!-- date: mandatory -->
+      {# date: mandatory #}
       <cit:date>
         {% if record['date_modified'] | length > 11 %}
-          <!-- CIOOS core mandatory element -->
-          <!-- MI_Metadata/dateInfo/CI_Date/date/DateTime -->
+          {# CIOOS core mandatory element #}
+          {# MI_Metadata/dateInfo/CI_Date/date/DateTime #}
           <gco:DateTime>{{ record['date_modified'] }}</gco:DateTime>
 
         {% else %}
           <gco:Date>{{ record['date_modified'] }}</gco:Date>
         {% endif %}
       </cit:date>
-      <!-- dateType: mandatory -->
+      {# dateType: mandatory #}
       <cit:dateType>
-        <cit:CI_DateTypeCode codeList="http://standards.iso.org/iso/19115/resources/Codelists/cat/codelists.xml#CI_DateTypeCode" codeListValue="revision">
-          <!-- CIOOS core mandatory element -->
-          <!-- MI_Metadata/dateInfo/CI_Date/date/CI_DateTypeCode -->
-          revision
-        </cit:CI_DateTypeCode>
+      {# CIOOS core mandatory element #}
+      {# MI_Metadata/dateInfo/CI_Date/date/CI_DateTypeCode #}
+        <cit:CI_DateTypeCode codeList="http://standards.iso.org/iso/19115/resources/Codelists/cat/codelists.xml#CI_DateTypeCode" codeListValue="revision">revision</cit:CI_DateTypeCode>
       </cit:dateType>
     </cit:CI_Date>
   </mdb:dateInfo>
@@ -232,46 +226,44 @@
   {% if record['date_issued'] %}
   <mdb:dateInfo>
     <cit:CI_Date>
-      <!-- date: mandatory -->
+      {# date: mandatory #}
       <cit:date>
         {% if record['date_issued'] | length > 11 %}
-          <!-- CIOOS core mandatory element -->
-          <!-- MI_Metadata/dateInfo/CI_Date/date/DateTime -->
-          <!-- ACDD: [date_created, date_modified=revision, date_issued=publication] -->
+          {# CIOOS core mandatory element #}
+          {# MI_Metadata/dateInfo/CI_Date/date/DateTime #}
+          {# ACDD: [date_created, date_modified=revision, date_issued=publication] #}
           <gco:DateTime>{{ record['date_issued'] }}</gco:DateTime>
         {% else %}
           <gco:Date>{{ record['date_issued'] }}</gco:Date>
         {% endif %}
       </cit:date>
-      <!-- dateType: mandatory -->
+      {# dateType: mandatory #}
       <cit:dateType>
-        <cit:CI_DateTypeCode codeList="http://standards.iso.org/iso/19115/resources/Codelists/cat/codelists.xml#CI_DateTypeCode" codeListValue="publication">
-          <!-- CIOOS core mandatory element -->
-          <!-- MI_Metadata/dateInfo/CI_Date/date/CI_DateTypeCode -->
-          publication
-        </cit:CI_DateTypeCode>
+      {# CIOOS core mandatory element #}
+      {# MI_Metadata/dateInfo/CI_Date/date/CI_DateTypeCode #}
+        <cit:CI_DateTypeCode codeList="http://standards.iso.org/iso/19115/resources/Codelists/cat/codelists.xml#CI_DateTypeCode" codeListValue="publication">publication</cit:CI_DateTypeCode>
       </cit:dateType>
     </cit:CI_Date>
   </mdb:dateInfo>
   {% endif %}
 
-  <!-- identificationInfo: mandatory -->
+  {# identificationInfo: mandatory #}
   <mdb:identificationInfo>
     <mri:MD_DataIdentification>
-      <!-- citation: mandatory -->
+      {# citation: mandatory #}
       <mri:citation>
         <cit:CI_Citation>
-          <!-- title: mandatory -->
+          {# title: mandatory #}
           <cit:title xsi:type="lan:PT_FreeText_PropertyType">
-            <!-- CIOOS core mandatory element -->
-            <!-- MI_Metadata/identificationInfo/MD_DataIdentification/citation/CI_Citation/title/CharacterString -->
+            {# CIOOS core mandatory element #}
+            {# MI_Metadata/identificationInfo/MD_DataIdentification/citation/CI_Citation/title/CharacterString #}
             {{ multi_lang('title') }}
           </cit:title>
 
           {% if record['contributor_name'] %}
-          <!-- citedResponsibileParty: mandatory -->
+          {# citedResponsibileParty: mandatory #}
           <cit:citedResponsibleParty>
-            <!-- contributor -->
+            {# contributor #}
             <cit:CI_Responsibility>
               <cit:role>
                 <cit:CI_RoleCode codeList="http://standards.iso.org/iso/19115/resources/Codelists/cat/codelists.xml#CI_RoleCode" codeListValue="contributor"/>
@@ -292,18 +284,14 @@
             <cit:CI_Responsibility>
 
               <cit:role>
-                <cit:CI_RoleCode codeList="http://standards.iso.org/iso/19115/resources/Codelists/cat/codelists.xml#CI_RoleCode" codeListValue="originator">
-                  <!-- CIOOS core mandatory element -->
-                  <!-- MI_Metadata/identificationInfo/MD_DataIdentification/citation/CI_Citation/role/CI_RoleCode -->
-                </cit:CI_RoleCode>
+              {# CIOOS core mandatory element #}
+              {# MI_Metadata/identificationInfo/MD_DataIdentification/citation/CI_Citation/role/CI_RoleCode #}
+                <cit:CI_RoleCode codeList="http://standards.iso.org/iso/19115/resources/Codelists/cat/codelists.xml#CI_RoleCode" codeListValue="originator"/>
               </cit:role>
 
               <cit:party>
                 <cit:CI_Organisation>
-                  <cit:name xsi:type="lan:PT_FreeText_PropertyType">
-                    {{ multi_lang('institution') }}
-                  </cit:name>
-
+                  <cit:name xsi:type="lan:PT_FreeText_PropertyType">{{ multi_lang('institution') }}</cit:name>
                 </cit:CI_Organisation>
               </cit:party>
             </cit:CI_Responsibility>
@@ -312,22 +300,21 @@
 
           {% if record['creator_name'] %}
           <cit:citedResponsibleParty>
-            <!-- originator -->
+            {# originator #}
             <cit:CI_Responsibility>
-              <!-- role: mandatory -->
+              {# role: mandatory #}
               <cit:role>
-                <cit:CI_RoleCode codeList="http://standards.iso.org/iso/19115/resources/Codelists/cat/codelists.xml#CI_RoleCode" codeListValue="originator">
-                  <!-- CIOOS core mandatory element -->
-                  <!-- MI_Metadata/identificationInfo/MD_DataIdentification/citation/CI_Citation/role/CI_RoleCode -->
-                </cit:CI_RoleCode>
+                <cit:CI_RoleCode codeList="http://standards.iso.org/iso/19115/resources/Codelists/cat/codelists.xml#CI_RoleCode" codeListValue="originator"/>
+                  {# CIOOS core mandatory element #}
+                  {# MI_Metadata/identificationInfo/MD_DataIdentification/citation/CI_Citation/role/CI_RoleCode #}
               </cit:role>
-              <!-- party: mandatory -->
+              {# party: mandatory #}
               <cit:party>
                 <cit:CI_Individual>
-                  <!-- name: mandatory -->
+                  {# name: mandatory #}
                   <cit:name xsi:type="lan:PT_FreeText_PropertyType">
-                    <!-- CIOOS core mandatory element -->
-                    <!-- MI_Metadata/identificationInfo/MD_DataIdentification/citation/CI_Citation/party/CI_Party/name/CharacterString -->
+                    {# CIOOS core mandatory element #}
+                    {# MI_Metadata/identificationInfo/MD_DataIdentification/citation/CI_Citation/party/CI_Party/name/CharacterString #}
                     <gco:CharacterString>{{ record['creator_name'] }}</gco:CharacterString>
                   </cit:name>
                   <cit:contactInfo>
@@ -335,9 +322,7 @@
                       <cit:onlineResource>
                         <cit:CI_OnlineResource>
                           <cit:linkage xsi:type="lan:PT_FreeText_PropertyType">
-                            <gco:CharacterString>
-                              {{ record['creator_url'] }}
-                            </gco:CharacterString>
+                            <gco:CharacterString>{{ record['creator_url'] }}</gco:CharacterString>
                           </cit:linkage>
                         </cit:CI_OnlineResource>
                       </cit:onlineResource>
@@ -362,10 +347,10 @@
         </cit:CI_Citation>
       </mri:citation>
 
-      <!-- abstract: mandatory -->
+      {# abstract: mandatory #}
       <mri:abstract xsi:type="lan:PT_FreeText_PropertyType">
-        <!-- CIOOS core mandatory element -->
-        <!-- MI_Metadata/identificationInfo/MD_DataIdentification/abstract/CharacterString -->
+        {# CIOOS core mandatory element #}
+        {# MI_Metadata/identificationInfo/MD_DataIdentification/abstract/CharacterString #}
         {{ multi_lang('summary') }}
       </mri:abstract>
 
@@ -378,8 +363,8 @@
       {% if record['progress_code'] %}
       <mri:status>
         <mcc:MD_ProgressCode codeList="http://standards.iso.org/iso/19115/resources/Codelists/cat/codelists.xml#MD_ProgressCode" codeListValue="{{ record['progress_code'] }}">
-          <!-- CIOOS core mandatory element -->
-          <!-- MI_Metadata/identificationInfo/MD_DataIdentification/status/MD_ProgressCode -->
+          {# CIOOS core mandatory element #}
+          {# MI_Metadata/identificationInfo/MD_DataIdentification/status/MD_ProgressCode #}
         </mcc:MD_ProgressCode>
       </mri:status>
       {% endif %}
@@ -400,24 +385,16 @@
             <gex:geographicElement>
               <gex:EX_GeographicBoundingBox>
                 <gex:westBoundLongitude>
-                  <gco:Decimal>
-                    {{ record['geospatial_lon_max'] }}
-                  </gco:Decimal>
+                  <gco:Decimal>{{ record['geospatial_lon_max'] }}</gco:Decimal>
                 </gex:westBoundLongitude>
                 <gex:eastBoundLongitude>
-                  <gco:Decimal>
-                    {{ record['geospatial_lon_min'] }}
-                  </gco:Decimal>
+                  <gco:Decimal>{{ record['geospatial_lon_min'] }}</gco:Decimal>
                 </gex:eastBoundLongitude>
                 <gex:southBoundLatitude>
-                  <gco:Decimal>
-                    {{ record['geospatial_lat_min'] }}
-                  </gco:Decimal>
+                  <gco:Decimal>{{ record['geospatial_lat_min'] }}</gco:Decimal>
                 </gex:southBoundLatitude>
                 <gex:northBoundLatitude>
-                  <gco:Decimal>
-                    {{ record['geospatial_lat_max'] }}
-                  </gco:Decimal>
+                  <gco:Decimal>{{ record['geospatial_lat_max'] }}</gco:Decimal>
                 </gex:northBoundLatitude>
               </gex:EX_GeographicBoundingBox>
             </gex:geographicElement>
@@ -470,9 +447,7 @@
           {# keywords in default language #}
           {% for keyword in record['keywords'].split(',') %}
             <mri:keyword>
-              <gco:CharacterString>
-                {{ keyword }}
-              </gco:CharacterString>
+              <gco:CharacterString>{{ keyword }}</gco:CharacterString>
             </mri:keyword>
           {% endfor %}
           {# for each alternate language: #}
@@ -491,7 +466,7 @@
           {% if record['keywords_vocabulary'] %}
           <mri:thesaurusName>
             <cit:CI_Citation>
-              <!-- validation requires title -->
+              {# validation requires title #}
               <cit:title xsi:type="lan:PT_FreeText_PropertyType">
                 {{ multi_lang('keywords_vocabulary') }}
               </cit:title>
@@ -520,9 +495,7 @@
           {# project in default language #}
           {% for project in record['project'].split(',') %}
             <mri:keyword>
-              <gco:CharacterString>
-                {{ project }}
-              </gco:CharacterString>
+              <gco:CharacterString>{{ project }}</gco:CharacterString>
             </mri:keyword>
           {% endfor %}
           {# for each alternate language: #}
@@ -566,46 +539,44 @@
   {% endif %}
 
   {% if record['platform_name'] %}
-  <!-- acquisitionInformation: mandatory -->
+  {# acquisitionInformation: mandatory #}
   <mdb:acquisitionInformation>
     <mac:MI_AcquisitionInformation>
       <mac:scope></mac:scope>
-      <!-- instrument: mandatory -->
-      <!-- platform is set to mandatory, presumably should be conditional? e.g. either have a platform or an instrument at top level? -->
-      <!-- platform: mandatory -->
+      {# instrument: mandatory #}
+      {# platform is set to mandatory, presumably should be conditional? e.g. either have a platform or an instrument at top level? #}
+      {# platform: mandatory #}
       <mac:platform>
         <mac:MI_Platform>
 
-          <!-- identifier: mandatory -->
+          {# identifier: mandatory #}
           <mac:identifier>
             <mcc:MD_Identifier>
-              <!-- authority: mandatory -->
+              {# authority: mandatory #}
               <mcc:authority>
                 <cit:CI_Citation>
-                  <!-- validation says cit:CI_Citation requires title -->
+                  {# validation says cit:CI_Citation requires title #}
                   <cit:title xsi:type="lan:PT_FreeText_PropertyType">
                     <gco:CharacterString>{{ record['platform_name'] }}</gco:CharacterString>
                   </cit:title>
 
                   {% if record['platform_role'] and record['platform_id_authority'] %}
-                  <!-- citedResponsibleParty: mandatory -->
+                  {# citedResponsibleParty: mandatory #}
                   <cit:citedResponsibleParty>
                     <cit:CI_Responsibility>
-                      <!-- role: mandatory -->
+                      {# role: mandatory #}
                       <cit:role>
-                        <cit:CI_RoleCode codeList="http://standards.iso.org/iso/19115/resources/Codelists/cat/codelists.xml#CI_RoleCode" codeListValue="{{ record['platform_role'] }}">
-                          <!-- CIOOS core mandatory element -->
-                          <!-- MI_Metadata/acquisitionInformation/MI_AcquisitionInformation/platform/MI_Platform/identifier/MD_Identifier/authority/CI_Citation/citedResponsibleParty/CI_Responsibility/role/CI_RoleCode -->
-
-                        </cit:CI_RoleCode>
+                        <cit:CI_RoleCode codeList="http://standards.iso.org/iso/19115/resources/Codelists/cat/codelists.xml#CI_RoleCode" codeListValue="{{ record['platform_role'] }}"/>
+                          {# CIOOS core mandatory element #}
+                          {# MI_Metadata/acquisitionInformation/MI_AcquisitionInformation/platform/MI_Platform/identifier/MD_Identifier/authority/CI_Citation/citedResponsibleParty/CI_Responsibility/role/CI_RoleCode #}
                       </cit:role>
-                      <!-- party: mandatory -->
+                      {# party: mandatory #}
                       <cit:party>
                         <cit:CI_Organisation>
-                          <!-- name: mandatory -->
+                          {# name: mandatory #}
                           <cit:name xsi:type="lan:PT_FreeText_PropertyType">
-                            <!-- CIOOS core mandatory element -->
-                            <!-- MI_Metadata/acquisitionInformation/MI_AcquisitionInformation/platform/MI_Platform/identifier/MD_Identifier/authority/CI_Citation/citedResponsibleParty/CI_Responsibility/party/CI_Party/name/CharacterString -->
+                            {# CIOOS core mandatory element #}
+                            {# MI_Metadata/acquisitionInformation/MI_AcquisitionInformation/platform/MI_Platform/identifier/MD_Identifier/authority/CI_Citation/citedResponsibleParty/CI_Responsibility/party/CI_Party/name/CharacterString #}
                             {{ multi_lang('platform_id_authority') }}
                           </cit:name>
                         </cit:CI_Organisation>
@@ -615,105 +586,105 @@
                   {% endif %}
                 </cit:CI_Citation>
               </mcc:authority>
-              <!-- code: mandatory -->
+              {# code: mandatory #}
               <mcc:code xsi:type="lan:PT_FreeText_PropertyType">
-                <!-- CIOOS core mandatory element -->
-                <!-- MI_Metadata/acquisitionInformation/MI_AcquisitionInformation/platform/MI_Platform/identifier/MD_Identifier/code/CharacterString -->
+                {# CIOOS core mandatory element #}
+                {# MI_Metadata/acquisitionInformation/MI_AcquisitionInformation/platform/MI_Platform/identifier/MD_Identifier/code/CharacterString #}
                 {{ multi_lang('platform_id') }}
               </mcc:code>
             </mcc:MD_Identifier>
           </mac:identifier>
 
-          <!-- description: mandatory -->
+          {# description: mandatory #}
           <mac:description xsi:type="lan:PT_FreeText_PropertyType">
-            <!-- CIOOS core mandatory element -->
-            <!-- MI_Metadata/acquisitionInformation/MI_AcquisitionInformation/platform/MI_Platform/description/CharacterString -->
+            {# CIOOS core mandatory element #}
+            {# MI_Metadata/acquisitionInformation/MI_AcquisitionInformation/platform/MI_Platform/description/CharacterString #}
             {{ multi_lang('platform_description') }}
           </mac:description>
 
           {% for num, instrument in instruments.items() %}
             <mac:instrument>
               <mac:MI_Instrument>
-                <!-- identifier: mandatory -->
+                {# identifier: mandatory #}
                 <mac:identifier>
                   <mcc:MD_Identifier>
-                    <!-- code: mandatory -->
+                    {# code: mandatory #}
                     <mcc:code xsi:type="lan:PT_FreeText_PropertyType">
-                      <!-- CIOOS core mandatory element -->
-                      <!-- MI_Metadata/acquisitionInformation/MI_AcquisitionInformation/instrument/MI_Instrument/identifier/MD_Identifier/code/CharacterString -->
+                      {# CIOOS core mandatory element #}
+                      {# MI_Metadata/acquisitionInformation/MI_AcquisitionInformation/instrument/MI_Instrument/identifier/MD_Identifier/code/CharacterString #}
                       <gco:CharacterString>{{ instrument.id }}</gco:CharacterString>
                     </mcc:code>
                     {% if instrument.version %}
-                    <!-- version: mandatory -->
+                    {# version: mandatory #}
                     <mcc:version xsi:type="lan:PT_FreeText_PropertyType">
-                      <!-- CIOOS core mandatory element -->
-                      <!-- MI_Metadata/acquisitionInformation/MI_AcquisitionInformation/instrument/MI_Instrument/identifier/MD_Identifier/version/CharacterString -->
+                      {# CIOOS core mandatory element #}
+                      {# MI_Metadata/acquisitionInformation/MI_AcquisitionInformation/instrument/MI_Instrument/identifier/MD_Identifier/version/CharacterString #}
                       <gco:CharacterString>{{ instrument.version }}</gco:CharacterString>
                     </mcc:version>
                     {% endif %}
                     {% if instrument.description %}
-                    <!-- description: mandatory -->
+                    {# description: mandatory #}
                     <mcc:description xsi:type="lan:PT_FreeText_PropertyType">
-                      <!-- CIOOS core mandatory element -->
-                      <!-- MI_Metadata/acquisitionInformation/MI_AcquisitionInformation/instrument/MI_Instrument/identifier/MD_Identifier/description/CharacterString -->
+                      {# CIOOS core mandatory element #}
+                      {# MI_Metadata/acquisitionInformation/MI_AcquisitionInformation/instrument/MI_Instrument/identifier/MD_Identifier/description/CharacterString #}
                       <gco:CharacterString>{{ instrument.description }}</gco:CharacterString>
                     </mcc:description>
                     {% endif %}
                   </mcc:MD_Identifier>
                 </mac:identifier>
-                <!-- type: mandatory -->
+                {# type: mandatory #}
                 <mac:type xsi:type="lan:PT_FreeText_PropertyType">
-                  <!-- CIOOS core mandatory element -->
-                  <!-- MI_Metadata/acquisitionInformation/MI_AcquisitionInformation/instrument/MI_Instrument/type/CharacterString -->
+                  {# CIOOS core mandatory element #}
+                  {# MI_Metadata/acquisitionInformation/MI_AcquisitionInformation/instrument/MI_Instrument/type/CharacterString #}
                   <gco:CharacterString>{{ instrument.type }}</gco:CharacterString>
                 </mac:type>
 
-                <!-- description: mandatory -->
+                {# description: mandatory #}
                 {% if instrument.description_other %}
                 <mac:description xsi:type="lan:PT_FreeText_PropertyType">
-                  <!-- CIOOS core mandatory element -->
-                  <!-- MI_Metadata/acquisitionInformation/MI_AcquisitionInformation/instrument/MI_Instrument/description/CharacterString -->
+                  {# CIOOS core mandatory element #}
+                  {# MI_Metadata/acquisitionInformation/MI_AcquisitionInformation/instrument/MI_Instrument/description/CharacterString #}
                   <gco:CharacterString>{{ instrument.description_other }}</gco:CharacterString>
                 </mac:description>
                 {% endif %}
-                <!-- mountedOn: mandatory? -->
+                {# mountedOn: mandatory? #}
                 <mac:mountedOn/>
                 {% for num, sensor in instrument.sensor.items() %}
-                  <!-- sensor: mandatory -->
+                  {# sensor: mandatory #}
                   <mac:sensor>
                     <mac:MI_Sensor>
 
-                      <!-- identifier: mandatory -->
+                      {# identifier: mandatory #}
                       <mac:identifier>
                         <mcc:MD_Identifier>
-                          <!-- code: mandatory -->
+                          {# code: mandatory #}
                           <mcc:code xsi:type="lan:PT_FreeText_PropertyType">
-                            <!-- CIOOS core mandatory element -->
-                            <!-- MI_Metadata/acquisitionInformation/MI_AcquisitionInformation/instrument/MI_Instrument/sensor/MI_Sensor/identifier/MD_Identifier/code/CharacterString -->
+                            {# CIOOS core mandatory element #}
+                            {# MI_Metadata/acquisitionInformation/MI_AcquisitionInformation/instrument/MI_Instrument/sensor/MI_Sensor/identifier/MD_Identifier/code/CharacterString #}
                             <gco:CharacterString>{{ sensor.id }}</gco:CharacterString>
                           </mcc:code>
-                          <!-- version: mandatory -->
+                          {# version: mandatory #}
                           {% if sensor.version %}
                           <mcc:version xsi:type="lan:PT_FreeText_PropertyType">
-                            <!-- CIOOS core mandatory element -->
-                            <!-- MI_Metadata/acquisitionInformation/MI_AcquisitionInformation/instrument/MI_Instrument/sensor/MI_Sensor/identifier/MD_Identifier/version/CharacterString -->
+                            {# CIOOS core mandatory element #}
+                            {# MI_Metadata/acquisitionInformation/MI_AcquisitionInformation/instrument/MI_Instrument/sensor/MI_Sensor/identifier/MD_Identifier/version/CharacterString #}
                             <gco:CharacterString>{{ sensor.version }}</gco:CharacterString>
                           </mcc:version>
                           {% endif %}
                           {% if sensor.description %}
-                          <!-- description: mandatory -->
+                          {# description: mandatory #}
                           <mcc:description xsi:type="lan:PT_FreeText_PropertyType">
-                            <!-- CIOOS core mandatory element -->
-                            <!-- MI_Metadata/acquisitionInformation/MI_AcquisitionInformation/instrument/MI_Instrument/sensor/MI_Sensor/identifier/MD_Identifier/description/CharacterString -->
+                            {# CIOOS core mandatory element #}
+                            {# MI_Metadata/acquisitionInformation/MI_AcquisitionInformation/instrument/MI_Instrument/sensor/MI_Sensor/identifier/MD_Identifier/description/CharacterString #}
                             <gco:CharacterString>{{ sensor.description }}</gco:CharacterString>
                           </mcc:description>
                           {% endif %}
                         </mcc:MD_Identifier>
                       </mac:identifier>
                       <mac:type/>
-                      <!-- hosted: mandatory -->
+                      {# hosted: mandatory #}
                       <mac:hosted>
-                        <!-- mac:MI_Instrument is an association to parent MI_Instrument really needed in this case? -->
+                        {# mac:MI_Instrument is an association to parent MI_Instrument really needed in this case? #}
                       </mac:hosted>
                     </mac:MI_Sensor>
                   </mac:sensor>
