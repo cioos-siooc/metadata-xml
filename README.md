@@ -32,7 +32,7 @@ These are the ACDD style keywords that you can use in your record.
 
 For the fields that are text, you can add on '\_fra' or '\_eng' to input the alternate language.
 
-See example .yaml files in this directory for more examples.
+See example .yaml files in the metadata_xml directory for more examples.
 
     - acknowledgement
     - comment
