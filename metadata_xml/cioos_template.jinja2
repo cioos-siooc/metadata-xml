@@ -360,14 +360,12 @@
       </mri:credit>
       {% endif %}
 
-      {% if record['progress_code'] %}
       <mri:status>
-        <mcc:MD_ProgressCode codeList="http://standards.iso.org/iso/19115/resources/Codelists/cat/codelists.xml#MD_ProgressCode" codeListValue="{{ record['progress_code'] }}">
+        <mcc:MD_ProgressCode codeList="http://standards.iso.org/iso/19115/resources/Codelists/cat/codelists.xml#MD_ProgressCode" codeListValue="{{ record['progress_code'] or 'onGoing' }}">
           {# CIOOS core mandatory element #}
           {# MI_Metadata/identificationInfo/MD_DataIdentification/status/MD_ProgressCode #}
         </mcc:MD_ProgressCode>
       </mri:status>
-      {% endif %}
 
       {% if record['time_coverage_resolution'] %}
         <mri:temporalResolution>
