@@ -519,6 +519,16 @@
       </mri:descriptiveKeywords>
       {% endif %}
 
+      {% if record['license'] %}
+      <mri:resourceConstraints>
+        <mco:MD_LegalConstraints>
+          <mco:useLimitation>
+            {{ multi_lang('license') }}
+          </mco:useLimitation>
+        </mco:MD_LegalConstraints>
+      </mri:resourceConstraints>
+      {% endif %}
+
       {% if record['comment'] %}
         <mri:supplementalInformation xsi:type="lan:PT_FreeText_PropertyType">
           {{ multi_lang('comment') }}
