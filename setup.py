@@ -4,7 +4,8 @@ from distutils.core import setup
 
 setup(name='metadata_xml',
       version='0.1',
-      description='Python module for converting ACDD style metadata into the CIOOS ISO profile',
+      description='Python module for converting ACDD style metadata into the '
+      + 'CIOOS ISO profile',
       url='https://github.com/cioos-siooc/metadata-xml',
       packages=['metadata_xml', ],
       include_package_data=True,
