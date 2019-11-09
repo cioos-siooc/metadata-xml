@@ -168,11 +168,13 @@ if (__name__ == '__main__'):
         help="Enter filename of yaml file. (default = record.yaml)")
     args = parser.parse_args()
     filename = args.string
-    print("Input filename as: "+filename.split('.')[0])
+    basename = os.path.basename(filename)
+    print("Input filename as: "+basename)
+
     with open(args.string) as stream:
         yaml_data = yaml.safe_load(stream)
 
         xml = iso_template(yaml_data, use_validation=True)
-        file = open(filename.split('.')[0] + ".xml", "w")
+        file = open(basename.split('.')[0] + ".xml", "w")
         file.write(xml)
         print("Wrote " + file.name)
