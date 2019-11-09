@@ -176,7 +176,6 @@
   {# schema requires at least one mdb:dateInfo field #}
   {# dateInfo: mandatory #}
   <mdb:dateInfo>
-  {% if record['date_created'] %}
     <cit:CI_Date>
       {# date: mandatory #}
       <cit:date>
@@ -185,8 +184,10 @@
           {# MI_Metadata/dateInfo/CI_Date/date/DateTime #}
           {# ACDD: [date_created=creation, date_modified=revision, date_issued=publication] #}
           <gco:DateTime>{{ record['date_created'] }}</gco:DateTime>
-        {% else %}
+        {% elif record['date_created'] %}
           <gco:Date>{{ record['date_created'] }}</gco:Date>
+        {% else %}
+          <gco:Date>{{ date_today }}</gco:Date>
         {% endif %}
       </cit:date>
       {# dateType: mandatory #}
@@ -196,7 +197,6 @@
         <cit:CI_DateTypeCode codeList="http://standards.iso.org/iso/19115/resources/Codelists/cat/codelists.xml#CI_DateTypeCode" codeListValue="creation">creation</cit:CI_DateTypeCode>
       </cit:dateType>
     </cit:CI_Date>
-    {% endif %}
   </mdb:dateInfo>
 
   {% if record['date_modified'] %}
