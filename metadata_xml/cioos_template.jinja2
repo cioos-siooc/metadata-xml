@@ -96,19 +96,17 @@
   </mdb:defaultLocale>
   {% endif %}
 
-  {% if record['scope_code'] %}
   {# metadataScope: mandatory #}
   <mdb:metadataScope>
     <mdb:MD_MetadataScope>
       {# resourceScope: mandatory #}
       <mdb:resourceScope>
-        <mcc:MD_ScopeCode codeList="http://standards.iso.org/iso/19115/resources/Codelists/cat/codelists.xml#MD_ScopeCode" codeListValue="{{ record['scope_code'] }}"/>
+        <mcc:MD_ScopeCode codeList="http://standards.iso.org/iso/19115/resources/Codelists/cat/codelists.xmlMD_ScopeCode_dataset" codeListValue="dataset"/>
           {# CIOOS core mandatory element #}
           {# MI_Metadata/metadataScope/MD_MetadataScope/resourceScope/MD_ScopeCode #}
       </mdb:resourceScope>
     </mdb:MD_MetadataScope>
   </mdb:metadataScope>
-  {% endif %}
 
   {# contact: mandatory #}
   <mdb:contact>
