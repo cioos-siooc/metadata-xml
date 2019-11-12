@@ -1,3 +1,5 @@
+#!/usr/bin/env python3
+
 import unittest
 import lxml
 from iso_template import (get_alternate_text_wrapper,
