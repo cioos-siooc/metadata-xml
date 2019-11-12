@@ -16,6 +16,10 @@ To upgrade this package if you have already installed it, use:
 
 `pip install . --upgrade`
 
+If you are developing this package, to avoid reinstalling each time, use:
+
+`pip install -e .`
+
 ## Command line usage
 
 To convert a Yaml file to XML, run:
