@@ -8,17 +8,20 @@ It can be used as a command line tool, or imported into other Python code.
 
 ## Installation
 
-From this directory, run:
+     1. Setup and activate a new Python 3 environment
 
-`pip install .`
+     2. From this directory, run:
 
-To upgrade this package if you have already installed it, use:
+        `pip install .`
 
-`pip install . --upgrade`
+     3. To upgrade this package if you have already installed it, use:
 
-If you are developing this package, to avoid reinstalling each time, use:
+      `pip install . --upgrade`
 
-`pip install -e .`
+      - or If you are developing this package, to avoid reinstalling each time,
+        use:
+
+      `pip install -e .`
 
 ## Command line usage
 
