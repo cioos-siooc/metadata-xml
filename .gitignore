@@ -1,3 +1,4 @@
 # Ignore PyCharm env
 .idea
 __pycache__
+*.egg-info
