@@ -5,15 +5,21 @@ import re
 from lxml import etree
 import os
 from datetime import date
-from metadata_xml.validation import validate, ValidationError
+from metadata_xml.validation import validate
 from xml.sax.saxutils import escape
 
 TEMPLATE_FILE = './cioos_template.jinja2'
 
 
+class ValidationError(Exception):
+    pass
+
+
 def get_instruments_from_record(record):
     ''' converts flat instrument variables to a nested dict
         See test for example
+
+        This function is used within the Jinja template
     '''
     instruments = {}
     for key, val in record.items():
@@ -145,8 +151,9 @@ def iso_template(record, use_validation=True):
     record = sanitize_record(record)
 
     if use_validation:
-        # validate() will throw a ValidationError error if needed
-        validate(record)
+        errors = validate(record)
+        if errors:
+            raise ValidationError(errors)
 
     xml = pretty_xml(convert_record_to_xml(record))
 

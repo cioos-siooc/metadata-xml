@@ -27,10 +27,6 @@ eovs = [
 ]
 
 
-class ValidationError(Exception):
-    pass
-
-
 def get_alternate_languge(record):
     language = record['language']
     if language == 'eng':
@@ -193,6 +189,5 @@ def validate(record):
         errors.append("""Date/time formatting error in field(s): {}.
                                  Pattern must match one of: {}""".format(
             join(fields_with_bad_dates), join(acceptable_date_formats_text)))
-    if errors:
-        raise ValidationError(errors)
-    return True
+
+    return errors
