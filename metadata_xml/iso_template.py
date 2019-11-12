@@ -1,19 +1,12 @@
 #!/usr/bin/env python3
 
-# From this directory, run: python iso_template.py
-
-
 from jinja2 import Environment, FileSystemLoader
-import yaml
 import re
 from lxml import etree
 import os
-import argparse
 from datetime import date
 from metadata_xml.validation import validate, ValidationError
 from xml.sax.saxutils import escape
-
-# from validation import validate, ValidationError
 
 TEMPLATE_FILE = './cioos_template.jinja2'
 
@@ -158,23 +151,3 @@ def iso_template(record, use_validation=True):
     xml = pretty_xml(convert_record_to_xml(record))
 
     return xml
-
-
-if (__name__ == '__main__'):
-    parser = argparse.ArgumentParser(
-        description="Convert yaml and Jinja template into xml.")
-    parser.add_argument(
-        '-f', type=str, dest="string", default="record.yaml",
-        help="Enter filename of yaml file. (default = record.yaml)")
-    args = parser.parse_args()
-    filename = args.string
-    basename = os.path.basename(filename)
-    print("Input filename as: "+basename)
-
-    with open(args.string) as stream:
-        yaml_data = yaml.safe_load(stream)
-
-        xml = iso_template(yaml_data, use_validation=True)
-        file = open(basename.split('.')[0] + ".xml", "w")
-        file.write(xml)
-        print("Wrote " + file.name)
