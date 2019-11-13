@@ -29,7 +29,7 @@ To convert a Yaml file to XML, run:
 
 `python -m metadata_xml -f <yaml_file_path>`
 
-eg, `pyhon -m metadata_xml -f sample_records/record.yaml`
+eg, `python -m metadata_xml -f sample_records/record.yaml`
 
 ## From Python code
 
@@ -53,62 +53,62 @@ For the fields that are text, you can add on '\_fra' or '\_eng' to input the alt
 
 See example .yaml files in the 'sample_records' directory for more examples.
 
-- acknowledgement
-- comment
-- contributor_name
-- creator_email
-- creator_name
-- creator_url
-- date_created
-- date_created
-- date_issued
-- date_issued
-- date_modified
-- date_modified
-- geospatial_lat_max
-- geospatial_lat_min
-- geospatial_lon_max
-- geospatial_lon_min
-- geospatial_vertical_max
-- geospatial_vertical_min
-- history
-- id
-- institution
-- keywords
-- keywords_vocabulary
-- keywords_vocabulary
-- lang_code
-- lang_text
-- language
-- language_country
-- license
-- naming_authority
-- platform_description
-- platform_id
-- platform_id_authority
-- platform_name
-- platform_role
-- progress_code
-- project
-- publisher_country
-- publisher_email
-- publisher_name
-- publisher_url
-- summary
-- time_coverage_duration
-- time_coverage_end
-- time_coverage_resolution
-- time_coverage_start
-- title
+    - acknowledgement
+    - comment
+    - contributor_name
+    - creator_email
+    - creator_name
+    - creator_url
+    - date_created
+    - date_created
+    - date_issued
+    - date_issued
+    - date_modified
+    - date_modified
+    - geospatial_lat_max
+    - geospatial_lat_min
+    - geospatial_lon_max
+    - geospatial_lon_min
+    - geospatial_vertical_max
+    - geospatial_vertical_min
+    - history
+    - id
+    - institution
+    - keywords
+    - keywords_vocabulary
+    - keywords_vocabulary
+    - lang_code
+    - lang_text
+    - language
+    - language_country
+    - license
+    - naming_authority
+    - platform_description
+    - platform_id
+    - platform_id_authority
+    - platform_name
+    - platform_role
+    - progress_code
+    - project
+    - publisher_country
+    - publisher_email
+    - publisher_name
+    - publisher_url
+    - summary
+    - time_coverage_duration
+    - time_coverage_end
+    - time_coverage_resolution
+    - time_coverage_start
+    - title
 
 These can be repeated with different instrument/sensor numbers, eg:
 
-- instrument_1_id
-- instrument_1_description
-- instrument_1_description_other
-- instrument_1_type
-- instrument_1_version
+    - instrument_1_id
+    - instrument_1_description
+    - instrument_1_description_other
+    - instrument_1_type
+    - instrument_1_version
 
-- instrument_1_sensor_1_id
-- instrument_1_sensor_1_description
-- instrument_1_sensor_1_version
+    - instrument_1_sensor_1_id
+    - instrument_1_sensor_1_description
+    - instrument_1_sensor_1_version
