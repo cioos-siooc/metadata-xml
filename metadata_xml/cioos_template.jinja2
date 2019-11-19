@@ -96,19 +96,17 @@
   </mdb:defaultLocale>
   {% endif %}
 
-  {% if record['scope_code'] %}
   {# metadataScope: mandatory #}
   <mdb:metadataScope>
     <mdb:MD_MetadataScope>
       {# resourceScope: mandatory #}
       <mdb:resourceScope>
-        <mcc:MD_ScopeCode codeList="http://standards.iso.org/iso/19115/resources/Codelists/cat/codelists.xml#MD_ScopeCode" codeListValue="{{ record['scope_code'] }}"/>
+        <mcc:MD_ScopeCode codeList="http://standards.iso.org/iso/19115/resources/Codelists/cat/codelists.xml#MD_ScopeCode" codeListValue="dataset"/>
           {# CIOOS core mandatory element #}
           {# MI_Metadata/metadataScope/MD_MetadataScope/resourceScope/MD_ScopeCode #}
       </mdb:resourceScope>
     </mdb:MD_MetadataScope>
   </mdb:metadataScope>
-  {% endif %}
 
   {# contact: mandatory #}
   <mdb:contact>
@@ -176,7 +174,6 @@
   {# schema requires at least one mdb:dateInfo field #}
   {# dateInfo: mandatory #}
   <mdb:dateInfo>
-  {% if record['date_created'] %}
     <cit:CI_Date>
       {# date: mandatory #}
       <cit:date>
@@ -185,8 +182,10 @@
           {# MI_Metadata/dateInfo/CI_Date/date/DateTime #}
           {# ACDD: [date_created=creation, date_modified=revision, date_issued=publication] #}
           <gco:DateTime>{{ record['date_created'] }}</gco:DateTime>
-        {% else %}
+        {% elif record['date_created'] %}
           <gco:Date>{{ record['date_created'] }}</gco:Date>
+        {% else %}
+          <gco:Date>{{ date_today }}</gco:Date>
         {% endif %}
       </cit:date>
       {# dateType: mandatory #}
@@ -196,7 +195,6 @@
         <cit:CI_DateTypeCode codeList="http://standards.iso.org/iso/19115/resources/Codelists/cat/codelists.xml#CI_DateTypeCode" codeListValue="creation">creation</cit:CI_DateTypeCode>
       </cit:dateType>
     </cit:CI_Date>
-    {% endif %}
   </mdb:dateInfo>
 
   {% if record['date_modified'] %}
@@ -360,14 +358,12 @@
       </mri:credit>
       {% endif %}
 
-      {% if record['progress_code'] %}
       <mri:status>
-        <mcc:MD_ProgressCode codeList="http://standards.iso.org/iso/19115/resources/Codelists/cat/codelists.xml#MD_ProgressCode" codeListValue="{{ record['progress_code'] }}">
+        <mcc:MD_ProgressCode codeList="http://standards.iso.org/iso/19115/resources/Codelists/cat/codelists.xml#MD_ProgressCode" codeListValue="{{ record['progress_code'] or 'onGoing' }}">
           {# CIOOS core mandatory element #}
           {# MI_Metadata/identificationInfo/MD_DataIdentification/status/MD_ProgressCode #}
         </mcc:MD_ProgressCode>
       </mri:status>
-      {% endif %}
 
       {% if record['time_coverage_resolution'] %}
         <mri:temporalResolution>
@@ -517,6 +513,16 @@
           </mri:type>
         </mri:MD_Keywords>
       </mri:descriptiveKeywords>
+      {% endif %}
+
+      {% if record['license'] %}
+      <mri:resourceConstraints>
+        <mco:MD_LegalConstraints>
+          <mco:useLimitation>
+            {{ multi_lang('license') }}
+          </mco:useLimitation>
+        </mco:MD_LegalConstraints>
+      </mri:resourceConstraints>
       {% endif %}
 
       {% if record['comment'] %}

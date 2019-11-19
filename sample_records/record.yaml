@@ -7,7 +7,7 @@ title_eng: "title in english"
 summary: "summary in french"
 summary_eng: "summary in english"
 keywords: "kw1 in french,kw2 in french"
-keywords_eng: "kw1 in english,kw2 in english,kw3 in english"
+keywords_eng: "kw1 in english,kw2 in english,kw3 in english, oxygen"
 id: "id"
 naming_authority: "naming_authority in french"
 naming_authority_eng: "naming_authority in english"
@@ -66,7 +66,6 @@ language_country: "CAN"
 
 publisher_country: "publisher_country"
 progress_code: "completed"
-scope_code: "dataset"
 
 instrument_1_id: instrument_1_id
 instrument_1_version: instrument_1_version
