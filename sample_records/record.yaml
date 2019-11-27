@@ -19,6 +19,7 @@ comment: "comment in french"
 comment_eng: "comment in english"
 
 date_created: "2010-01-22"
+erddap_dataset_url: "http://example.com/erddap/tabledap/MyDataset.html"
 creator_name: "creator_name"
 creator_url: "creator_url"
 creator_email: "nobody@example.com"
