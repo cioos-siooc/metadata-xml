@@ -101,6 +101,11 @@ class TestISOTemplateFunctions(unittest.TestCase):
 
     def test_sanitize_record(self):
         self.assertEqual(sanitize_record({"title": None}), {})
+        self.assertEqual(
+            sanitize_record(
+                {"erddap_dataset_url": "http://example.com?a&b"}),
+            {"erddap_dataset_url": "http://example.com?a&amp;b"}
+        )
 
     def test_list_intersection(self):
         self.assertEqual(list_intersection([1, 2], [2, 3]), [2])
