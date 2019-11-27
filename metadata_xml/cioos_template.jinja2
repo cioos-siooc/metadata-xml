@@ -278,6 +278,7 @@
           {% endif %}
 
           {% if record['institution'] %}
+          {% for institution in record['institution'].split(',')  %}
           <cit:citedResponsibleParty>
             <cit:CI_Responsibility>
 
@@ -289,11 +290,12 @@
 
               <cit:party>
                 <cit:CI_Organisation>
-                  <cit:name xsi:type="lan:PT_FreeText_PropertyType">{{ multi_lang('institution') }}</cit:name>
+                  <cit:name><gco:CharacterString>{{ institution }}</gco:CharacterString></cit:name>
                 </cit:CI_Organisation>
               </cit:party>
             </cit:CI_Responsibility>
           </cit:citedResponsibleParty>
+          {% endfor %}
           {% endif %}
 
           {% if record['creator_name'] %}
