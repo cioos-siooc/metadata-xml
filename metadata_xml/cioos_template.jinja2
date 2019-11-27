@@ -534,6 +534,39 @@
     </mri:MD_DataIdentification>
   </mdb:identificationInfo>
 
+  {% if record['erddap_dataset_url'] %}
+    <mdb:distributionInfo>
+      <mrd:MD_Distribution>
+        <mrd:transferOptions>
+          <mrd:MD_DigitalTransferOptions>
+            <mrd:onLine>
+              <cit:CI_OnlineResource>
+                <cit:linkage>
+                  <gco:CharacterString>{{ record['erddap_dataset_url'] }}</gco:CharacterString>
+                </cit:linkage>
+                <cit:protocol>
+                  <gco:CharacterString>order</gco:CharacterString>
+                </cit:protocol>
+                <cit:name>
+                  <gco:CharacterString>ERDDAP Data Subset Form</gco:CharacterString>
+                </cit:name>
+                <cit:description>
+                  <gco:CharacterString>ERDDAP's version of the OPeNDAP .html web page for this dataset. Specify a subset of the dataset and download the data via OPeNDAP or in many different file types.</gco:CharacterString>
+                </cit:description>
+                <cit:function>
+                  <cit:CI_OnLineFunctionCode codeList="http://standards.iso.org/iso/19115/resources/Codelists/cat/codelists.xml#CI_OnLineFunctionCode" codeListValue="download"/>
+                </cit:function>
+                <cit:protocolRequest>
+                  <gco:CharacterString>OPeNDAP constraint protocol</gco:CharacterString>
+                </cit:protocolRequest>
+              </cit:CI_OnlineResource>
+            </mrd:onLine>
+          </mrd:MD_DigitalTransferOptions>
+        </mrd:transferOptions>
+      </mrd:MD_Distribution>
+    </mdb:distributionInfo>
+  {% endif %}
+
   {% if record['history'] %}
     <mdb:resourceLineage>
       <mrl:LI_Lineage>
