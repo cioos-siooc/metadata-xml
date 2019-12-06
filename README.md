@@ -62,8 +62,6 @@ See example .yaml files in the 'sample_records' directory for more examples.
     - date_created
     - date_created
     - date_issued
-    - date_issued
-    - date_modified
     - date_modified
     - erddap_dataset_url
     - geospatial_lat_max
@@ -77,9 +75,6 @@ See example .yaml files in the 'sample_records' directory for more examples.
     - institution
     - keywords
     - keywords_vocabulary
-    - keywords_vocabulary
-    - lang_code
-    - lang_text
     - language
     - language_country
     - license
