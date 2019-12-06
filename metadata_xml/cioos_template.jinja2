@@ -40,31 +40,31 @@
   xmlns:xlink="http://www.w3.org/1999/xlink">
 
   {% if record['id'] %}
-    {# metadataIdentifier: mandatory #}
-    <mdb:metadataIdentifier>
+  {# metadataIdentifier: mandatory #}
+  <mdb:metadataIdentifier>
 
-      {# in cioos profile? #}
-      <mcc:MD_Identifier>
-        {% if record['naming_authority'] %}
-          <mcc:authority>
-            <cit:CI_Citation>
-              <cit:title xsi:type="lan:PT_FreeText_PropertyType">
-                {{ multi_lang('naming_authority') }}
-              </cit:title>
-            </cit:CI_Citation>
-          </mcc:authority>
-        {% endif %}
+    {# in cioos profile? #}
+    <mcc:MD_Identifier>
+      {% if record['naming_authority'] %}
+        <mcc:authority>
+          <cit:CI_Citation>
+            <cit:title xsi:type="lan:PT_FreeText_PropertyType">
+              {{ multi_lang('naming_authority') }}
+            </cit:title>
+          </cit:CI_Citation>
+        </mcc:authority>
+      {% endif %}
 
-      {% if record['id'] %}
-        {# code: mandatory #}
-        <mcc:code xsi:type="lan:PT_FreeText_PropertyType">
-          {# CIOOS core mandatory element #}
-          {# MI_Metadata/metadataIdentifier/MD_Identifier/code/CharacterString #}
-          {{ multi_lang('id') }}
-        </mcc:code>
-        {% endif %}
-      </mcc:MD_Identifier>
-    </mdb:metadataIdentifier>
+    {% if record['id'] %}
+      {# code: mandatory #}
+      <mcc:code xsi:type="lan:PT_FreeText_PropertyType">
+        {# CIOOS core mandatory element #}
+        {# MI_Metadata/metadataIdentifier/MD_Identifier/code/CharacterString #}
+        {{ multi_lang('id') }}
+      </mcc:code>
+      {% endif %}
+    </mcc:MD_Identifier>
+  </mdb:metadataIdentifier>
   {% endif %}
 
   {% if record['language'] %}
@@ -521,7 +521,7 @@
               <gex:EX_VerticalExtent>
 
                 {# verticalCRS: optional, required if verticalCRSId is missing #}
-                <gmd:verticalCRS xlink:href="http://www.epsg-registry.org/export.htm?gml=urn:ogc:def:crs:EPSG::5831"
+                <gex:verticalCRS xlink:href="http://www.epsg-registry.org/export.htm?gml=urn:ogc:def:crs:EPSG::5831"
                        xlink:title="instantaneous water level depth"
                        xlink:actuate="onRequest"/>
 
