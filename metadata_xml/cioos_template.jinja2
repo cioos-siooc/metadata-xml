@@ -643,13 +643,13 @@
 
               {% if record['keywords_vocabulary'].startswith('http') %}
               {# online link not in cioos standard, should it be? #}
-                {# <cit:onlineResource>
+                <cit:onlineResource>
                   <cit:CI_OnlineResource>
                     <cit:linkage xsi:type="lan:PT_FreeText_PropertyType">
                       {{ multi_lang('keywords_vocabulary') }}
                     </cit:linkage>
                   </cit:CI_OnlineResource>
-                </cit:onlineResource> #}
+                </cit:onlineResource>
               {% endif %}
 
             </cit:CI_Citation>
