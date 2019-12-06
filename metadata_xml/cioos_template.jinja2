@@ -39,34 +39,35 @@
   xmlns:mrc="http://standards.iso.org/iso/19115/-3/mrc/2.0"
   xmlns:xlink="http://www.w3.org/1999/xlink">
 
-{% if record['id'] %}
-  {# metadataIdentifier: mandatory #}
-  <mdb:metadataIdentifier>
+  {% if record['id'] %}
+    {# metadataIdentifier: mandatory #}
+    <mdb:metadataIdentifier>
 
-    <mcc:MD_Identifier>
-      {% if record['naming_authority'] %}
-        <mcc:authority>
-          <cit:CI_Citation>
-            <cit:title xsi:type="lan:PT_FreeText_PropertyType">
-              {{ multi_lang('naming_authority') }}
-            </cit:title>
-          </cit:CI_Citation>
-        </mcc:authority>
-      {% endif %}
+      {# in cioos profile? #}
+      <mcc:MD_Identifier>
+        {% if record['naming_authority'] %}
+          <mcc:authority>
+            <cit:CI_Citation>
+              <cit:title xsi:type="lan:PT_FreeText_PropertyType">
+                {{ multi_lang('naming_authority') }}
+              </cit:title>
+            </cit:CI_Citation>
+          </mcc:authority>
+        {% endif %}
 
-    {% if record['id'] %}
-      {# code: mandatory #}
-      <mcc:code xsi:type="lan:PT_FreeText_PropertyType">
-        {# CIOOS core mandatory element #}
-        {# MI_Metadata/metadataIdentifier/MD_Identifier/code/CharacterString #}
-        {{ multi_lang('id') }}
-      </mcc:code>
-      {% endif %}
-    </mcc:MD_Identifier>
-  </mdb:metadataIdentifier>
-{% endif %}
+      {% if record['id'] %}
+        {# code: mandatory #}
+        <mcc:code xsi:type="lan:PT_FreeText_PropertyType">
+          {# CIOOS core mandatory element #}
+          {# MI_Metadata/metadataIdentifier/MD_Identifier/code/CharacterString #}
+          {{ multi_lang('id') }}
+        </mcc:code>
+        {% endif %}
+      </mcc:MD_Identifier>
+    </mdb:metadataIdentifier>
+  {% endif %}
 
-{% if record['language'] %}
+  {% if record['language'] %}
   {# defaultLocale: mandatory #}
   <mdb:defaultLocale>
     <lan:PT_Locale>
@@ -94,6 +95,35 @@
       </lan:characterEncoding>
     </lan:PT_Locale>
   </mdb:defaultLocale>
+  {% endif %}
+
+  {% if record['language_other'] %}
+  {# otherLocale: CIOOS mandatory #}
+	<mdb:otherLocale>
+		<lan:PT_Locale>
+      {# language: mandatory #}
+      <lan:language>
+        <lan:LanguageCode codeList="http://standards.iso.org/iso/19115/resources/Codelist/lan/LanguageCode.xml" codeListValue="{{ record['language_other'] }}">
+          {# CIOOS core mandatory element #}
+          {# MI_Metadata/otherLocale/PT_Locale/language/LanguageCode (ISO639-2) #}
+        </lan:LanguageCode>
+      </lan:language>
+      {# country: mandatory #}
+      {% if record['language_country'] %}
+      <lan:country>
+        <lan:CountryCode codeList="http://standards.iso.org/iso/19115/resources/Codelists/cat/codelists.xml" codeListValue="{{ record['language_country'] }}">
+          {# CIOOS core mandatory element #}
+          {# MI_Metadata/otherLocale/PT_Locale/country/CountryCode (ISO3166-1) #}
+        </lan:CountryCode>
+      </lan:country>
+      {% endif %}
+			<lan:characterEncoding>
+				<lan:MD_CharacterSetCode codeList="http://standards.iso.org/iso/19115/resources/Codelist/lan/CharacterSetCode.xml" codeListValue="utf8"/>
+        {# CIOOS core mandatory element #}
+        {# MI_Metadata/otherLocale/PT_Locale/characterEncoding/MD_CharacterSetCode (UTF-8) #}
+			</lan:characterEncoding>
+		</lan:PT_Locale>
+	</mdb:otherLocale>
   {% endif %}
 
   {# metadataScope: mandatory #}
@@ -156,6 +186,7 @@
               </cit:address>
 
               {% if record['publisher_url'] %}
+              {# in cioos profile? #}
               <cit:onlineResource>
                 <cit:CI_OnlineResource>
                   <cit:linkage xsi:type="lan:PT_FreeText_PropertyType">
@@ -243,6 +274,49 @@
       </cit:dateType>
     </cit:CI_Date>
   </mdb:dateInfo>
+  {% endif %}
+
+  {# metadataStandard: Recommended #}
+  <mdb:metadataStandard>
+    <cit:CI_Citation>
+      <cit:title><gco:CharacterString>ISO 19115-1 Geographic information - Metadata</gco:CharacterString></cit:title>
+      <cit:edition><gco:CharacterString>First Edition 2014-04-01</gco:CharacterString></cit:edition>
+    </cit:CI_Citation>
+  </mdb:metadataStandard>
+  <mdb:metadataStandard>
+    <cit:CI_Citation>
+      <cit:title><gco:CharacterString>ISO 19115-2 Geographic information - Metadata</gco:CharacterString></cit:title>
+      <cit:edition><gco:CharacterString>Second Edition 2019-01</gco:CharacterString></cit:edition>
+    </cit:CI_Citation>
+  </mdb:metadataStandard>
+
+  {% if record['metadata_profile_title'] %}
+  {# metadataProfile: Optional, will be CIOOS core Mandatory once profile is published #}
+	<mdb:metadataProfile>
+    <cit:CI_Citation>
+      <cit:title>
+        <gco:CharacterString>
+          {{ record['metadata_profile_title'] }}
+         {# Canadian Integrated Ocean Observing System Metadata Profile of ISO 19115 #}
+         </gco:CharacterString>
+      </cit:title>
+      <cit:CI_Date>
+        {# date: mandatory #}
+        <cit:date>
+            <gco:Date>
+              {{ record['metadata_profile_title'] }}
+              {# 2019-11-06Z #}
+            </gco:Date>
+        </cit:date>
+        {# dateType: mandatory #}
+        <cit:dateType>
+        {# CIOOS core mandatory element #}
+        {# MI_Metadata/dateInfo/CI_Date/date/CI_DateTypeCode #}
+          <cit:CI_DateTypeCode codeList="http://standards.iso.org/iso/19115/resources/Codelists/cat/codelists.xml#CI_DateTypeCode" codeListValue="publication">publication</cit:CI_DateTypeCode>
+        </cit:dateType>
+      </cit:CI_Date>
+    </cit:CI_Citation>
+  </mdb:metadataProfile>
   {% endif %}
 
   {# identificationInfo: mandatory #}
@@ -354,7 +428,24 @@
         {{ multi_lang('summary') }}
       </mri:abstract>
 
-      {% if record['acknowledgement'] %}
+      {# resourceMaintenance: CIOOS core mandatory #}
+      {# refers to the maintenance of the data #}
+      <mri:resourceMaintenance>
+        <mmi:MD_MaintenanceInformation>
+          {# maintenanceAndUpdateFrequency: CIOOS core mandatory #}
+          <mmi:maintenanceAndUpdateFrequency>
+            <mmi:MD_MaintenanceFrequencyCode codeList="http://standards.iso.org/iso/19115/resources/Codelists/cat/codelists.xml#MD_MaintenanceFrequencyCode" codeListValue="asNeeded">asNeeded</mmi:MD_MaintenanceFrequencyCode>
+          </mmi:maintenanceAndUpdateFrequency>
+          {% if record['data_maintenance_note'] %}
+          {# maintenanceNote: Recommended #}
+          <mmi:maintenanceNote>
+            <gco:CharacterString>{{ record['data_maintenance_note'] }}</gco:CharacterString>
+          </mmi:maintenanceNote>
+          {% endif %}
+        </mmi:MD_MaintenanceInformation>
+      </mri:resourceMaintenance>
+
+      {% if record['acknowledgement'] %} {# credit not in cioos profile, should it be? #}
       <mri:credit xsi:type="lan:PT_FreeText_PropertyType">
         {{ multi_lang('acknowledgement') }}
       </mri:credit>
@@ -380,8 +471,12 @@
         <mri:extent>
           <gex:EX_Extent>
 
+            {# EX_GeographicBoundingBox: CIOOS core mandatory if not using EX_BoundingPolygon #}
             <gex:geographicElement>
               <gex:EX_GeographicBoundingBox>
+                <gex:extentTypeCode>
+                  <gco:Boolean>true</gco:Boolean>
+                </gex:extentTypeCode>
                 <gex:westBoundLongitude>
                   <gco:Decimal>{{ record['geospatial_lon_max'] }}</gco:Decimal>
                 </gex:westBoundLongitude>
@@ -401,23 +496,100 @@
         </mri:extent>
       {% endif %}
 
+      {% if record['geospatial_gml_geomitry'] %}
+        <mri:extent>
+          <gex:EX_Extent>
+            <gex:geographicElement>
+              {# EX_BoundingPolygon: CIOOS core mandatory if not using EX_GeographicBoundingBox #}
+              <gex:EX_BoundingPolygon>
+                <gex:extentTypeCode>
+                  <gco:Boolean>true</gco:Boolean>
+                </gex:extentTypeCode>
+                <gex:polygon>
+                  {{ record['geospatial_gml_geomitry'] }}
+                </gex:polygon>
+              </gex:EX_BoundingPolygon>
+            </gex:geographicElement>
+          </gex:EX_Extent>
+        </mri:extent>
+      {% endif %}
 
-    {% if record['geospatial_vertical_min'] and record['geospatial_vertical_max'] %}
-      <mri:extent>
-        <gex:EX_Extent>
-          <gex:verticalElement>
-            <gex:EX_VerticalExtent>
-              <gex:minimumValue>
-                <gco:Real>{{ record['geospatial_vertical_min'] }}</gco:Real>
-              </gex:minimumValue>
-              <gex:maximumValue>
-                <gco:Real>{{ record['geospatial_vertical_max'] }}</gco:Real>
-              </gex:maximumValue>
-            </gex:EX_VerticalExtent>
-          </gex:verticalElement>
-        </gex:EX_Extent>
-      </mri:extent>
-    {% endif %}
+      {% if record['geospatial_vertical_min'] and record['geospatial_vertical_max'] %}
+        <mri:extent>
+          <gex:EX_Extent>
+            <gex:verticalElement>
+              <gex:EX_VerticalExtent>
+
+                {# verticalCRS: optional, required if verticalCRSId is missing #}
+                <gmd:verticalCRS xlink:href="http://www.epsg-registry.org/export.htm?gml=urn:ogc:def:crs:EPSG::5831"
+                       xlink:title="instantaneous water level depth"
+                       xlink:actuate="onRequest"/>
+
+                {# verticalCRSId: CIOOS core mandatory #}
+                <gex:verticalCRSId>
+                  <mrs:MD_ReferenceSystem>
+                    {# referenceSystemIdentifier: optional but dosn't make sense as referenceSystemType is mandatory #}
+              			<mrs:referenceSystemIdentifier>
+              				<mcc:MD_Identifier>
+                        {% if record['geospatial_vertical_reference_system_code'] %}
+                        {# code: mandatory #}
+              					<mcc:code>
+              						<gco:CharacterString>
+                            {{ record['geospatial_vertical_reference_system_code']  }}
+                            {# 5831 #}
+                          </gco:CharacterString>
+              					</mcc:code>
+                        {% endif %}
+                        {% if record['geospatial_vertical_reference_system_code_space'] %}
+                        {# codeSpace: Optional #}
+                        <mcc:codeSpace>
+              						<gco:CharacterString>
+                            {{ record['geospatial_vertical_reference_system_code_space'] }}
+                            {# EPSG #}
+                          </gco:CharacterString>
+              					</mcc:codeSpace>
+                        {% endif %}
+                        {% if record['geospatial_vertical_reference_system_version'] %}
+                        {# version: Recommended #}
+                        <mcc:version>
+                          <gco:CharacterString>
+                            {{ record['geospatial_vertical_reference_system_version'] }}
+                            {# 2012-08-10 #}
+                          </gco:CharacterString>
+                        </mcc:version>
+                        {% endif %}
+                        {% if record['geospatial_vertical_reference_system_description'] %}
+                        {# description: Optional #}
+              					<mcc:description>
+              						<gco:CharacterString>
+                            {{ record['geospatial_vertical_reference_system_description'] }}
+                            {# EPSG::5831 - Instantaneous Water Level depth - Depth relative to instantaneous water level uncorrected for tide. Not specific to any location or epoch. #}
+                          </gco:CharacterString>
+              					</mcc:description>
+                        {% endif %}
+              				</mcc:MD_Identifier>
+              			</mrs:referenceSystemIdentifier>
+
+                    {# referenceSystemType: CIOOS core mandatory #}
+                    {% if record['geospatial_vertical_reference_system_type'] %}
+              			<mrs:referenceSystemType>
+              				<mrs:MD_ReferenceSystemTypeCode codeList="https://standards.iso.org/iso/19115/resources/Codelists/cat/codelists.xml#MD_ReferenceSystemTypeCode" codeListValue="{{ record['geospatial_vertical_reference_system_type'] }}">{{ record['geospatial_vertical_reference_system_type'] }}</mrs:MD_ReferenceSystemTypeCode>
+              			</mrs:referenceSystemType>
+                    {% endif %}
+              		</mrs:MD_ReferenceSystem>
+                </gex:verticalCRSId>
+
+                <gex:minimumValue>
+                  <gco:Real>{{ record['geospatial_vertical_min'] }}</gco:Real>
+                </gex:minimumValue>
+                <gex:maximumValue>
+                  <gco:Real>{{ record['geospatial_vertical_max'] }}</gco:Real>
+                </gex:maximumValue>
+              </gex:EX_VerticalExtent>
+            </gex:verticalElement>
+          </gex:EX_Extent>
+        </mri:extent>
+      {% endif %}
 
       {% if record['time_coverage_start'] and record['time_coverage_end'] %}
       <mri:extent>
@@ -470,13 +642,14 @@
               </cit:title>
 
               {% if record['keywords_vocabulary'].startswith('http') %}
-                <cit:onlineResource>
+              {# online link not in cioos standard, should it be? #}
+                {# <cit:onlineResource>
                   <cit:CI_OnlineResource>
                     <cit:linkage xsi:type="lan:PT_FreeText_PropertyType">
                       {{ multi_lang('keywords_vocabulary') }}
                     </cit:linkage>
                   </cit:CI_OnlineResource>
-                </cit:onlineResource>
+                </cit:onlineResource> #}
               {% endif %}
 
             </cit:CI_Citation>
@@ -487,6 +660,7 @@
       {% endif %}
 
       {% if record['project'] %}
+      {# is project in cioos standard. should it be? #}
       <mri:descriptiveKeywords>
         <mri:MD_Keywords>
 
@@ -517,8 +691,16 @@
       </mri:descriptiveKeywords>
       {% endif %}
 
-      {% if record['license'] %}
+      {% if record['license'] or record['use_constraints']%}
       <mri:resourceConstraints>
+        {# MD_Constraints: CIOOS core mandatory #}
+        <mco:MD_Constraints>
+          {# useLimitation: CIOOS core mandatory #}
+					<mco:useLimitation xsi:type="lan:PT_FreeText_PropertyType">
+						{{ multi_lang('use_constraints') }}
+					</mco:useLimitation>
+        </mco:MD_Constraints>
+        {# MD_LegalConstraints: CIOOS core mandatory #}
         <mco:MD_LegalConstraints>
           <mco:useLimitation xsi:type="lan:PT_FreeText_PropertyType">
             {{ multi_lang('license') }}
@@ -528,6 +710,7 @@
       {% endif %}
 
       {% if record['comment'] %}
+      {# Supplemental Information not in cioos standard, should it be? #}
         <mri:supplementalInformation xsi:type="lan:PT_FreeText_PropertyType">
           {{ multi_lang('comment') }}
         </mri:supplementalInformation>
@@ -536,9 +719,44 @@
     </mri:MD_DataIdentification>
   </mdb:identificationInfo>
 
+  {# metadataMaintenance: CIOOS core mandatory #}
+  {# refers to the maintenance of the metadata #}
+  <mdb:metadataMaintenance>
+    <mmi:MD_MaintenanceInformation>
+      <mmi:maintenanceAndUpdateFrequency>
+				<mmi:MD_MaintenanceFrequencyCode codeList="http://standards.iso.org/iso/19115/resources/Codelists/cat/codelists.xml#MD_MaintenanceFrequencyCode" codeListValue="asNeeded">asNeeded</mmi:MD_MaintenanceFrequencyCode>
+			</mmi:maintenanceAndUpdateFrequency>
+    </mmi:MD_MaintenanceInformation>
+  </mdb:metadataMaintenance>
+
   {% if record['erddap_dataset_url'] %}
+    {# distributionInfo: CIOOS core mandatory #}
     <mdb:distributionInfo>
       <mrd:MD_Distribution>
+        <mrd:distributor>
+				<mrd:MD_Distributor>
+          <mrd:distributorContact>
+            <cit:CI_Responsibility>
+              {# role: mandatory #}
+              <cit:role>
+                <cit:CI_RoleCode codeList="http://standards.iso.org/iso/19115/resources/Codelists/cat/codelists.xml#CI_RoleCode" codeListValue="distributor"/>
+              </cit:role>
+              {# party: mandatory #}
+              <cit:party>
+        				<cit:CI_Organisation>
+                  {% if record['distributor_name'] %}
+                  {# name: mandatory #}
+                  <cit:name xsi:type="lan:PT_FreeText_PropertyType">
+                    {{ multi_lang('distributor_name') }}
+                  </cit:name>
+                  {% endif %}
+                </cit:CI_Organisation>
+              </cit:party>
+
+            </cit:CI_Responsibility>
+          </mrd:distributorContact>
+        </mrd:MD_Distributor>
+        </mrd:distributor>
         <mrd:transferOptions>
           <mrd:MD_DigitalTransferOptions>
             <mrd:onLine>
@@ -556,9 +774,11 @@
                   <gco:CharacterString>ERDDAP's version of the OPeNDAP .html web page for this dataset. Specify a subset of the dataset and download the data via OPeNDAP or in many different file types.</gco:CharacterString>
                 </cit:description>
                 <cit:function>
+                {# Function not in cioos standard, should it be? #}
                   <cit:CI_OnLineFunctionCode codeList="http://standards.iso.org/iso/19115/resources/Codelists/cat/codelists.xml#CI_OnLineFunctionCode" codeListValue="download"/>
                 </cit:function>
                 <cit:protocolRequest>
+                {# Protocol Request not in cioos standard, should it be? #}
                   <gco:CharacterString>OPeNDAP constraint protocol</gco:CharacterString>
                 </cit:protocolRequest>
               </cit:CI_OnlineResource>
@@ -575,6 +795,15 @@
         <mrl:statement xsi:type="lan:PT_FreeText_PropertyType">
           {{ multi_lang('history') }}
         </mrl:statement>
+        {# scope: CIOOS core mandatory #}
+        <mrl:scope>
+          <mcc:MD_Scope>
+            # level: mandatory #}
+            <mcc:level>
+              <mcc:MD_ScopeCode codeList="http://standards.iso.org/iso/19115/resources/Codelists/cat/codelists.xml#MD_ScopeCode" codeListValue="dataset"/>
+            </mcc:level>
+          </mcc:MD_Scope>
+        </mrl:scope>
       </mrl:LI_Lineage>
     </mdb:resourceLineage>
   {% endif %}
@@ -583,7 +812,15 @@
   {# acquisitionInformation: mandatory #}
   <mdb:acquisitionInformation>
     <mac:MI_AcquisitionInformation>
-      <mac:scope></mac:scope>
+      {# scope: CIOOS core mandatory #}
+      <mac:scope>
+        <mcc:MD_Scope>
+          {# level: mandatory #}
+          <mcc:level>
+            <mcc:MD_ScopeCode codeList="http://standards.iso.org/iso/19115/resources/Codelists/cat/codelists.xml#MD_ScopeCode" codeListValue="dataset"/>
+          </mcc:level>
+        </mcc:MD_Scope>
+      </mac:scope>
       {# instrument: mandatory #}
       {# platform is set to mandatory, presumably should be conditional? e.g. either have a platform or an instrument at top level? #}
       {# platform: mandatory #}
