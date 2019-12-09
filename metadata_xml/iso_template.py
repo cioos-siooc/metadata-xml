@@ -5,7 +5,7 @@ import re
 from lxml import etree
 import os
 from datetime import date
-from metadata_xml.validation import validate
+from metadata_xml.validation import validate, get_alternate_language
 from xml.sax.saxutils import escape
 
 TEMPLATE_FILE = './cioos_template.jinja2'
@@ -134,11 +134,13 @@ def convert_record_to_xml(record):
     template = template_env.get_template(TEMPLATE_FILE)
 
     get_alternate_text = get_alternate_text_wrapper(record)
+    language_alt = get_alternate_language(record)
     template_env.filters['get_alternate_text'] = get_alternate_text
     template_env.globals.update(get_alternate_text=get_alternate_text)
     template_env.globals.update(
         instruments=get_instruments_from_record(record),
-        date_today=date.today().strftime("%Y-%m-%d"))
+        date_today=date.today().strftime("%Y-%m-%d"),
+        language_alt=language_alt)
 
     xml = template.render({"record": record})
     return xml

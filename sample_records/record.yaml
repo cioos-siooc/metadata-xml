@@ -45,7 +45,7 @@ time_coverage_resolution: "P1D"
 standard_name_vocabulary: "standard_name_vocabulary"
 license: "license in french"
 license_eng: "license in english"
-
+geospatial_bounds: -134.9560930248004,55.04906108082663 -135.1383039452922,54.92080534478477 -134.95544771826,54.80371975294069 -134.5885406230701,54.52582251081131 -134.3958680271735,54.30590365973542 -134.2871827978063,54.09639254256942 -134.1298468501946,54.00261796250579 -134.0392471282768,53.87651006123389 -133.0821852760259,53.82034518426109 -131.6602150692286,54.17089009686439 -130.1965930572902,54.80048664517466 -130.8980575412898,56.26170446865984 -134.9560930248004,55.04906108082663
 contributor_name: "contributor_name"
 contributor_role: "contributor_role"
 publisher_name: "publisher_name"
@@ -63,7 +63,8 @@ geospatial_vertical_positive: "vertical"
 coverage_content_type: "image"
 
 # These ones are made up
-language_country: "CAN"
+data_maintenance_note: "Sensor cleaned monthly"
+distributor_name: "distributor_name"
 
 publisher_country: "publisher_country"
 progress_code: "completed"

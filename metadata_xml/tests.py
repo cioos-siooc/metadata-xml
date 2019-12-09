@@ -11,7 +11,7 @@ from iso_template import (get_alternate_text_wrapper,
 
 from validation import (list_intersection,
                         check_date,
-                        get_alternate_languge,
+                        get_alternate_language,
                         get_missing_fields,
                         has_eov_in_keywords)
 
@@ -95,9 +95,9 @@ class TestISOTemplateFunctions(unittest.TestCase):
                   }
         self.assertEqual(get_missing_fields(record), ['summary'])
 
-    def test_get_alternate_languge(self):
-        self.assertEqual(get_alternate_languge({"language": "eng"}), 'fra')
-        self.assertEqual(get_alternate_languge({"language": "fra"}), 'eng')
+    def test_get_alternate_language(self):
+        self.assertEqual(get_alternate_language({"language": "eng"}), 'fra')
+        self.assertEqual(get_alternate_language({"language": "fra"}), 'eng')
 
     def test_sanitize_record(self):
         self.assertEqual(sanitize_record({"title": None}), {})
