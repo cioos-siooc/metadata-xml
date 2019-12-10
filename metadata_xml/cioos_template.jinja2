@@ -715,10 +715,12 @@
     </mri:MD_DataIdentification>
   </mdb:identificationInfo>
 
-  {% if record['erddap_dataset_url'] %}
+    {% if record['distributor_name'] or record['erddap_dataset_url'] %}
     {# distributionInfo: CIOOS core mandatory #}
     <mdb:distributionInfo>
       <mrd:MD_Distribution>
+        
+    {% if record['distributor_name'] %}
         <mrd:distributor>
 				<mrd:MD_Distributor>
           <mrd:distributorContact>
@@ -730,12 +732,12 @@
               {# party: mandatory #}
               <cit:party>
         				<cit:CI_Organisation>
-                  {% if record['distributor_name'] %}
+                  
                   {# name: mandatory #}
                   <cit:name xsi:type="lan:PT_FreeText_PropertyType">
                     {{ multi_lang('distributor_name') }}
                   </cit:name>
-                  {% endif %}
+                  
                 </cit:CI_Organisation>
               </cit:party>
 
@@ -743,6 +745,8 @@
           </mrd:distributorContact>
         </mrd:MD_Distributor>
         </mrd:distributor>
+        {% endif %}
+        {% if record['erddap_dataset_url'] %}
         <mrd:transferOptions>
           <mrd:MD_DigitalTransferOptions>
             <mrd:onLine>
@@ -769,6 +773,7 @@
             </mrd:onLine>
           </mrd:MD_DigitalTransferOptions>
         </mrd:transferOptions>
+        {% endif %}
       </mrd:MD_Distribution>
     </mdb:distributionInfo>
   {% endif %}
