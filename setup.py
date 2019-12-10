@@ -12,7 +12,8 @@ setup(name='metadata_xml',
 
       install_requires=['Jinja2 == 2.10.3',
                         'lxml == 4.4.1',
-                        'PyYAML == 5.1.2'
+                        'PyYAML == 5.1.2',
+                        'xmlschema == 1.0.16'
                         ]
 
       )

@@ -108,3 +108,13 @@ These can be repeated with different instrument/sensor numbers, eg:
     - instrument_1_sensor_1_id
     - instrument_1_sensor_1_description
     - instrument_1_sensor_1_version
+
+## Running tests
+
+```bash
+cd metadata_xml
+python -m unittest tests.py
+```
+
+Or using Docker, from this directory:
+`docker build ./ --tag metadata_xml`

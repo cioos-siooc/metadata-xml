@@ -1,7 +1,11 @@
 #!/usr/bin/env python3
 
 import unittest
+import xmlschema
 import lxml
+import os
+import yaml
+
 from iso_template import (get_alternate_text_wrapper,
                           pretty_xml,
                           get_instruments_from_record,
@@ -14,6 +18,14 @@ from validation import (list_intersection,
                         get_alternate_languge,
                         get_missing_fields,
                         has_eov_in_keywords)
+
+
+def yaml_file_to_dict(filename):
+    with open(filename) as stream:
+        return yaml.safe_load(stream)
+
+
+this_file_dir = os.path.dirname(__file__)
 
 
 class TestISOTemplateFunctions(unittest.TestCase):
@@ -138,6 +150,24 @@ class TestISOTemplateFunctions(unittest.TestCase):
                   "keywords": "kw1 in english"
                   }
         self.assertFalse(has_eov_in_keywords(record))
+
+    def test_sample_records(self):
+        '''
+        This loads each record in the sample_records directory and makes sure
+        the XML generated passes XSD schema validation.
+        '''
+        sample_records_dir = this_file_dir+'/../sample_records/'
+        print("Loading schema, this can take a few seconds")
+
+        cioos_schema = xmlschema.XMLSchema(
+            this_file_dir+'/../validate/schema/standards.iso.org/iso/19115/-3/mds/2.0/mds.xsd')
+
+        for filename in os.listdir(sample_records_dir):
+            if filename.endswith(".yaml"):
+                record = yaml_file_to_dict(sample_records_dir + filename)
+                xml = iso_template(record)
+                # will throw an error if it doesn't validate
+                cioos_schema.validate(xml)
 
 
 if __name__ == '__main__':
