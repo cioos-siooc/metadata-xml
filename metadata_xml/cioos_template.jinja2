@@ -93,7 +93,7 @@
     </lan:PT_Locale>
   </mdb:defaultLocale>
   {% endif %}
-  
+
    {# metadataScope: mandatory #}
   <mdb:metadataScope>
     <mdb:MD_MetadataScope>
@@ -287,7 +287,7 @@
       </cit:date>
     </cit:CI_Citation>
   </mdb:metadataProfile>
-  
+
 	<mdb:otherLocale>
 		<lan:PT_Locale>
       {# language: mandatory #}
@@ -421,7 +421,7 @@
         {{ multi_lang('summary') }}
       </mri:abstract>
 
-      {% if record['acknowledgement'] %} 
+      {% if record['acknowledgement'] %}
       <mri:credit xsi:type="lan:PT_FreeText_PropertyType">
         {{ multi_lang('acknowledgement') }}
       </mri:credit>
@@ -539,7 +539,7 @@
 
                     {# referenceSystemType: CIOOS core mandatory #}
               			<mrs:referenceSystemType>
-              				<mrs:MD_ReferenceSystemTypeCode codeList="https://standards.iso.org/iso/19115/resources/Codelists/cat/codelists.xml#MD_ReferenceSystemTypeCode" codeListValue=""></mrs:MD_ReferenceSystemTypeCode>
+              				<mrs:MD_ReferenceSystemTypeCode codeList="https://standards.iso.org/iso/19115/resources/Codelists/cat/codelists.xml#MD_ReferenceSystemTypeCode" codeListValue="vertical">vertical</mrs:MD_ReferenceSystemTypeCode>
               			</mrs:referenceSystemType>
               		</mrs:MD_ReferenceSystem>
                 </gex:verticalCRSId>
@@ -590,7 +590,7 @@
           {% endif %}
         </mmi:MD_MaintenanceInformation>
       </mri:resourceMaintenance>
-  
+
       {% if record['keywords'] %}
       <mri:descriptiveKeywords>
         <mri:MD_Keywords>
@@ -724,7 +724,7 @@
     {# distributionInfo: CIOOS core mandatory #}
     <mdb:distributionInfo>
       <mrd:MD_Distribution>
-        
+
     {% if record['distributor_name'] %}
         <mrd:distributor>
 				<mrd:MD_Distributor>
@@ -737,12 +737,12 @@
               {# party: mandatory #}
               <cit:party>
         				<cit:CI_Organisation>
-                  
+
                   {# name: mandatory #}
                   <cit:name xsi:type="lan:PT_FreeText_PropertyType">
                     {{ multi_lang('distributor_name') }}
                   </cit:name>
-                  
+
                 </cit:CI_Organisation>
               </cit:party>
 
@@ -811,7 +811,7 @@
         </mmi:maintenanceAndUpdateFrequency>
       </mmi:MD_MaintenanceInformation>
     </mdb:metadataMaintenance>
-    
+
   {% if record['platform_name'] %}
   {# acquisitionInformation: mandatory #}
   <mdb:acquisitionInformation>
