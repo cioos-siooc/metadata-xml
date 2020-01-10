@@ -27,7 +27,7 @@ eovs = [
 ]
 
 
-def get_alternate_languge(record):
+def get_alternate_language(record):
     language = record['language']
     if language == 'eng':
         return 'fra'
@@ -92,7 +92,6 @@ def get_missing_fields(record):
         'summary',
         'institution',
         'id',
-        # 'language_country',
         'keywords',
         # 'date_created',
         # 'creator_name',
@@ -124,7 +123,7 @@ def has_eov_in_keywords(record):
     '''
 
     # merged english and french keywords
-    keywords_alternate_lang = 'keywords_' + get_alternate_languge(record)
+    keywords_alternate_lang = 'keywords_' + get_alternate_language(record)
 
     all_keywords = (record.get('keywords', '').split(',')
                     + record.get(keywords_alternate_lang, '').split(','))
@@ -134,7 +133,7 @@ def has_eov_in_keywords(record):
 
 def get_missing_bilingual_fields(record):
     missing_fields = []
-    alternate_language = get_alternate_languge(record)
+    alternate_language = get_alternate_language(record)
     mandatory_bilingual_fields = ['title', 'summary', 'keywords']
     for field in mandatory_bilingual_fields:
         alternate_lang_field = field+'_'+alternate_language
