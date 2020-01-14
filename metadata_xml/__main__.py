@@ -36,6 +36,8 @@ if __name__ == '__main__':
         yaml_data = yaml.safe_load(stream)
 
         xml = iso_template(yaml_data, use_validation=True)
-        file = open(basename.split('.')[0] + ".xml", "w")
+        pre, ext = os.path.splitext(filename)
+        yaml_filename = f'{pre}.xml'
+        file = open(yaml_filename, "w")
         file.write(xml)
         print("Wrote " + file.name)
