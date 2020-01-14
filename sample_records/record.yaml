@@ -12,25 +12,20 @@ id: "id"
 naming_authority: "naming_authority in french"
 naming_authority_eng: "naming_authority in english"
 keywords_vocabulary: "http://example.com/keywords"
-cdm_data_type: "cdm_data_type"
 history: "history in french"
 history_eng: "history in english"
 comment: "comment in french"
 comment_eng: "comment in english"
-
 date_created: "2010-01-22"
-erddap_dataset_url: "http://example.com/erddap/tabledap/MyDataset.html"
 creator_name: "creator_name"
 creator_url: "creator_url"
 creator_email: "nobody@example.com"
 institution: "institution1,institution2"
 project: "project1 in french,project2 in french"
 project_eng: "project1 in english,project2 in english"
-processing_level: "processing level in french"
-processing_level_eng: "processing level in english"
 acknowledgement: "acknowledgement in french"
 acknowledgement_eng: "acknowledgement in english"
-geospatial_bounds: "POLYGON ((-90 -180, 90 -180, 90 180, -90 180, -90 -180))"
+geospatial_bounds: -134.9560930248004,55.04906108082663 -135.1383039452922,54.92080534478477 -134.95544771826,54.80371975294069 -134.5885406230701,54.52582251081131
 geospatial_lat_min: -89.975
 geospatial_lat_max: 89.975
 geospatial_lon_min: -179.975
@@ -43,9 +38,6 @@ time_coverage_end: "1985-04-25T12:00:00Z"
 time_coverage_duration: "P1D"
 time_coverage_resolution: "P1D"
 standard_name_vocabulary: "standard_name_vocabulary"
-license: "license in french"
-license_eng: "license in english"
-
 contributor_name: "contributor_name"
 contributor_role: "contributor_role"
 publisher_name: "publisher_name"
@@ -53,20 +45,16 @@ publisher_url: "publisher_url"
 publisher_email: "publisher_email"
 date_modified: "2019-10-07T21:27:22Z"
 date_issued: "2010-01-24"
-geospatial_lat_units: "degrees_north"
-geospatial_lat_resolution: "1.23"
-geospatial_lon_units: "geospatial_lon_units"
-geospatial_lon_resolution: "4.56"
-geospatial_vertical_units: "geospatial_vertical_units"
-geospatial_vertical_resolution: "geospatial_vertical_resolution"
-geospatial_vertical_positive: "vertical"
-coverage_content_type: "image"
 
 # These ones are made up
-language_country: "CAN"
+data_maintenance_note: "Sensor cleaned monthly"
+distributor_name: "distributor_name"
+erddap_dataset_url: "http://example.com/erddap/tabledap/MyDataset.html"
 
 publisher_country: "publisher_country"
 progress_code: "completed"
+
+use_constraints: "use_constraints"
 
 instrument_1_id: instrument_1_id
 instrument_1_version: instrument_1_version
