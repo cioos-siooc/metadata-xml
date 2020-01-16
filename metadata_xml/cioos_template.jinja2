@@ -515,7 +515,7 @@
                 {# verticalCRSId: CIOOS core mandatory #}
                 <gex:verticalCRSId>
                   <mrs:MD_ReferenceSystem>
-                    {# referenceSystemIdentifier: optional but dosn't make sense as referenceSystemType is mandatory #}
+                    {# referenceSystemIdentifier: optional #}
               			<mrs:referenceSystemIdentifier>
               				<mcc:MD_Identifier>
                         {# code: mandatory #}
@@ -813,7 +813,7 @@
     </mdb:metadataMaintenance>
 
   {% if record['platform_name'] %}
-  {# acquisitionInformation: mandatory #}
+  {# acquisitionInformation: Recomended #}
   <mdb:acquisitionInformation>
     <mac:MI_AcquisitionInformation>
       {# scope: CIOOS core mandatory #}
@@ -825,9 +825,8 @@
           </mcc:level>
         </mcc:MD_Scope>
       </mac:scope>
-      {# instrument: mandatory #}
 
-      {# platform: mandatory #}
+      {# platform: Recomended #}
       <mac:platform>
         <mac:MI_Platform>
 
@@ -885,11 +884,23 @@
           </mac:description>
 
           {% for num, instrument in instruments.items() %}
+            {# instrument: Recomended, if platform not used then this should be under mac:MI_AcquisitionInformation #}
             <mac:instrument>
+              {# MI_Instrument: Recomended #}
               <mac:MI_Instrument>
                 {# identifier: mandatory #}
                 <mac:identifier>
                   <mcc:MD_Identifier>
+                    {# authority: Recomended #}
+                    {% if instrument.manufacturer %}
+                    <mcc:authority>
+                      <cit:CI_Citation>
+                        <cit:title>
+                        <gco:CharacterString>{{ instrument.manufacturer }}</gco:CharacterString>
+                        </cit:title>
+                      </cit:CI_Citation>
+                    </mcc:authority>
+                    {% endif %}
                     {# code: mandatory #}
                     <mcc:code xsi:type="lan:PT_FreeText_PropertyType">
                       {# CIOOS core mandatory element #}
@@ -963,8 +974,11 @@
                           {% endif %}
                         </mcc:MD_Identifier>
                       </mac:identifier>
+                      <mac:type>
+                        {# type: mandatory #}
+                        <gco:CharacterString>{{ sensor.type }}</gco:CharacterString>
                       <mac:type/>
-                      {# hosted: mandatory #}
+                      {# hosted: optional #}
                       <mac:hosted>
                         {# mac:MI_Instrument is an association to parent MI_Instrument really needed in this case? #}
                       </mac:hosted>
