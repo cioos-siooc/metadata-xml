@@ -813,7 +813,7 @@
     </mdb:metadataMaintenance>
 
   {% if record['platform_name'] %}
-  {# acquisitionInformation: Recomended #}
+  {# acquisitionInformation: Recommended #}
   <mdb:acquisitionInformation>
     <mac:MI_AcquisitionInformation>
       {# scope: CIOOS core mandatory #}
@@ -826,7 +826,7 @@
         </mcc:MD_Scope>
       </mac:scope>
 
-      {# platform: Recomended #}
+      {# platform: Recommended #}
       <mac:platform>
         <mac:MI_Platform>
 
@@ -884,14 +884,14 @@
           </mac:description>
 
           {% for num, instrument in instruments.items() %}
-            {# instrument: Recomended, if platform not used then this should be under mac:MI_AcquisitionInformation #}
+            {# instrument: Recommended, if platform not used then this should be under mac:MI_AcquisitionInformation #}
             <mac:instrument>
-              {# MI_Instrument: Recomended #}
+              {# MI_Instrument: Recommended #}
               <mac:MI_Instrument>
                 {# identifier: mandatory #}
                 <mac:identifier>
                   <mcc:MD_Identifier>
-                    {# authority: Recomended #}
+                    {# authority: Recommended #}
                     {% if instrument.manufacturer %}
                     <mcc:authority>
                       <cit:CI_Citation>
