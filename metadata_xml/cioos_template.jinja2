@@ -932,14 +932,6 @@
                   <gco:CharacterString>{{ instrument.type }}</gco:CharacterString>
                 </mac:type>
 
-                {# description: mandatory #}
-                {% if instrument.description_other %}
-                <mac:description>
-                  {# CIOOS core mandatory element #}
-                  {# MI_Metadata/acquisitionInformation/MI_AcquisitionInformation/instrument/MI_Instrument/description/CharacterString #}
-                  <gco:CharacterString>{{ instrument.description_other }}</gco:CharacterString>
-                </mac:description>
-                {% endif %}
                 {# mountedOn: mandatory? #}
                 <mac:mountedOn/>
                 {% for num, sensor in instrument.sensor.items() %}
