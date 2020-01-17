@@ -883,7 +883,7 @@
             {{ multi_lang('platform_description') }}
           </mac:description>
 
-          {% for num, instrument in instruments.items() %}
+          {% for instrument_num, instrument in instruments.items() %}
             {# instrument: Recommended, if platform not used then this should be under mac:MI_AcquisitionInformation #}
             <mac:instrument>
               {# MI_Instrument: Recommended #}
@@ -917,10 +917,10 @@
                     {% endif %}
                     {% if instrument.description %}
                     {# description: mandatory #}
-                    <mcc:description>
+                    <mcc:description xsi:type="lan:PT_FreeText_PropertyType">
                       {# CIOOS core mandatory element #}
                       {# MI_Metadata/acquisitionInformation/MI_AcquisitionInformation/instrument/MI_Instrument/identifier/MD_Identifier/description/CharacterString #}
-                      <gco:CharacterString>{{ instrument.description }}</gco:CharacterString>
+                      {{ multi_lang('instrument_' + instrument_num + '_description') }}
                     </mcc:description>
                     {% endif %}
                   </mcc:MD_Identifier>
@@ -934,7 +934,7 @@
 
                 {# mountedOn: mandatory? #}
                 <mac:mountedOn/>
-                {% for num, sensor in instrument.sensor.items() %}
+                {% for sensor_num, sensor in instrument.sensor.items() %}
                   {# sensor: mandatory #}
                   <mac:sensor>
                     <mac:MI_Sensor>
@@ -958,10 +958,10 @@
                           {% endif %}
                           {% if sensor.description %}
                           {# description: mandatory #}
-                          <mcc:description>
+                          <mcc:description xsi:type="lan:PT_FreeText_PropertyType">
                             {# CIOOS core mandatory element #}
                             {# MI_Metadata/acquisitionInformation/MI_AcquisitionInformation/instrument/MI_Instrument/sensor/MI_Sensor/identifier/MD_Identifier/description/CharacterString #}
-                            <gco:CharacterString>{{ sensor.description }}</gco:CharacterString>
+                            {{ multi_lang('instrument_' + instrument_num + '_sensor_' + sensor_num + '_description') }}
                           </mcc:description>
                           {% endif %}
                         </mcc:MD_Identifier>
