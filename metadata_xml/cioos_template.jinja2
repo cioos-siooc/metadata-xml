@@ -399,8 +399,8 @@
                     <cit:CI_Contact>
                       <cit:address>
                         <cit:CI_Address>
-                          <cit:electronicMailAddress xsi:type="lan:PT_FreeText_PropertyType">
-                            {{ multi_lang('creator_email') }}
+                          <cit:electronicMailAddress>
+                            <gco:CharacterString>{{ record['creator_email'] }}</gco:CharacterString>
                           </cit:electronicMailAddress>
                         </cit:CI_Address>
                       </cit:address>
