@@ -568,6 +568,8 @@
 
                   {% if record['time_coverage_end'] %}
                   <gml:endPosition>{{ record['time_coverage_end'] }}</gml:endPosition>
+                  {% elif not record['progress_code'] or record['progress_code'] == 'onGoing' %}
+                  <gml:endPosition indeterminatePosition="now"/>
                   {% else %}
                   <gml:endPosition indeterminatePosition="unknown"/>
                   {% endif %}
