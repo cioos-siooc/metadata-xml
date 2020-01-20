@@ -54,16 +54,10 @@ class TestISOTemplateFunctions(unittest.TestCase):
     def test_get_instruments_from_record(self):
         record = {
             "instrument_2_id": "instrument_2_id",
-            "instrument_2_sensor_1_id": "sensor_id",
         }
         self.assertEqual({
             '2': {
                 'id': 'instrument_2_id',
-                'sensor': {
-                    '1': {
-                        'id': 'sensor_id'
-                    }
-                }
             }
         }, get_instruments_from_record(record))
 
