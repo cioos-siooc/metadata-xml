@@ -554,15 +554,26 @@
         </mri:extent>
       {% endif %}
 
-      {% if record['time_coverage_start'] and record['time_coverage_end'] %}
       <mri:extent>
         <gex:EX_Extent>
           <gex:temporalElement>
             <gex:EX_TemporalExtent>
               <gex:extent>
                 <gml:TimePeriod gml:id="time_period">
+                  {% if record['time_coverage_start'] %}
                   <gml:beginPosition>{{ record['time_coverage_start'] }}</gml:beginPosition>
+                  {% else %}
+                  <gml:beginPosition indeterminatePosition="unknown"/>
+                  {% endif %}
+
+                  {% if record['time_coverage_end'] %}
                   <gml:endPosition>{{ record['time_coverage_end'] }}</gml:endPosition>
+                  {% elif not record['progress_code'] or record['progress_code'] == 'onGoing' %}
+                  <gml:endPosition indeterminatePosition="now"/>
+                  {% else %}
+                  <gml:endPosition indeterminatePosition="unknown"/>
+                  {% endif %}
+
                   {% if record['time_coverage_duration']  %}
                   <gml:duration>{{ record['time_coverage_duration'] }}</gml:duration>
                   {% endif %}
@@ -572,7 +583,6 @@
           </gex:temporalElement>
         </gex:EX_Extent>
       </mri:extent>
-      {% endif %}
 
       {# resourceMaintenance: CIOOS core mandatory #}
       {# refers to the maintenance of the data #}
