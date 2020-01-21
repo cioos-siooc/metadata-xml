@@ -942,8 +942,6 @@
                   <gco:CharacterString>{{ instrument.type }}</gco:CharacterString>
                 </mac:type>
 
-                {# mountedOn: mandatory? #}
-                <mac:mountedOn/>
                 {% for sensor_num, sensor in instrument.sensor.items() %}
                   {# sensor: mandatory #}
                   <mac:sensor>
