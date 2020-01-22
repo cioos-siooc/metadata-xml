@@ -111,3 +111,13 @@ These can be repeated with different instrument/sensor numbers, eg:
 - instrument_1_sensor_1_id
 - instrument_1_sensor_1_description
 - instrument_1_sensor_1_version
+
+## Running tests
+
+```bash
+cd metadata_xml
+python -m unittest tests.py
+```
+
+Or if you have Docker installed, from this directory:
+`sh run_docker_tests.sh`
