@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 
-from datetime import datetime
+import arrow
 
 
 eovs = [
@@ -47,22 +47,17 @@ def strip_elements(lst):
     return [e.strip() for e in lst]
 
 
-acceptable_date_formats_text = ['YYYYMMDD', 'YYYY-MM-DD', 'YYYYMMDDThh:mm:ss',
-                                'YYYYMMDDThhmmss']
+acceptable_date_formats = [
+    # gco:Date
+    'YYYYMMDD', 'YYYY-MM-DD',
+    # gco:DateTime
+    'YYYY-MM-DDThh:mm:ss', 'YYYY-MM-DDThh:mm:ssZ', 'YYYY-MM-DDThh:mm:ssZZ']
 
 
 def check_date(date_text):
-    ''' gco:Date supports YYYYMMDD, YYYY-MM-DD
-        gco:DateTime supports YYYYMMDDThh:mm:ss, YYYYMMDDThhmmss,
-            or YYYY-MM-DDThh:mm:ss.
-    '''
-
-    acceptable_date_formats = ['%Y%m%d', '%Y-%m-%d', '%Y%m%dT%H:%M:%S',
-                               '%Y%m%dT%H%M%S']
-
     for date_format in acceptable_date_formats:
         try:
-            datetime.strptime(date_text, date_format)
+            arrow.parser.DateTimeParser().parse(date_text, date_format)
             return True
         except ValueError:
             continue
@@ -78,6 +73,7 @@ def get_fields_with_bad_dates(record):
         if field.startswith('date_') and record.get(field):
             if check_date(record.get(field)) is False:
                 bad_date_fields.append(field)
+    return bad_date_fields
 
 
 def join(lst):

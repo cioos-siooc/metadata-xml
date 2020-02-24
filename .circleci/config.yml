@@ -6,4 +6,4 @@ jobs:
       - checkout
 
       # build the application image
-      - run: docker build ./ --tag metadata_xml
+      - run: docker build .
