@@ -111,15 +111,17 @@ class TestISOTemplateFunctions(unittest.TestCase):
         self.assertEqual(list_intersection([1, 2], [2, 3]), [2])
 
     def test_check_date(self):
-        good_dates = ['20161022',
-                      '2010-09-28',
-                      '20140102T12:01:22',
+        good_dates = ['2020-01-21T21:31:58-07:00',
+                      '2020-01-21T21:31:58Z',
+                      '2020-01-21T21:31:58',
+                      '2020-01-21',
+                      '20200121'
                       ]
         bad_dates = ['Monday January 3rd, 2017', '2010-31-01']
         for date in good_dates:
-            self.assertTrue(check_date(date))
+            self.assertTrue(check_date(date), date)
         for date in bad_dates:
-            self.assertFalse(check_date(date))
+            self.assertFalse(check_date(date), date)
 
     def test_has_eov_in_keywords(self):
         record = {"language": "fra",
