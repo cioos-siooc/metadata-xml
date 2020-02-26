@@ -62,12 +62,6 @@ instrument_1_type: instrument_1_type
 instrument_1_description: instrument_1_description in french
 instrument_1_description_eng: instrument_1_description in english
 
-instrument_1_sensor_1_id: instrument_1_sensor_1_id
-instrument_1_sensor_1_version: instrument_1_sensor_1_version
-instrument_1_sensor_1_type: instrument_1_sensor_1_type
-instrument_1_sensor_1_description: instrument_1_sensor_1_description in french
-instrument_1_sensor_1_description_eng: instrument_1_sensor_1_description in english
-
 platform_name: "platform_name" # from cf
 platform_id: "platform_id" # from cf
 platform_role: "owner"
