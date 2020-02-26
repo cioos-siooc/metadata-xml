@@ -439,6 +439,10 @@
           <gco:TM_PeriodDuration>{{ record['time_coverage_resolution'] }}</gco:TM_PeriodDuration>
         </mri:temporalResolution>
       {% endif %}
+ 
+      <mri:topicCategory>
+        <mri:MD_TopicCategoryCode>oceans</mri:MD_TopicCategoryCode>
+      </mri:topicCategory>
 
       {% if record['geospatial_lon_min'] and
       record['geospatial_lon_max'] and
