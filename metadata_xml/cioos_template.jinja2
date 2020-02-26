@@ -946,50 +946,7 @@
                   <gco:CharacterString>{{ instrument.type }}</gco:CharacterString>
                 </mac:type>
 
-                {% for sensor_num, sensor in instrument.sensor.items() %}
-                  {# sensor: mandatory #}
-                  <mac:sensor>
-                    <mac:MI_Sensor>
-
-                      {# identifier: mandatory #}
-                      <mac:identifier>
-                        <mcc:MD_Identifier>
-                          {# code: mandatory #}
-                          <mcc:code>
-                            {# CIOOS core mandatory element #}
-                            {# MI_Metadata/acquisitionInformation/MI_AcquisitionInformation/instrument/MI_Instrument/sensor/MI_Sensor/identifier/MD_Identifier/code/CharacterString #}
-                            <gco:CharacterString>{{ sensor.id }}</gco:CharacterString>
-                          </mcc:code>
-                          {# version: mandatory #}
-                          {% if sensor.version %}
-                          <mcc:version>
-                            {# CIOOS core mandatory element #}
-                            {# MI_Metadata/acquisitionInformation/MI_AcquisitionInformation/instrument/MI_Instrument/sensor/MI_Sensor/identifier/MD_Identifier/version/CharacterString #}
-                            <gco:CharacterString>{{ sensor.version }}</gco:CharacterString>
-                          </mcc:version>
-                          {% endif %}
-                          {% if sensor.description %}
-                          {# description: mandatory #}
-                          <mcc:description xsi:type="lan:PT_FreeText_PropertyType">
-                            {# CIOOS core mandatory element #}
-                            {# MI_Metadata/acquisitionInformation/MI_AcquisitionInformation/instrument/MI_Instrument/sensor/MI_Sensor/identifier/MD_Identifier/description/CharacterString #}
-                            {{ multi_lang('instrument_' + instrument_num + '_sensor_' + sensor_num + '_description') }}
-                          </mcc:description>
-                          {% endif %}
-                        </mcc:MD_Identifier>
-                      </mac:identifier>
-                      <mac:type>
-                        {# type: mandatory #}
-                        <gco:CharacterString>{{ sensor.type }}</gco:CharacterString>
-                      </mac:type>
-                      {# hosted: optional #}
-                      <mac:hosted>
-                        {# mac:MI_Instrument is an association to parent MI_Instrument really needed in this case? #}
-                      </mac:hosted>
-                    </mac:MI_Sensor>
-                  </mac:sensor>
-                {% endfor %}
-              </mac:MI_Instrument>
+               </mac:MI_Instrument>
             </mac:instrument>
           {% endfor %}
         </mac:MI_Platform>

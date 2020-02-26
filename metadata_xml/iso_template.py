@@ -35,18 +35,7 @@ def get_instruments_from_record(record):
 
         instrument_field = matches_instrument[2]
 
-        matches_sensor = re.search(r'^sensor_(\d)+_?(\w+)?', instrument_field)
-        if matches_sensor:
-            sensor_num = matches_sensor[1]
-            sensor_field = matches_sensor[2]
-            if 'sensor' not in instrument:
-                instrument['sensor'] = {}
-            if sensor_num not in instrument['sensor']:
-                instrument['sensor'][sensor_num] = {}
-
-            instrument['sensor'][sensor_num][sensor_field] = val
-        else:
-            instrument[instrument_field] = val
+        instrument[instrument_field] = val
 
     return instruments
 

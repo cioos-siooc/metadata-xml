@@ -100,7 +100,7 @@ See example .yaml files in the 'sample_records' directory for more examples.
 - title
 - use_constraints
 
-These can be repeated with different instrument/sensor numbers, eg:
+These can be repeated with different instrument numbers, eg:
 
 - instrument_1_id
 - instrument_1_description
@@ -108,16 +108,12 @@ These can be repeated with different instrument/sensor numbers, eg:
 - instrument_1_type
 - instrument_1_version
 
-- instrument_1_sensor_1_id
-- instrument_1_sensor_1_description
-- instrument_1_sensor_1_version
-
 ## Running tests
 
 ```bash
 cd metadata_xml
 python -m unittest tests.py
-```
 
+```
 Or if you have Docker installed, from this directory:
 `sh run_docker_tests.sh`
