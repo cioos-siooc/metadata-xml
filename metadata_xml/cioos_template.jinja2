@@ -56,10 +56,10 @@
 
     {% if record['id'] %}
       {# code: mandatory #}
-      <mcc:code xsi:type="lan:PT_FreeText_PropertyType">
+      <mcc:code>
         {# CIOOS core mandatory element #}
         {# MI_Metadata/metadataIdentifier/MD_Identifier/code/CharacterString #}
-        {{ multi_lang('id') }}
+        <gco:CharacterString>{{ record['id'] }}</gco:CharacterString>
       </mcc:code>
       {% endif %}
     </mcc:MD_Identifier>
@@ -882,10 +882,10 @@
                 </cit:CI_Citation>
               </mcc:authority>
               {# code: mandatory #}
-              <mcc:code xsi:type="lan:PT_FreeText_PropertyType">
+              <mcc:code>
                 {# CIOOS core mandatory element #}
                 {# MI_Metadata/acquisitionInformation/MI_AcquisitionInformation/platform/MI_Platform/identifier/MD_Identifier/code/CharacterString #}
-                {{ multi_lang('platform_id') }}
+                <gco:CharacterString>{{ record['platform_id'] }}</gco:CharacterString>
               </mcc:code>
             </mcc:MD_Identifier>
           </mac:identifier>
