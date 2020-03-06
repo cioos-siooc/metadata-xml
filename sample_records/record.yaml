@@ -37,12 +37,11 @@ time_coverage_end: "1985-04-25T12:00:00Z"
 # copied these from https://coastwatch.pfeg.noaa.gov/erddap/info/NOAA_DHW/index.html
 time_coverage_duration: "P1D"
 time_coverage_resolution: "P1D"
-standard_name_vocabulary: "standard_name_vocabulary"
 contributor_name: "contributor_name"
 contributor_role: "contributor_role"
 publisher_name: "publisher_name"
 publisher_url: "publisher_url"
-publisher_email: "publisher_email"
+publisher_email: "nobody@example.com"
 date_modified: "2019-10-07T21:27:22Z"
 date_issued: "2010-01-24"
 

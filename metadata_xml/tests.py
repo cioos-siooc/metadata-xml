@@ -13,7 +13,10 @@ from validation import (list_intersection,
                         check_date,
                         get_alternate_language,
                         get_missing_fields,
-                        has_eov_in_keywords)
+                        has_eov_in_keywords,
+                        get_fields_with_bad_emails,
+                        get_fields_with_nonnumerics
+                        )
 
 
 class TestISOTemplateFunctions(unittest.TestCase):
@@ -103,6 +106,14 @@ class TestISOTemplateFunctions(unittest.TestCase):
 
     def test_list_intersection(self):
         self.assertEqual(list_intersection([1, 2], [2, 3]), [2])
+
+    def test_emails(self):
+        record = {"a_email": "abc@example.com", "b_email": "bad@email"}
+        self.assertTrue(len(get_fields_with_bad_emails(record)) == 1)
+
+    def test_nonnumeric(self):
+        record = {"geospatial_lat_max": "abc"}
+        self.assertTrue(len(get_fields_with_nonnumerics(record)) == 1)
 
     def test_check_date(self):
         good_dates = ['2020-01-21T21:31:58-07:00',

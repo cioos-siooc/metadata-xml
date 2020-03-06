@@ -103,7 +103,9 @@ def sanitize_record(record):
     out = {}
     for key, val in record.items():
         if isinstance(val, str):
-            out[key] = escape(val)
+            out[key] = escape(val).strip()
+        elif isinstance(val, date):
+            out[key] = str(val)
         else:
             if val:
                 out[key] = val

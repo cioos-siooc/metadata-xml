@@ -1,5 +1,7 @@
 #!/usr/bin/env python3
 
+import numbers
+import re
 import arrow
 
 
@@ -54,26 +56,81 @@ acceptable_date_formats = [
     'YYYY-MM-DDThh:mm:ss', 'YYYY-MM-DDThh:mm:ssZ', 'YYYY-MM-DDThh:mm:ssZZ']
 
 
-def check_date(date_text):
+def check_date(date_text) -> bool:
     for date_format in acceptable_date_formats:
         try:
-            arrow.parser.DateTimeParser().parse(date_text, date_format)
+            arrow.parser.DateTimeParser().parse(str(date_text), date_format)
             return True
         except ValueError:
             continue
     return False
 
 
-def get_fields_with_bad_dates(record):
+def is_valid_duration(duration_str):
+    duration_regex = r'^P(?!$)(\d+(?:\.\d+)?Y)?(\d+(?:\.\d+)?M)?(\d+(?:\.\d+)?W)?(\d+(?:\.\d+)?D)?(T(?=\d)(\d+(?:\.\d+)?H)?(\d+(?:\.\d+)?M)?(\d+(?:\.\d+)?S)?)?$'  # nopep8
+    return bool(re.match(duration_regex, duration_str))
+
+
+def get_fields_with_bad_durations(record) -> list:
+    # Check duration fields conform to ISO 8601 duration format, eg 'P1D'
+    duration_fields = ['time_coverage_duration',
+                       'time_coverage_resolution']
+
+    bad_fields = []
+    for field in duration_fields:
+        val = record.get(field)
+        if val and not is_valid_duration(val):
+            bad_fields.append(field)
+    return bad_fields
+
+
+def is_valid_email(addr: str) -> bool:
+    'Check for valid looking email address'
+    email_regex = r'[^@]+@[^@]+\.[^@]+'
+    return bool(re.match(email_regex, addr))
+
+
+def get_fields_with_bad_dates(record: dict):
     ''' check all the date_ fields in the record and return a list of key names
         with bad dates
     '''
     bad_date_fields = []
     for field in record:
-        if field.startswith('date_') and record.get(field):
+        if (field.startswith('date_') or field == 'time_coverage_start' or
+                field == 'time_coverage_end') and record.get(field):
             if check_date(record.get(field)) is False:
                 bad_date_fields.append(field)
     return bad_date_fields
+
+
+def is_decimal_type(val) -> bool:
+    'Determine whether val is decimal type'
+    return isinstance(val, numbers.Number)
+
+
+def get_fields_with_nonnumerics(record) -> list:
+    ''' Ensure these fields are numeric
+    '''
+    non_numeric_fields = []
+    for field in record:
+        if (field.startswith('geospatial') and
+                (field.endswith('_max') or field.endswith('_min')) and
+                record.get(field)):
+            if is_decimal_type(record.get(field)) is False:
+                non_numeric_fields.append(field)
+    return non_numeric_fields
+
+
+def get_fields_with_bad_emails(record):
+    ''' check all the date_ fields in the record and return a list of key names
+        with bad dates
+    '''
+    bad_email_fields = []
+    for field in record:
+        if field.endswith('_email') and record.get(field):
+            if is_valid_email(record.get(field)) is False:
+                bad_email_fields.append(field)
+    return bad_email_fields
 
 
 def join(lst):
@@ -106,7 +163,8 @@ def get_missing_fields(record):
     missing_fields = []
 
     for field in mandatory_fields:
-        if field not in record:
+        val = record.get(field)
+        if val is None or val == "":
             missing_fields.append(field)
 
     return missing_fields
@@ -166,6 +224,8 @@ def validate(record):
         errors.append(
             "Required variable 'language' must be either 'fra' or 'eng' ")
 
+    fields_with_bad_durations = get_fields_with_bad_durations(record)
+
     # check if progress_code value is in the codeList
     if ('progress_code' in record
             and record['progress_code'] not in progress_code_options):
@@ -175,6 +235,12 @@ def validate(record):
     # check for badly formatted dates
     fields_with_bad_dates = get_fields_with_bad_dates(record)
 
+    # check for badly formatted emails
+    fields_with_bad_emails = get_fields_with_bad_emails(record)
+
+    # check for badly numeric fields
+    fields_with_nonnumeric = get_fields_with_nonnumerics(record)
+
     if missing_required_fields:
         errors.append(
             "Missing required fields/values: '{}'".format(
@@ -183,6 +249,19 @@ def validate(record):
     if fields_with_bad_dates:
         errors.append("""Date/time formatting error in field(s): {}.
                                  Pattern must match one of: {}""".format(
-            join(fields_with_bad_dates), join(acceptable_date_formats_text)))
+            join(fields_with_bad_dates), join(acceptable_date_formats)))
+
+    if fields_with_bad_emails:
+        errors.append(
+            f"Bad email address in field(s): {fields_with_bad_emails}")
+
+    if fields_with_nonnumeric:
+        errors.append(
+            f"Non-numeric values found in field(s): {fields_with_nonnumeric}")
+
+    if fields_with_bad_durations:
+        errors.append(
+            f"""Durations dont conform to ISO 8601 duration format:
+                {fields_with_bad_durations}""")
 
     return errors
