@@ -54,65 +54,65 @@ For the fields that are text and have bilingual support, you can add on '\_fra' 
 
 See example .yaml files in the 'sample_records' directory for more examples.
 
-| field name               | example value                                 | data type          | bilingual support | codelist options                              | Notes                                            |
-| ------------------------ | --------------------------------------------- | ------------------ | ----------------- | --------------------------------------------- | ------------------------------------------------ |
-| comment                  |                                               | text               | ✓                 |                                               |                                                  |
-| acknowledgement          |                                               | text               | ✓                 |                                               |                                                  |
-| contributor_name         |                                               | text               |                   |                                               |                                                  |
-| contributor_role         | Source of Level 2b data                       | text               |                   | ✓                                             |                                                  |
-| creator_email            | nobody@example.com                            | email              |                   |                                               |                                                  |
-| creator_name             |                                               | text               |                   |                                               |                                                  |
-| creator_url              | <http://example.com>                          | text               |                   |                                               |                                                  |
-| creator_type             | person                                        | text               |                   | Codelist                                      |                                                  |
-| data_maintenance_note    |                                               | text               | ✓                 |                                               | Not from ACDD/CF                                 |
-| date_created             | 2010-01-22                                    | ISO 8601 Date/Time |                   |                                               |                                                  |
-| date_issued              | 2010-01-23                                    | ISO 8601 Date/Time |                   |                                               |                                                  |
-| date_modified            | 2010-01-24                                    | ISO 8601 Date/Time |                   |                                               |                                                  |
-| distributor_name         | distributor name                              | text               |                   |                                               |                                                  |
-| erddap_dataset_url       | <http://example.com/erddap/tabledap/abc.html> | URL                |                   |                                               | Not from ACDD/CF                                 |
-| geospatial_bounds        | 0,0 100,0 100,100 0,100                       |                    |                   |                                               |                                                  |
-| geospatial_lat_max       |                                               | Numeric            |                   |                                               |                                                  |
-| geospatial_lat_min       |                                               | Numeric            |                   |                                               |                                                  |
-| geospatial_lon_max       |                                               | Numeric            |                   |                                               |                                                  |
-| geospatial_lon_min       |                                               | Numeric            |                   |                                               |                                                  |
-| geospatial_vertical_max  |                                               | Numeric            |                   |                                               |                                                  |
-| geospatial_vertical_min  |                                               | Numeric            |                   |                                               |                                                  |
-| history                  |                                               | text               | ✓                 |                                               |                                                  |
-| id                       | 12345                                         | text               |                   |                                               |                                                  |
-| institution              |                                               | text               |                   |                                               |                                                  |
-| keywords_vocabulary      |                                               | text               | ✓                 |                                               |                                                  |
-| keywords                 |                                               | text               | ✓                 | At least one of [EOV codelist](#eov-codelist) |                                                  |
-| language                 | eng                                           | text               |                   | fra or eng                                    | Not from ACDD/CF                                 |
-| naming_authority         |                                               | text               | ✓                 |                                               |                                                  |
-| platform_id_authority    |                                               | text               | ✓                 |                                               | Not from ACDD/CF                                 |
-| platform_id              |                                               | text               |                   |                                               | Not from ACDD/CF                                 |
-| platform_name            |                                               | text               |                   |                                               | Not from ACDD/CF                                 |
-| platform_role            | author                                        | text               |                   | [Role Codes](#role-codes)                     | Not from ACDD/CF                                 |
-| progress_code            | onGoing                                       | text               |                   | [Progress Codes](#progress-codes)             | Not from ACDD/CF                                 |
-| project                  |                                               | text               | ✓                 |                                               |                                                  |
-| publisher_country        |                                               | text               | ✓                 |                                               | Not from ACDD/CF                                 |
-| publisher_email          | nobody@example.com                            | email              |                   |                                               |                                                  |
-| publisher_institution    |                                               | text               |                   |                                               |                                                  |
-| publisher_name           |                                               | text               |                   |                                               |                                                  |
-| publisher_url            |                                               | URL                |                   |                                               |                                                  |
-| publisher_type           | group                                         | text               |                   | [Party Role Codes](#party-role-codes)         |                                                  |
-| summary                  |                                               | text               |                   |                                               | Required in ERDDAP                               |
-| time_coverage_duration   | P1D                                           | ISO 8601 Duration  |                   |                                               |                                                  |
-| time_coverage_start      | 2012-10-21                                    | ISO 8601 Date/Time |                   |                                               | Set in ERDDAP automatically when source is files |
-| time_coverage_end        | 2012-10-22                                    | ISO 8601 Date/Time |                   |                                               | Set in ERDDAP automatically when source is files |
-| time_coverage_resolution | P1D                                           | ISO 8601 Duration  |                   |                                               |                                                  |
-| title                    |                                               | text               |                   |                                               | Required in ERDDAP                               |
-| use_constraints          |                                               | text               | ✓                 |                                               | Not from ACDD/CF                                 |
+| field name               | example value                                 | data type          | bilingual support | codelist options                              | Convention |
+| ------------------------ | --------------------------------------------- | ------------------ | ----------------- | --------------------------------------------- | ---------- |
+| comment                  |                                               | text               | ✓                 |                                               | ACDD       |
+| acknowledgement          |                                               | text               | ✓                 |                                               | ACDD       |
+| contributor_name         |                                               | text               |                   |                                               | ACDD       |
+| contributor_role         | sponsor                                       | text               |                   | [Role Codes](#role-codes)                     | ACDD       |
+| creator_email            | nobody@example.com                            | email              |                   |                                               | ACDD       |
+| creator_name             |                                               | text               |                   |                                               | ACDD       |
+| creator_url              | <http://example.com>                          | text               |                   |                                               | ACDD       |
+| creator_type             | person                                        | text               |                   | Codelist                                      | ACDD       |
+| data_maintenance_note    |                                               | text               | ✓                 |                                               | CIOOS      |
+| date_created             | 2010-01-22                                    | ISO 8601 Date/Time |                   |                                               | ACDD       |
+| date_issued              | 2010-01-23                                    | ISO 8601 Date/Time |                   |                                               | ACDD       |
+| date_modified            | 2010-01-24                                    | ISO 8601 Date/Time |                   |                                               | ACDD       |
+| distributor_name         | distributor name                              | text               |                   |                                               | ACDD       |
+| erddap_dataset_url       | <http://example.com/erddap/tabledap/abc.html> | URL                |                   |                                               | CIOOS      |
+| geospatial_bounds        | 0,0 100,0 100,100 0,100                       |                    |                   |                                               | ACDD       |
+| geospatial_lat_max       |                                               | Numeric            |                   |                                               | ACDD       |
+| geospatial_lat_min       |                                               | Numeric            |                   |                                               | ACDD       |
+| geospatial_lon_max       |                                               | Numeric            |                   |                                               | ACDD       |
+| geospatial_lon_min       |                                               | Numeric            |                   |                                               | ACDD       |
+| geospatial_vertical_max  |                                               | Numeric            |                   |                                               | ACDD       |
+| geospatial_vertical_min  |                                               | Numeric            |                   |                                               | ACDD       |
+| history                  |                                               | text               | ✓                 |                                               | ACDD       |
+| id                       | 12345                                         | text               |                   |                                               | ACDD       |
+| institution              |                                               | text               |                   |                                               | ACDD       |
+| keywords_vocabulary      |                                               | text               | ✓                 |                                               | ACDD       |
+| keywords                 |                                               | text               | ✓                 | At least one of [EOV codelist](#eov-codelist) | ACDD       |
+| language                 | eng                                           | text               |                   | fra or eng                                    | CIOOS      |
+| naming_authority         |                                               | text               | ✓                 |                                               | ACDD       |
+| platform_id_authority    |                                               | text               | ✓                 |                                               | CIOOS      |
+| platform_id              |                                               | text               |                   |                                               | IOOS       |
+| platform_name            |                                               | text               |                   |                                               | IOOS       |
+| platform_role            | author                                        | text               |                   | [Role Codes](#role-codes)                     | CIOOS      |
+| progress_code            | onGoing                                       | text               |                   | [Progress Codes](#progress-codes)             | CIOOS      |
+| project                  |                                               | text               | ✓                 |                                               | ACDD       |
+| publisher_country        |                                               | text               | ✓                 |                                               | IOOS       |
+| publisher_email          | nobody@example.com                            | email              |                   |                                               | ACDD       |
+| publisher_institution    |                                               | text               |                   |                                               | ACDD       |
+| publisher_name           |                                               | text               |                   |                                               | ACDD       |
+| publisher_url            |                                               | URL                |                   |                                               | ACDD       |
+| publisher_type           | group                                         | text               |                   | [Party Role Codes](#party-role-codes)         | ACDD       |
+| summary                  |                                               | text               |                   |                                               | ACDD       |
+| time_coverage_duration   | P1D                                           | ISO 8601 Duration  |                   |                                               | ACDD       |
+| time_coverage_start      | 2012-10-21                                    | ISO 8601 Date/Time |                   |                                               | ACDD       |
+| time_coverage_end        | 2012-10-22                                    | ISO 8601 Date/Time |                   |                                               | ACDD       |
+| time_coverage_resolution | P1D                                           | ISO 8601 Duration  |                   |                                               | ACDD       |
+| title                    |                                               | text               |                   |                                               | ACDD       |
+| use_constraints          |                                               | text               | ✓                 |                                               | CIOOS      |
 
 These can be repeated with different instrument numbers, eg:
 
-| field name                     | example value | data type | bilingual support | codelist options | Notes            |
-| ------------------------------ | ------------- | --------- | ----------------- | ---------------- | ---------------- |
-| instrument_1_id                |               | text      |                   |                  | Not from ACDD/CF |
-| instrument_1_description       |               | text      |                   |                  | Not from ACDD/CF |
-| instrument_1_description_other |               | text      |                   |                  | Not from ACDD/CF |
-| instrument_1_type              |               | text      |                   |                  | Not from ACDD/CF |
-| instrument_1_version           |               | text      |                   |                  | Not from ACDD/CF |
+| field name                     | example value | data type | bilingual support | codelist options | Notes |
+| ------------------------------ | ------------- | --------- | ----------------- | ---------------- | ----- |
+| instrument_1_id                |               | text      |                   |                  | CIOOS |
+| instrument_1_description       |               | text      |                   |                  | CIOOS |
+| instrument_1_description_other |               | text      |                   |                  | CIOOS |
+| instrument_1_type              |               | text      |                   |                  | CIOOS |
+| instrument_1_version           |               | text      |                   |                  | CIOOS |
 
 ## Codelists
 
