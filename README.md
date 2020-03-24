@@ -106,13 +106,12 @@ See example .yaml files in the 'sample_records' directory for more examples.
 
 These can be repeated with different instrument numbers, eg:
 
-| field name                     | example value | data type | bilingual support | codelist options | Notes |
-| ------------------------------ | ------------- | --------- | ----------------- | ---------------- | ----- |
-| instrument_1_id                |               | text      |                   |                  | CIOOS |
-| instrument_1_description       |               | text      |                   |                  | CIOOS |
-| instrument_1_description_other |               | text      |                   |                  | CIOOS |
-| instrument_1_type              |               | text      |                   |                  | CIOOS |
-| instrument_1_version           |               | text      |                   |                  | CIOOS |
+| field name               | example value | data type | bilingual support | codelist options | Notes |
+| ------------------------ | ------------- | --------- | ----------------- | ---------------- | ----- |
+| instrument_1_id          |               | text      |                   |                  | CIOOS |
+| instrument_1_description |               | text      |                   |                  | CIOOS |
+| instrument_1_type        |               | text      |                   |                  | CIOOS |
+| instrument_1_version     |               | text      |                   |                  | CIOOS |
 
 ## Codelists
 
