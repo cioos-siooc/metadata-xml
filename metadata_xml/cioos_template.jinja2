@@ -56,10 +56,10 @@
 
     {% if record['id'] %}
       {# code: mandatory #}
-      <mcc:code xsi:type="lan:PT_FreeText_PropertyType">
+      <mcc:code>
         {# CIOOS core mandatory element #}
         {# MI_Metadata/metadataIdentifier/MD_Identifier/code/CharacterString #}
-        {{ multi_lang('id') }}
+        <gco:CharacterString>{{ record['id'] }}</gco:CharacterString>
       </mcc:code>
       {% endif %}
     </mcc:MD_Identifier>
@@ -117,7 +117,12 @@
       </cit:role>
       {# party: mandatory #}
       <cit:party>
+          {% if record['publisher_type'] in organization_types %}
+            <cit:CI_Organisation>
+          {% else %}
         <cit:CI_Individual>
+          {% endif %}
+
           {# name: mandatory #}
           {% if record['publisher_name'] %}
           <cit:name xsi:type="lan:PT_FreeText_PropertyType">
@@ -165,7 +170,13 @@
               {% endif %}
             </cit:CI_Contact>
           </cit:contactInfo>
+          
+          {% if record['publisher_type'] in organization_types %}
+            </cit:CI_Organisation>
+          {% else %}
         </cit:CI_Individual>
+          {% endif %}
+
       </cit:party>
     </cit:CI_Responsibility>
   </mdb:contact>
@@ -371,13 +382,17 @@
             <cit:CI_Responsibility>
               {# role: mandatory #}
               <cit:role>
-                <cit:CI_RoleCode codeList="http://standards.iso.org/iso/19115/resources/Codelists/cat/codelists.xml#CI_RoleCode" codeListValue="originator"/>
+                <cit:CI_RoleCode codeList="http://standards.iso.org/iso/19115/resources/Codelists/cat/codelists.xml#CI_RoleCode" codeListValue="author"/>
                   {# CIOOS core mandatory element #}
                   {# MI_Metadata/identificationInfo/MD_DataIdentification/citation/CI_Citation/role/CI_RoleCode #}
               </cit:role>
               {# party: mandatory #}
               <cit:party>
+                {% if record['creator_type'] in organization_types %}
+                <cit:CI_Organisation>
+                {% else %}
                 <cit:CI_Individual>
+                {% endif %}
                   {# name: mandatory #}
                   <cit:name>
                     {# CIOOS core mandatory element #}
@@ -406,7 +421,11 @@
                       </cit:address>
                     </cit:CI_Contact>
                   </cit:contactInfo>
+                {% if record['creator_type'] in organization_types %}
+                </cit:CI_Organisation>
+                {% else %}
                 </cit:CI_Individual>
+                {% endif %}
               </cit:party>
             </cit:CI_Responsibility>
           </cit:citedResponsibleParty>
@@ -757,6 +776,20 @@
                     {{ multi_lang('distributor_name') }}
                   </cit:name>
 
+                  {% if record['distributor_email'] %}
+                  <cit:contactInfo>
+                    <cit:CI_Contact>
+                        <cit:address>
+                            <cit:CI_Address>
+                              <cit:electronicMailAddress>
+                                <gco:CharacterString>{{ record['distributor_email'] }}</gco:CharacterString>
+                              </cit:electronicMailAddress>
+                            </cit:CI_Address>
+                        </cit:address>
+                    </cit:CI_Contact>
+                  </cit:contactInfo>
+                  {% endif %}
+
                 </cit:CI_Organisation>
               </cit:party>
 
@@ -882,10 +915,10 @@
                 </cit:CI_Citation>
               </mcc:authority>
               {# code: mandatory #}
-              <mcc:code xsi:type="lan:PT_FreeText_PropertyType">
+              <mcc:code>
                 {# CIOOS core mandatory element #}
                 {# MI_Metadata/acquisitionInformation/MI_AcquisitionInformation/platform/MI_Platform/identifier/MD_Identifier/code/CharacterString #}
-                {{ multi_lang('platform_id') }}
+                <gco:CharacterString>{{ record['platform_id'] }}</gco:CharacterString>
               </mcc:code>
             </mcc:MD_Identifier>
           </mac:identifier>
