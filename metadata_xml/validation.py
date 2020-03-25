@@ -26,6 +26,10 @@ eovs = [
     'surfaceCurrents'
 ]
 
+# Options for publisher_type, creator_type
+contact_type_options = ['person', 'group', 'institution', 'position']
+organization_types = ['group', 'institution']
+
 
 def get_alternate_language(record):
     language = record['language']
@@ -179,6 +183,14 @@ def validate(record):
         errors.append(
             "Missing required fields/values: '{}'".format(
                 join(missing_required_fields)))
+
+    if ('creator_type' in record and
+            record['creator_type'] not in contact_type_options):
+        errors.append(f'Creator type must be one of: {contact_type_options}')
+
+    if ('publisher_type' in record and record['publisher_type'] not in
+            contact_type_options):
+        errors.append(f'Creator type must be one of: {contact_type_options}')
 
     if fields_with_bad_dates:
         errors.append("""Date/time formatting error in field(s): {}.
