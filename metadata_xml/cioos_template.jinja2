@@ -757,6 +757,20 @@
                     {{ multi_lang('distributor_name') }}
                   </cit:name>
 
+                  {% if record['distributor_email'] %}
+                  <cit:contactInfo>
+                    <cit:CI_Contact>
+                        <cit:address>
+                            <cit:CI_Address>
+                              <cit:electronicMailAddress>
+                                <gco:CharacterString>{{ record['distributor_email'] }}</gco:CharacterString>
+                              </cit:electronicMailAddress>
+                            </cit:CI_Address>
+                        </cit:address>
+                    </cit:CI_Contact>
+                  </cit:contactInfo>
+                  {% endif %}
+
                 </cit:CI_Organisation>
               </cit:party>
 
