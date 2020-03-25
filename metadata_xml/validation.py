@@ -4,6 +4,8 @@ import numbers
 import re
 import arrow
 
+# used to standardize join style  - comma.join(list)
+comma = ', '
 
 eovs = [
     'oxygen',
@@ -133,10 +135,6 @@ def get_fields_with_bad_emails(record):
     return bad_email_fields
 
 
-def join(lst):
-    return ', '.join(lst)
-
-
 def get_missing_fields(record):
     # required in ERDDAP: title,summary,institution,infoUrl
     mandatory_fields = [
@@ -219,7 +217,7 @@ def validate(record):
         if has_eov_in_keywords(record) is False:
             errors.append(
                 "There must be at least one EOV in 'keywords'."
-                + "EOVs are: {}".format(join(eovs)))
+                + "EOVs are: {}".format(comma.join(eovs)))
     else:
         errors.append(
             "Required variable 'language' must be either 'fra' or 'eng' ")
@@ -230,7 +228,7 @@ def validate(record):
     if ('progress_code' in record
             and record['progress_code'] not in progress_code_options):
         errors.append("progress_code must be one of: "
-                      + join(progress_code_options))
+                      + comma.join(progress_code_options))
 
     # check for badly formatted dates
     fields_with_bad_dates = get_fields_with_bad_dates(record)
@@ -244,12 +242,13 @@ def validate(record):
     if missing_required_fields:
         errors.append(
             "Missing required fields/values: '{}'".format(
-                join(missing_required_fields)))
+                comma.join(missing_required_fields)))
 
     if fields_with_bad_dates:
         errors.append("""Date/time formatting error in field(s): {}.
                                  Pattern must match one of: {}""".format(
-            join(fields_with_bad_dates), join(acceptable_date_formats)))
+            comma.join(fields_with_bad_dates),
+            comma.join(acceptable_date_formats)))
 
     if fields_with_bad_emails:
         errors.append(
