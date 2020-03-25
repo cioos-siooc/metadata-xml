@@ -371,7 +371,7 @@
             <cit:CI_Responsibility>
               {# role: mandatory #}
               <cit:role>
-                <cit:CI_RoleCode codeList="http://standards.iso.org/iso/19115/resources/Codelists/cat/codelists.xml#CI_RoleCode" codeListValue="originator"/>
+                <cit:CI_RoleCode codeList="http://standards.iso.org/iso/19115/resources/Codelists/cat/codelists.xml#CI_RoleCode" codeListValue="author"/>
                   {# CIOOS core mandatory element #}
                   {# MI_Metadata/identificationInfo/MD_DataIdentification/citation/CI_Citation/role/CI_RoleCode #}
               </cit:role>
@@ -756,6 +756,20 @@
                   <cit:name xsi:type="lan:PT_FreeText_PropertyType">
                     {{ multi_lang('distributor_name') }}
                   </cit:name>
+
+                  {% if record['distributor_email'] %}
+                  <cit:contactInfo>
+                    <cit:CI_Contact>
+                        <cit:address>
+                            <cit:CI_Address>
+                              <cit:electronicMailAddress>
+                                <gco:CharacterString>{{ record['distributor_email'] }}</gco:CharacterString>
+                              </cit:electronicMailAddress>
+                            </cit:CI_Address>
+                        </cit:address>
+                    </cit:CI_Contact>
+                  </cit:contactInfo>
+                  {% endif %}
 
                 </cit:CI_Organisation>
               </cit:party>
