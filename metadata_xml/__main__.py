@@ -12,10 +12,11 @@
 
 
 import os
-import yaml
 import argparse
+from pygeometa.core import render_template
 
-from metadata_xml.iso_template import iso_template
+dir_path = os.path.dirname(os.path.realpath(__file__))
+schema_path = dir_path + '/iso19115-cioos-template'
 
 if __name__ == '__main__':
 
@@ -32,12 +33,10 @@ if __name__ == '__main__':
     basename = os.path.basename(filename)
     print("Input filename as: "+basename)
 
-    with open(args.yaml_file) as stream:
-        yaml_data = yaml.safe_load(stream)
+    xml = render_template(filename, schema_local=schema_path)
 
-        xml = iso_template(yaml_data, use_validation=True)
-        pre, ext = os.path.splitext(filename)
-        yaml_filename = f'{pre}.xml'
-        file = open(yaml_filename, "w")
-        file.write(xml)
-        print("Wrote " + file.name)
+    pre, ext = os.path.splitext(filename)
+    yaml_filename = f'{pre}.xml'
+    file = open(yaml_filename, "w")
+    file.write(xml)
+    print("Wrote " + file.name)

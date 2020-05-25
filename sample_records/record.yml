@@ -1,0 +1,98 @@
+mcf:
+  version: 1.0
+
+metadata:
+  naming_authority_en: namingauthority in eng
+  naming_authority_fr: namingauthority in fr
+  identifier: 3f342f64-9348-11df-ba6a-0014c2c00eab
+  language: en
+  language_alternate: fr
+  maintenance_note_en: maintenance_note
+  maintenance_note_fr: maintenance_note_fr
+  use_constraints_en: use_constraints
+  use_constraints_fr: use_constraints_fr
+  comment_en: comment
+  comment_fr: comment_fr
+  history_en: history_en
+  history_fr: history_fr
+
+spatial:
+  bbox: [-141, 42, -52, 84]
+  polygon: polygon_data
+  vertical: [0, 10]
+
+identification:
+  title_en: title in English
+  title_fr: title in French
+  abstract_en: abstract in English
+  abstract_fr: abstract in French
+  dates:
+    creation: 2011-11-11
+    publication: 2000-09-01T00:00:00Z
+    revision: 2000-09-01T00:00:00Z
+  keywords:
+    default:
+      keywords_en: [kw1 in English, kw2 in English, kw3 in English]
+      keywords_fr: [kw1 in French, kw2 in French, kw3 in French]
+    eov:
+      keywords_en: [oxygen, BAR]
+  temporal_begin: 1950-07-31
+  temporal_end: now
+  temporal_duration: P1D
+  time_coverage_resolution: P1D
+  status: onGoing
+  acknowledgement: acknowledgement
+  status: onGoing
+  project_en:
+    - project_name
+  project_fr:
+    - project_name in french
+
+contact:
+  main: &contact_main
+    organization:
+      name: Environment Canada
+      url: https://www.ec.gc.ca/
+      address: 4905 Dufferin Street
+      city: Toronto
+      country: Canada
+      email: foo@bar.tld
+    individual:
+      name: Shiela Jones
+      position: Scientist
+      email: foo@bar.tld
+
+  author:
+    individual:
+      name: Bob Mcgee
+      phone: +01-123-456-7890
+
+  contributor: *contact_main
+  creator: *contact_main
+  publisher: *contact_main
+  distributor: *contact_main
+
+distribution:
+  erddap:
+    url: https://catalogue.hakai.org/erddap/tabledap/HakaiCTDKC10.html
+  other_format:
+    url: https://dd.meteo.gc.ca/bla.pdf
+    name: my pdf resource
+    description_en: pdf description in English
+    description_fr: pdf description in French
+
+platform:
+  name_en: platform_name
+  role_en: platform_role
+  authority_en: platform_authority
+  id: platform_id
+  description_en: platform_description
+  instruments:
+    - id: 123
+      manufacturer_en: manufacturer en 1
+      version_en: version en 1
+      version_fr: version en 1
+      type_en: type en 1
+      type_fr: type fr 1
+      description_en: instrument description en 1
+      description_fr: instrument description fr 1

@@ -1,0 +1,54 @@
+{% macro bilingual(element, option ,section_items) -%}
+{# returns a bilingual XML tag. The tag is named <element> and the data is from
+   section_items[option]
+#}
+{% set myvars = get_charstring(option, section_items,lang,lang_alt)  %}
+{% if lang_alt is none or myvars[1] is none %}
+      {% if myvars[0]|trim != "None" %}
+      <{{ element }}>
+        <gco:CharacterString>{{ myvars[0]|e }}</gco:CharacterString>
+      </{{ element }}>
+      {% endif %}
+{% else %}
+      <{{ element }} xsi:type="lan:PT_FreeText_PropertyType">
+
+      {% if myvars[0]|trim != "None" %}
+        <gco:CharacterString>{{ myvars[0]|e }}</gco:CharacterString>
+    {% endif %}
+          <lan:PT_FreeText>
+            <lan:textGroup>
+              <lan:LocalisedCharacterString locale="#{{lang_alt_code}}">{{ myvars[1]|e }}</lan:LocalisedCharacterString>
+            </lan:textGroup>
+          </lan:PT_FreeText>
+      </{{ element }}>
+{% endif %}
+{% endmacro %}
+
+
+{% macro bilingual_keyword_list(option, section_items) -%}
+{# Similar to macro above, but returns multiple keyword tags #}
+{# This assumes the two lists (eg keywords_en, keywords_fr) are not necessarily lists
+   of the same words, eg may not be translation
+ #}
+        {% set list_item = get_charstring(option, section_items, lang, lang_alt) %}
+
+        {# list_item[0] is primary language, section_items[1] is alternate language #}
+        {% if list_item[0] %}
+          {% for keyword in list_item[0] %}
+              <mri:keyword>
+                    <gco:CharacterString>{{ keyword|e }}</gco:CharacterString>
+              </mri:keyword>
+          {% endfor %}
+          {% endif %}
+        {% if list_item[1] %}
+          {% for keyword in list_item[1] %}
+              <mri:keyword xsi:type="lan:PT_FreeText_PropertyType">
+                <lan:PT_FreeText>
+                  <lan:textGroup>
+                    <lan:LocalisedCharacterString locale="#{{ lang_alt_code }}">{{ keyword|e }}</lan:LocalisedCharacterString>
+                  </lan:textGroup>
+                </lan:PT_FreeText>
+              </mri:keyword>
+          {% endfor %}
+          {% endif %}
+{% endmacro %}

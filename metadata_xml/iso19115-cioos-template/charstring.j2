@@ -1,0 +1,23 @@
+{# This file is similar to templates/common/iso19139-charstring.j2
+   but you can specify the element's namespace, and alternate language code
+#}
+{% macro get_freetext(element, language_alternate, myvars) -%}
+{% if language_alternate is none or myvars[1] is none %}
+      {% if myvars[0]|trim != "None" %}
+      <{{ element }}>
+        <gco:CharacterString>{{ myvars[0]|trim|e }}</gco:CharacterString>
+      </{{ element }}>
+      {% endif %}
+{% else %}
+      {% if myvars[0]|trim != "None" %}
+      <{{ element }} xsi:type="lan:PT_FreeText_PropertyType">
+        <gco:CharacterString>{{ myvars[0]|trim|e }}</gco:CharacterString>
+          <lan:PT_FreeText>
+            <lan:textGroup>
+              <lan:LocalisedCharacterString locale="#{{language_alternate}}">{{ myvars[1]|trim|e }}</lan:LocalisedCharacterString>
+            </lan:textGroup>
+          </lan:PT_FreeText>
+      </{{ element }}>
+    {% endif %}
+{% endif %}
+{% endmacro %}
