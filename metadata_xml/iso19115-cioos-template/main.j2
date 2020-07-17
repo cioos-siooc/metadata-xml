@@ -41,7 +41,7 @@
   {# metadataIdentifier: mandatory #}
   <mdb:metadataIdentifier>
     <mcc:MD_Identifier>
-    
+
       {% if get_charstring('naming_authority', record['metadata'],lang,lang_alt) %}
       <mcc:authority>
         <cit:CI_Citation>
@@ -103,7 +103,9 @@
   </mdb:metadataScope>
   {# contact: mandatory #}
   <mdb:contact>
-        {{ contact.get_contact(record['contact']['publisher'], 'publisher; contact', 'publisher') }}
+        {% for c in record['contact']['pointOfContact'] %}
+          {{ contact.get_contact(c, c['role'] or 'pointOfContact; contact', c['role'] or 'pointOfContact') }}
+        {% endfor %}
   </mdb:contact>
   {# schema requires at least one mdb:dateInfo field #}
   {# dateInfo: mandatory #}
@@ -414,8 +416,9 @@
       </mri:descriptiveKeywords>
       {% endfor %}
 
+      {% set project = get_charstring('project',record['identification'],lang,lang_alt) %}
 
-      {% if get_charstring('project',record['identification'],lang,lang_alt) %}
+      {% if (project is defined) and project and (project|select('equalto',None)|list|length == 0)  %}
       <mri:descriptiveKeywords>
         <mri:MD_Keywords>
           {# project in default language #}
@@ -428,22 +431,31 @@
       {% endif %}
       <mri:resourceConstraints>
         <mco:MD_LegalConstraints>
+          {% set license = record['metadata'].get('use_constraints',{}).get('license',{}) %}
+          {% set use_constraint_title = license.get('title','') %}
+          {% set use_constraint_code = license.get('code','') %}
+          {% set use_constraint_link = license.get('link','') %}
+          {% if not use_constraint_title and not use_constraint_code and not use_constraint_link %}
+           {% set use_constraint_title = 'Creative Commons Attribution 4.0' %}
+           {% set use_constraint_code = 'CC-BY-4.0'%}
+           {% set use_constraint_link = 'https://creativecommons.org/licenses/by/4.0/' %}
+          {% endif %}
           <mco:reference>
             <cit:CI_Citation>
               <cit:title>
-                <gco:CharacterString>Creative Commons Attribution 4.0</gco:CharacterString>
+                <gco:CharacterString>{{ use_constraint_title }}</gco:CharacterString>
               </cit:title>
               <cit:identifier>
                 <mcc:MD_Identifier>
                   <mcc:code>
-                    <gco:CharacterString>CC-BY-4.0</gco:CharacterString>
+                    <gco:CharacterString>{{ use_constraint_code }}</gco:CharacterString>
                   </mcc:code>
                 </mcc:MD_Identifier>
               </cit:identifier>
               <cit:onlineResource>
                 <cit:CI_OnlineResource>
                   <cit:linkage>
-                    <gco:CharacterString>https://creativecommons.org/licenses/by/4.0/</gco:CharacterString>
+                    <gco:CharacterString>{{ use_constraint_link }}</gco:CharacterString>
                   </cit:linkage>
                 </cit:CI_OnlineResource>
               </cit:onlineResource>
@@ -454,12 +466,12 @@
           </mco:useConstraints>
         </mco:MD_LegalConstraints>
       </mri:resourceConstraints>
-      {% if get_charstring('use_constraints', record['metadata'],lang,lang_alt) %}
+      {% if record['metadata']['use_constraints'] %}
       <mri:resourceConstraints>
         {# MD_Constraints: CIOOS core mandatory #}
         <mco:MD_Constraints>
           {# useLimitation: CIOOS core mandatory #}
-					{{ bl.bilingual('mco:useLimitation', 'use_constraints', record['metadata']) }}
+          {{ bl.bilingual('mco:useLimitation', 'limitations', record['metadata']['use_constraints']) }}
         </mco:MD_Constraints>
       </mri:resourceConstraints>
       {% endif %}
@@ -467,7 +479,7 @@
       {{ bl.bilingual('mri:supplementalInformation', 'comment', record['metadata']) }}
     </mri:MD_DataIdentification>
   </mdb:identificationInfo>
-  {% if record['contact']['distributor'] or record['distribution']['erddap'] %}
+  {% if record['contact']['distributor'] or (record['distribution']|length > 0) %}
     {# distributionInfo: CIOOS core mandatory #}
   <mdb:distributionInfo>
     <mrd:MD_Distribution>
@@ -480,17 +492,24 @@
         </mrd:MD_Distributor>
       </mrd:distributor>
       {% endif %}
-      {% if record['distribution']['erddap']['url'] %}
+    {% for distribution in record['distribution'] %}
+      {% if distribution['format'].lower() == 'erddap' and distribution['url'] %}
       <mrd:transferOptions>
         <mrd:MD_DigitalTransferOptions>
           <mrd:onLine>
             <cit:CI_OnlineResource>
               <cit:linkage>
-                <gco:CharacterString>{{ record['metadata']['erddap_url']|e }}</gco:CharacterString>
+                <gco:CharacterString>{{ distribution['url']|e }}</gco:CharacterString>
               </cit:linkage>
+              {% if '://' in distribution.url %}
+              <cit:protocol>
+                <gco:CharacterString>{{ distribution.url.split('://')[0] }}</gco:CharacterString>
+              </cit:protocol>
+              {% else %}
               <cit:protocol>
                 <gco:CharacterString>order</gco:CharacterString>
               </cit:protocol>
+              {% endif %}
               <cit:name>
                 <gco:CharacterString>ERDDAP Data Subset Form</gco:CharacterString>
               </cit:name>
@@ -507,21 +526,23 @@
           </mrd:onLine>
         </mrd:MD_DigitalTransferOptions>
       </mrd:transferOptions>
-      {% endif %}
-
-
-      {% for key,distribution_format in record['distribution'].items() %}
+      {% else %}
       <mrd:transferOptions>
         <mrd:MD_DigitalTransferOptions>
           <mrd:onLine>
             <cit:CI_OnlineResource>
               <cit:linkage>
-                <gco:CharacterString>{{ distribution_format.url|e }}</gco:CharacterString>
+                <gco:CharacterString>{{ distribution.url|e }}</gco:CharacterString>
               </cit:linkage>
+              {% if '://' in distribution.url %}
+              <cit:protocol>
+                <gco:CharacterString>{{ distribution.url.split('://')[0] }}</gco:CharacterString>
+              </cit:protocol>
+              {% endif %}
               <cit:name>
-                <gco:CharacterString>{{ distribution_format.name }}</gco:CharacterString>
+                <gco:CharacterString>{{ distribution.name }}</gco:CharacterString>
               </cit:name>
-              {{ bl.bilingual('cit:description','description',distribution_format) }}
+              {{ bl.bilingual('cit:description','description',distribution) }}
               <cit:function>
                 <cit:CI_OnLineFunctionCode codeList="http://standards.iso.org/iso/19115/resources/Codelists/cat/codelists.xml#CI_OnLineFunctionCode" codeListValue="download" />
               </cit:function>
@@ -529,6 +550,7 @@
           </mrd:onLine>
         </mrd:MD_DigitalTransferOptions>
       </mrd:transferOptions>
+      {% endif %}
     {% endfor %}
 
 
@@ -656,7 +678,7 @@
                   {% endif %}
                     {# description: mandatory #}
                       {# CIOOS core mandatory element #}
-                      {# MI_Metadata/acquisitionInformation/MI_AcquisitionInformation/instrument/MI_Instrument/identifier/MD_Identifier/description/CharacterString #}                   
+                      {# MI_Metadata/acquisitionInformation/MI_AcquisitionInformation/instrument/MI_Instrument/identifier/MD_Identifier/description/CharacterString #}
                     {{ bl.bilingual('mcc:description', 'description', instrument ) }}
                 </mcc:MD_Identifier>
               </mac:identifier>

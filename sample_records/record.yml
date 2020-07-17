@@ -9,8 +9,13 @@ metadata:
   language_alternate: fr
   maintenance_note_en: maintenance_note
   maintenance_note_fr: maintenance_note_fr
-  use_constraints_en: use_constraints
-  use_constraints_fr: use_constraints_fr
+  use_constraints:
+    limitations_en: use_limitations,
+    limitations_fr: use_limitations_fr,
+    license:
+      title: Creative Commons Attribution 4.0,
+      code: CC-BY-4.0,
+      link: https://creativecommons.org/licenses/by/4.0/
   comment_en: comment
   comment_fr: comment_fr
   history_en: history_en
@@ -62,6 +67,12 @@ contact:
       position: Scientist
       email: foo@bar.tld
 
+  pointOfContact: # use as 'contact' in xml
+    - individual:
+        name: some guy
+        email: some.guy@here.now
+      role: destributor # include role if  differs from object key, in this case point of contact
+
   author:
     individual:
       name: Bob Mcgee
@@ -70,13 +81,13 @@ contact:
   contributor: *contact_main
   creator: *contact_main
   publisher: *contact_main
-  distributor: *contact_main
+  distributor: *contact_main # used as distributor in distributionInfo in xml
 
 distribution:
-  erddap:
-    url: https://catalogue.hakai.org/erddap/tabledap/HakaiCTDKC10.html
-  other_format:
-    url: https://dd.meteo.gc.ca/bla.pdf
+  - url: https://catalogue.hakai.org/erddap/tabledap/HakaiCTDKC10.html
+    format: erddap
+  - url: https://dd.meteo.gc.ca/bla.pdf
+    format: pdf
     name: my pdf resource
     description_en: pdf description in English
     description_fr: pdf description in French

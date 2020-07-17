@@ -2,7 +2,7 @@
 
 <cit:CI_Responsibility>
   <cit:role>
-    <cit:CI_RoleCode codeList="" codeListValue="{{ role_codelist_value }}">{{ role }}</cit:CI_RoleCode>
+    <cit:CI_RoleCode codeList="https://standards.iso.org/iso/19115/resources/Codelists/cat/codelists.xml#CI_RoleCode" codeListValue="{{ role_codelist_value }}">{{ role }}</cit:CI_RoleCode>
   </cit:role>
   <cit:party>
   {% if contact['organization'] %}
@@ -41,13 +41,13 @@
               </cit:protocol>
               <cit:function>
                 {# TODO what here? #}
-                <cit:CI_OnLineFunctionCode codeList="" codeListValue=""></cit:CI_OnLineFunctionCode>
+                <cit:CI_OnLineFunctionCode codeList="https://standards.iso.org/iso/19115/resources/Codelists/cat/codelists.xml#CI_OnLineFunctionCode" codeListValue=""></cit:CI_OnLineFunctionCode>
               </cit:function>
             </cit:CI_OnlineResource>
           </cit:onlineResource>
         </cit:CI_Contact>
       </cit:contactInfo>
-      
+
       {% if contact['individual'] %}
       <cit:individual>
         {{ get_individual(contact['individual']) }}
