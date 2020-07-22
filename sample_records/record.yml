@@ -66,17 +66,20 @@ contact:
       name: Shiela Jones
       position: Scientist
       email: foo@bar.tld
+      country: Canada
 
   pointOfContact: # use as 'contact' in xml
     - individual:
         name: some guy
         email: some.guy@here.now
+        country: Canada
       role: destributor # include role if  differs from object key, in this case point of contact
 
   author:
     individual:
       name: Bob Mcgee
       phone: +01-123-456-7890
+      country: Canada
 
   contributor: *contact_main
   creator: *contact_main
