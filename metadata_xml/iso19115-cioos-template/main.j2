@@ -102,9 +102,14 @@
     </mdb:MD_MetadataScope>
   </mdb:metadataScope>
   {# contact: mandatory #}
-  <mdb:contact>
-        {{ contact.get_contact(record['contact']['publisher'], 'publisher; contact', 'publisher') }}
-  </mdb:contact>
+  {% for c in record['contact'] %}
+    {% for role in c.roles %}
+    <mdb:contact>
+            {{ contact.get_contact(c, role or 'pointOfContact; contact', role or 'pointOfContact') }}
+    </mdb:contact>
+    {% endfor %}
+  {% endfor %}
+
   {# schema requires at least one mdb:dateInfo field #}
   {# dateInfo: mandatory #}
         {% for date_type, date in record['identification']['dates'].items() %}
@@ -203,24 +208,17 @@
           {# title: mandatory #}
           {{ bl.bilingual('cit:title','title', record['identification']) }}
 
-          {% if record['contact']['author'] %}
+          {% for c in record['contact'] %}
+          {% for role in c['roles'] %}
+          {% if role in ['author','contributor','creator'] %}
           <cit:citedResponsibleParty>
-            {{ contact.get_contact(record['contact']['author'], 'author; contact', 'author') }}
+            {{ contact.get_contact(c, role + '; contact', role) }}
           </cit:citedResponsibleParty>
           {% endif %}
+          {% endfor %}
+          {% endfor %}
 
-          {% if record['contact']['contributor'] %}
-          <cit:citedResponsibleParty>
-            {{ contact.get_contact(record['contact']['contributor'], 'contributor; contact', 'contributor') }}
-          </cit:citedResponsibleParty>
-          {% endif %}
 
-          {% if record['contact']['creator'] %}
-          <cit:citedResponsibleParty>
-            {# originator #}
-          {{ contact.get_contact(record['contact']['creator'], 'creator; contact', 'creator') }}
-          </cit:citedResponsibleParty>
-          {% endif %}
         </cit:CI_Citation>
       </mri:citation>
       {# abstract: mandatory #}
@@ -404,6 +402,9 @@
                   <cit:linkage>
                       {{ key }}
                     </cit:linkage>
+                  <cit:protocol>
+                    <gco:CharacterString>WWW:LINK</gco:CharacterString>
+                  </cit:protocol>
                 </cit:CI_OnlineResource>
               </cit:onlineResource>
               {% endif %}
@@ -426,25 +427,38 @@
         </mri:MD_Keywords>
       </mri:descriptiveKeywords>
       {% endif %}
+      
+      {% if record['metadata'].get('use_constraints',{}).get('license')%}
+        {% set license = record['metadata']['use_constraints']['license'] %}
+      {% else %}
+        {% set license= {"title":"Creative Commons Attribution 4.0",
+                         "code":"CC-BY-4.0",
+                         "url": "https://creativecommons.org/licenses/by/4.0/"
+                         } %}
+      {% endif %}
+
       <mri:resourceConstraints>
         <mco:MD_LegalConstraints>
           <mco:reference>
             <cit:CI_Citation>
               <cit:title>
-                <gco:CharacterString>Creative Commons Attribution 4.0</gco:CharacterString>
+                <gco:CharacterString>{{ license['title'] }}</gco:CharacterString>
               </cit:title>
               <cit:identifier>
                 <mcc:MD_Identifier>
                   <mcc:code>
-                    <gco:CharacterString>CC-BY-4.0</gco:CharacterString>
+                    <gco:CharacterString>{{ license['code'] }}</gco:CharacterString>
                   </mcc:code>
                 </mcc:MD_Identifier>
               </cit:identifier>
               <cit:onlineResource>
                 <cit:CI_OnlineResource>
                   <cit:linkage>
-                    <gco:CharacterString>https://creativecommons.org/licenses/by/4.0/</gco:CharacterString>
+                    <gco:CharacterString>{{ license['url'] }}</gco:CharacterString>
                   </cit:linkage>
+                  <cit:protocol>
+                    <gco:CharacterString>WWW:LINK</gco:CharacterString>
+                  </cit:protocol>
                 </cit:CI_OnlineResource>
               </cit:onlineResource>
             </cit:CI_Citation>
@@ -454,12 +468,12 @@
           </mco:useConstraints>
         </mco:MD_LegalConstraints>
       </mri:resourceConstraints>
-      {% if get_charstring('use_constraints', record['metadata'],lang,lang_alt) %}
+      {% if record['metadata']['use_constraints'] %}
       <mri:resourceConstraints>
         {# MD_Constraints: CIOOS core mandatory #}
         <mco:MD_Constraints>
           {# useLimitation: CIOOS core mandatory #}
-					{{ bl.bilingual('mco:useLimitation', 'use_constraints', record['metadata']) }}
+           {{ bl.bilingual('mco:useLimitation', 'limitations', record['metadata']['use_constraints']) }}
         </mco:MD_Constraints>
       </mri:resourceConstraints>
       {% endif %}
@@ -467,68 +481,70 @@
       {{ bl.bilingual('mri:supplementalInformation', 'comment', record['metadata']) }}
     </mri:MD_DataIdentification>
   </mdb:identificationInfo>
-  {% if record['contact']['distributor'] or record['distribution']['erddap'] %}
+
+  {% if record['distribution'] %}
     {# distributionInfo: CIOOS core mandatory #}
   <mdb:distributionInfo>
     <mrd:MD_Distribution>
-      {% if record['contact']['distributor'] %}
+      {% for c in record['contact'] %}
+      {% if 'distributor' in c.roles %}
       <mrd:distributor>
         <mrd:MD_Distributor>
           <mrd:distributorContact>
-        {{ contact.get_contact(record['contact']['distributor'], 'distributor; contact', 'distributor') }}
+        {{ contact.get_contact(c, 'distributor; contact', 'distributor') }}
             </mrd:distributorContact>
         </mrd:MD_Distributor>
       </mrd:distributor>
       {% endif %}
-      {% if record['distribution']['erddap']['url'] %}
+      {% endfor %}
+
+
+      {% for distribution in record['distribution'] %}
+      
+      {% if '/erddap' in distribution['url']%}
       <mrd:transferOptions>
         <mrd:MD_DigitalTransferOptions>
           <mrd:onLine>
             <cit:CI_OnlineResource>
               <cit:linkage>
-                <gco:CharacterString>{{ record['metadata']['erddap_url']|e }}</gco:CharacterString>
+                <gco:CharacterString>{{ distribution['url']|e }}</gco:CharacterString>
               </cit:linkage>
               <cit:protocol>
-                <gco:CharacterString>order</gco:CharacterString>
+                <gco:CharacterString>WWW:LINK</gco:CharacterString>
               </cit:protocol>
               <cit:name>
                 <gco:CharacterString>ERDDAP Data Subset Form</gco:CharacterString>
               </cit:name>
+              {# TODO add french for this? #}
               <cit:description>
                 <gco:CharacterString>ERDDAP's version of the OPeNDAP .html web page for this dataset. Specify a subset of the dataset and download the data via OPeNDAP or in many different file types.</gco:CharacterString>
               </cit:description>
-              <cit:function>
-                <cit:CI_OnLineFunctionCode codeList="http://standards.iso.org/iso/19115/resources/Codelists/cat/codelists.xml#CI_OnLineFunctionCode" codeListValue="download" />
-              </cit:function>
-              <cit:protocolRequest>
-                <gco:CharacterString>OPeNDAP constraint protocol</gco:CharacterString>
-              </cit:protocolRequest>
+            </cit:CI_OnlineResource>
+          </mrd:onLine>
+        </mrd:MD_DigitalTransferOptions>
+      </mrd:transferOptions>
+
+      {% else %}
+      
+      <mrd:transferOptions>
+        <mrd:MD_DigitalTransferOptions>
+          <mrd:onLine>
+            <cit:CI_OnlineResource>
+              <cit:linkage>
+                <gco:CharacterString>{{ distribution.url|e }}</gco:CharacterString>
+              </cit:linkage>
+              <cit:protocol>
+                <gco:CharacterString>WWW:LINK</gco:CharacterString>
+              </cit:protocol>
+              <cit:name>
+                <gco:CharacterString>{{ distribution.name }}</gco:CharacterString>
+              </cit:name>
+              {{ bl.bilingual('cit:description','description',distribution) }}
             </cit:CI_OnlineResource>
           </mrd:onLine>
         </mrd:MD_DigitalTransferOptions>
       </mrd:transferOptions>
       {% endif %}
-
-
-      {% for key,distribution_format in record['distribution'].items() %}
-      <mrd:transferOptions>
-        <mrd:MD_DigitalTransferOptions>
-          <mrd:onLine>
-            <cit:CI_OnlineResource>
-              <cit:linkage>
-                <gco:CharacterString>{{ distribution_format.url|e }}</gco:CharacterString>
-              </cit:linkage>
-              <cit:name>
-                <gco:CharacterString>{{ distribution_format.name }}</gco:CharacterString>
-              </cit:name>
-              {{ bl.bilingual('cit:description','description',distribution_format) }}
-              <cit:function>
-                <cit:CI_OnLineFunctionCode codeList="http://standards.iso.org/iso/19115/resources/Codelists/cat/codelists.xml#CI_OnLineFunctionCode" codeListValue="download" />
-              </cit:function>
-            </cit:CI_OnlineResource>
-          </mrd:onLine>
-        </mrd:MD_DigitalTransferOptions>
-      </mrd:transferOptions>
     {% endfor %}
 
 
@@ -584,9 +600,7 @@
               <mcc:authority>
                 <cit:CI_Citation>
                   {# validation says cit:CI_Citation requires title #}
-                  <cit:title>
-                    <gco:CharacterString>{{ record['platform']['name'] }}</gco:CharacterString>
-                  </cit:title>
+                  {{ bl.bilingual('cit:title', 'name', record['platform']) }}
                   {% if record['platform']['role'] and record['platform']['authority'] %}
                   {# citedResponsibleParty: mandatory #}
                   <cit:citedResponsibleParty>

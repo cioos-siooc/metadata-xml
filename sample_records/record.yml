@@ -9,8 +9,14 @@ metadata:
   language_alternate: fr
   maintenance_note_en: maintenance_note
   maintenance_note_fr: maintenance_note_fr
-  use_constraints_en: use_constraints
-  use_constraints_fr: use_constraints_fr
+  use_constraints:
+    limitations_en: use_limitations
+    limitations_fr: use_limitations_fr
+    license:
+      title: Creative Commons Attribution 4.0
+      code: CC-BY-4.0
+      url: https://creativecommons.org/licenses/by/4.0/
+
   comment_en: comment
   comment_fr: comment_fr
   history_en: history_en
@@ -40,7 +46,6 @@ identification:
   temporal_end: now
   temporal_duration: P1D
   time_coverage_resolution: P1D
-  status: onGoing
   acknowledgement: acknowledgement
   status: onGoing
   project_en:
@@ -49,7 +54,9 @@ identification:
     - project_name in french
 
 contact:
-  main: &contact_main
+  - roles:
+      - pointOfContact
+      - creator
     organization:
       name: Environment Canada
       url: https://www.ec.gc.ca/
@@ -61,37 +68,41 @@ contact:
       name: Shiela Jones
       position: Scientist
       email: foo@bar.tld
-
-  author:
+  - roles:
+      - author
     individual:
-      name: Bob Mcgee
-      phone: +01-123-456-7890
+      name: X Y
+      position: Scientist
+      email: foo2@bar.tld
+      country: Canada
 
-  contributor: *contact_main
-  creator: *contact_main
-  publisher: *contact_main
-  distributor: *contact_main
+  - roles:
+      - distributor
+    organization:
+      name: Bill's Pubishing
+      address: 123 Main Street
+      city: Winnipeg
+      country: Canada
+      email: foo@bar.tld
 
+# TODO rename to resources now that we are straying from MCF?
 distribution:
-  erddap:
-    url: https://catalogue.hakai.org/erddap/tabledap/HakaiCTDKC10.html
-  other_format:
-    url: https://dd.meteo.gc.ca/bla.pdf
+  - url: https://catalogue.hakai.org/erddap/tabledap/HakaiCTDKC10.html
+  - url: https://dd.meteo.gc.ca/bla.pdf
     name: my pdf resource
     description_en: pdf description in English
     description_fr: pdf description in French
 
 platform:
   name_en: platform_name
-  role_en: platform_role
-  authority_en: platform_authority
+  role: platform_role
+  authority: platform_authority
   id: platform_id
   description_en: platform_description
   instruments:
     - id: 123
       manufacturer_en: manufacturer en 1
-      version_en: version en 1
-      version_fr: version en 1
+      version: A1.53
       type_en: type en 1
       type_fr: type fr 1
       description_en: instrument description en 1

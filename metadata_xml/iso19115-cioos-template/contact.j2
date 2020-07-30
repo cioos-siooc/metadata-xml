@@ -2,7 +2,7 @@
 
 <cit:CI_Responsibility>
   <cit:role>
-    <cit:CI_RoleCode codeList="" codeListValue="{{ role_codelist_value }}">{{ role }}</cit:CI_RoleCode>
+    <cit:CI_RoleCode codeList="https://standards.iso.org/iso/19115/resources/Codelists/cat/codelists.xml#CI_RoleCode" codeListValue="{{ role_codelist_value }}">{{ role }}</cit:CI_RoleCode>
   </cit:role>
   <cit:party>
   {% if contact['organization'] %}
@@ -20,6 +20,7 @@
 
           <cit:address>
             <cit:CI_Address>
+              {{ bl.bilingual('cit:deliveryPoint', 'address', contact['organization']) }}
               {{ bl.bilingual('cit:city', 'city', contact['organization']) }}
               {{ bl.bilingual('cit:country', 'country', contact['organization']) }}
               {% if contact['organization']['email'] %}
@@ -37,11 +38,9 @@
               </cit:linkage>
               <cit:protocol>
                 <gco:CharacterString>WWW:LINK</gco:CharacterString>
-
               </cit:protocol>
               <cit:function>
-                {# TODO what here? #}
-                <cit:CI_OnLineFunctionCode codeList="" codeListValue=""></cit:CI_OnLineFunctionCode>
+                <cit:CI_OnLineFunctionCode codeList="https://standards.iso.org/iso/19115/resources/Codelists/cat/codelists.xml#CI_OnLineFunctionCode" codeListValue="information"></cit:CI_OnLineFunctionCode>
               </cit:function>
             </cit:CI_OnlineResource>
           </cit:onlineResource>
@@ -77,6 +76,7 @@
         {% if contact['city'] or contact['country'] or contact['email']%}
         <cit:address>
           <cit:CI_Address>
+            {{ bl.bilingual('cit:deliveryPoint', 'address', contact) }}
             {{ bl.bilingual('cit:city', 'city', contact) }}
             {{ bl.bilingual('cit:country', 'country', contact) }}
             {% if contact['email'] %}
@@ -94,7 +94,7 @@
         {% endif %}
       </cit:CI_Contact>
     </cit:contactInfo>
-    {{ bl.bilingual('cit:positionName', 'positionname', contact) }}
+    {{ bl.bilingual('cit:positionName', 'position', contact) }}
 </cit:CI_Individual>
 
 {% endmacro%}
