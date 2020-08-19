@@ -1,79 +1,73 @@
-mcf:
-  version: 1.0
-
 metadata:
-  naming_authority_en: namingauthority in eng
-  naming_authority_fr: namingauthority in fr
+  naming_authority:
+    en: namingauthority in en
+    fr: namingauthority in fr
   identifier: 3f342f64-9348-11df-ba6a-0014c2c00eab
   language: en
-  language_alternate: fr
-  maintenance_note_en: maintenance_note
-  maintenance_note_fr: maintenance_note_fr
+  maintenance_note: maintenance_note
   use_constraints:
-    limitations_en: use_limitations
-    limitations_fr: use_limitations_fr
+    limitations: limitations
     license:
       title: Creative Commons Attribution 4.0
       code: CC-BY-4.0
       url: https://creativecommons.org/licenses/by/4.0/
 
-  comment_en: comment
-  comment_fr: comment_fr
-  history_en: history_en
-  history_fr: history_fr
+  comment: just in the main language
+
+  history:
+    en: history in english
+    fr: history in french
 
 spatial:
   bbox: [-141, 42, -52, 84]
   polygon: polygon_data
   vertical: [0, 10]
-
 identification:
-  title_en: title in English
-  title_fr: title in French
-  abstract_en: abstract in English
-  abstract_fr: abstract in French
+  title:
+    en: title in english
+    fr: title in french
+
+  abstract:
+    en: abstract in French
+    fr: abstract in English
   dates:
     creation: 2011-11-11
     publication: 2000-09-01T00:00:00Z
     revision: 2000-09-01T00:00:00Z
   keywords:
     default:
-      keywords_en: [kw1 in English, kw2 in English, kw3 in English]
-      keywords_fr: [kw1 in French, kw2 in French, kw3 in French]
-    eov:
-      keywords_en: [oxygen, BAR]
+      en: [kw1 in English, kw2 in English, kw3 in English]
+      fr: [kw1 in French, kw2 in French, kw3 in French]
+    eov: [oxygen]
   temporal_begin: 1950-07-31
   temporal_end: now
   temporal_duration: P1D
   time_coverage_resolution: P1D
   acknowledgement: acknowledgement
   status: onGoing
-  project_en:
-    - project_name
-  project_fr:
-    - project_name in french
-
+  project:
+    en: [project_a, project_b]
+    fr: [project_a in french, project_b in french]
 contact:
   - roles:
       - pointOfContact
-      - creator
     organization:
       name: Environment Canada
       url: https://www.ec.gc.ca/
       address: 4905 Dufferin Street
       city: Toronto
       country: Canada
-      email: foo@bar.tld
+      email: foo@bar.ca
     individual:
       name: Shiela Jones
       position: Scientist
-      email: foo@bar.tld
+      email: foo@bar.ca
   - roles:
       - author
     individual:
       name: X Y
       position: Scientist
-      email: foo2@bar.tld
+      email: foo2@bar.ca
       country: Canada
 
   - roles:
@@ -83,27 +77,30 @@ contact:
       address: 123 Main Street
       city: Winnipeg
       country: Canada
-      email: foo@bar.tld
+      email: foo@bar.ca
 
 # TODO rename to resources now that we are straying from MCF?
 distribution:
   - url: https://catalogue.hakai.org/erddap/tabledap/HakaiCTDKC10.html
   - url: https://dd.meteo.gc.ca/bla.pdf
     name: my pdf resource
-    description_en: pdf description in English
-    description_fr: pdf description in French
+    description:
+      en: pdf description in English
+      fr: pdf description in French
 
 platform:
-  name_en: platform_name
+  name: platform_name
   role: platform_role
   authority: platform_authority
-  id: platform_id
-  description_en: platform_description
+  id: platform id
+  description: platform_description
   instruments:
     - id: 123
-      manufacturer_en: manufacturer en 1
+      manufacturer: manufacturer en 1
       version: A1.53
-      type_en: type en 1
-      type_fr: type fr 1
-      description_en: instrument description en 1
-      description_fr: instrument description fr 1
+      type:
+        en: type en 1
+        fr: type fr 1
+      description:
+        en: instrument description en 1
+        fr: instrument description fr 1

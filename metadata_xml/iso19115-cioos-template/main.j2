@@ -7,7 +7,9 @@
                         }
 %}
 {% set lang_code = language_codes[lang] %}
+
 {% set lang_alt_code = language_codes[lang_alt] %}
+{% set languages_used = list_all_languages_in_record(record) %}
 
 {% import 'bilingual.j2' as bl with context %}
 {% import 'contact.j2' as contact with context %}
@@ -41,8 +43,7 @@
   {# metadataIdentifier: mandatory #}
   <mdb:metadataIdentifier>
     <mcc:MD_Identifier>
-    
-      {% if get_charstring('naming_authority', record['metadata'],lang,lang_alt) %}
+      {% if record['metadata']['naming_authority'] %}
       <mcc:authority>
         <cit:CI_Citation>
             {{ bl.bilingual('cit:title', 'naming_authority',record['metadata']) }}
@@ -176,11 +177,13 @@
     </cit:CI_Citation>
   </mdb:metadataProfile>
 
+{% for alternate_lang_2char in languages_used %}
+{% set alternate_lang_code= language_codes[alternate_lang_2char] %}
   <mdb:otherLocale>
     <lan:PT_Locale>
       {# language: mandatory #}
       <lan:language>
-        <lan:LanguageCode codeList="http://standards.iso.org/iso/19115/resources/Codelist/lan/LanguageCode.xml" codeListValue="{{ lang_alt_code }}">
+        <lan:LanguageCode codeList="http://standards.iso.org/iso/19115/resources/Codelist/lan/LanguageCode.xml" codeListValue="{{ alternate_lang_code }}">
           {# CIOOS core mandatory element #}
           {# MI_Metadata/otherLocale/PT_Locale/language/LanguageCode (ISO639-2) #}
         </lan:LanguageCode>
@@ -199,6 +202,8 @@
       </lan:characterEncoding>
     </lan:PT_Locale>
   </mdb:otherLocale>
+  {% endfor %}
+
   {# identificationInfo: mandatory #}
   <mdb:identificationInfo>
     <mri:MD_DataIdentification>
@@ -387,8 +392,9 @@
       <mri:descriptiveKeywords>
 
         <mri:MD_Keywords>
-          {% set keywords_xml = bl.bilingual_keyword_list('keywords',value) %}
+          {% set keywords_xml = bl.bilingual_keyword_list(value) %}
           {{ keywords_xml }}
+
           {% if keywords_xml|trim|length>0 %}
           <mri:thesaurusName>
             <cit:CI_Citation>
@@ -415,12 +421,10 @@
       </mri:descriptiveKeywords>
       {% endfor %}
 
-
-      {% if get_charstring('project',record['identification'],lang,lang_alt) %}
+      {% if record['identification']['project'] %}
       <mri:descriptiveKeywords>
         <mri:MD_Keywords>
-          {# project in default language #}
-          {{ bl.bilingual_keyword_list('project',record['identification']) }}
+          {{ bl.bilingual_keyword_list(record['identification']['project']) }}
           <mri:type>
             <mri:MD_KeywordTypeCode codeList="https://standards.iso.org/iso/19115/resources/Codelists/cat/codelists.xml#MD_KeywordTypeCode" codeListValue="project">project</mri:MD_KeywordTypeCode>
           </mri:type>
@@ -551,7 +555,7 @@
     </mrd:MD_Distribution>
   </mdb:distributionInfo>
   {% endif %}
-  {% if get_charstring('history', record['metadata'],lang,lang_alt) %}
+  {% if record['metadata']['history'] %}
   <mdb:resourceLineage>
     <mrl:LI_Lineage>
       {{ bl.bilingual('mrl:statement', 'history', record['metadata']) }}
@@ -647,7 +651,7 @@
               <mac:identifier>
                 <mcc:MD_Identifier>
                   {# authority: Recommended #}
-                    {% if get_charstring('manufacturer',instrument,lang,lang_alt) %}
+                    {% if instrument['manufacturer'] %}
                   <mcc:authority>
                     <cit:CI_Citation>
                       {{ bl.bilingual('cit:title', 'manufacturer', instrument ) }}
