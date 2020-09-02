@@ -32,6 +32,20 @@ eg:
 
 `python -m metadata_xml -f sample_records/record.yaml`
 
+## YAML Metadata format
+
+See `sample_records/record.yaml` for an example. Most text fields have the option to be bilingual, eg:
+
+```yaml
+   comment: just in the primary language
+
+   # -- or --
+
+   comment:
+      en: comment in english
+      fr: comment in french
+```
+
 ## Codelists
 
 ### Party Role Codes

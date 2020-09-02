@@ -1,3 +1,12 @@
+# Most text fields can be either bilingual or not, eg either is valid:
+#
+#   comment: just in the main language
+#
+#   comment:
+#      en: in english
+#      fr: in french
+#
+
 metadata:
   naming_authority:
     en: namingauthority in en
@@ -79,7 +88,6 @@ contact:
       country: Canada
       email: foo@bar.ca
 
-# TODO rename to resources now that we are straying from MCF?
 distribution:
   - url: https://catalogue.hakai.org/erddap/tabledap/HakaiCTDKC10.html
   - url: https://dd.meteo.gc.ca/bla.pdf
