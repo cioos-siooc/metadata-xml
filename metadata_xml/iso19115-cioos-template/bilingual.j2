@@ -1,0 +1,64 @@
+{% macro bilingual(element,key,mapping) -%}
+{% set value = mapping[key] %}
+
+{% if value is not mapping %}
+      {% if value|trim != "None" %}
+      <{{ element }}>
+        <gco:CharacterString>{{ value|e }}</gco:CharacterString>
+      </{{ element }}>
+      {% endif %}
+{% else %}
+      <{{ element }} xsi:type="lan:PT_FreeText_PropertyType">
+
+      {% if value[lang]|trim != "None" %}
+        <gco:CharacterString>{{ value[lang]|e }}</gco:CharacterString>
+    {% endif %}
+          <lan:PT_FreeText>
+          {% for secondary_lang,val in value.items() %}
+          {% if secondary_lang != lang %}
+            <lan:textGroup>
+              <lan:LocalisedCharacterString locale="#{{secondary_lang}}">{{ val|e }}</lan:LocalisedCharacterString>
+            </lan:textGroup>
+          {% endif %}
+          {% endfor %}
+          </lan:PT_FreeText>
+      </{{ element }}>
+{% endif %}
+{% endmacro %}
+
+{% macro bilingual_keyword_list(section_items) -%}
+{# Similar to macro above, but returns multiple keyword tags #}
+        {# check if list #}
+        {% set is_array = section_items is iterable and section_items is not string and section_items is not mapping  %}
+        {% if is_array %}
+          {% set default_lang_list = section_items %}
+        {% else %}
+          {% set default_lang_list = section_items[lang] %}
+        {% endif %}
+
+        {% if default_lang_list|length>0 %}
+          {% for keyword in default_lang_list %}
+              <mri:keyword>
+                    <gco:CharacterString>{{ keyword|e }}</gco:CharacterString>
+              </mri:keyword>
+          {% endfor %}
+          {% endif %}
+
+          {% if not is_array %}
+          
+        {% for secondary_lang,list_of_keywords in section_items.items() %}
+          {% if secondary_lang !=  lang %}
+            {% for keyword in list_of_keywords %}
+                <mri:keyword xsi:type="lan:PT_FreeText_PropertyType">
+                  <lan:PT_FreeText>
+                    <lan:textGroup>
+                      <lan:LocalisedCharacterString locale="#{{ secondary_lang }}">{{ keyword|e }}</lan:LocalisedCharacterString>
+                    </lan:textGroup>
+                  </lan:PT_FreeText>
+                </mri:keyword>
+            {% endfor %}
+            {% endif %}
+          {% endfor %}  
+        {% endif %}
+
+{% endmacro %}

@@ -1,0 +1,100 @@
+{% macro get_contact(contact, role ,role_codelist_value) -%}
+
+<cit:CI_Responsibility>
+  <cit:role>
+    <cit:CI_RoleCode codeList="https://standards.iso.org/iso/19115/resources/Codelists/cat/codelists.xml#CI_RoleCode" codeListValue="{{ role_codelist_value }}">{{ role }}</cit:CI_RoleCode>
+  </cit:role>
+  <cit:party>
+  {% if contact['organization'] %}
+    <cit:CI_Organisation>
+    {{ bl.bilingual('cit:name', 'name', contact['organization']) }}
+      <cit:contactInfo>
+        <cit:CI_Contact>
+          <cit:phone>
+            <cit:CI_Telephone>
+              <cit:number>
+              <gco:CharacterString>{{ contact['organization']['phone'] }}</gco:CharacterString>
+              </cit:number>
+            </cit:CI_Telephone>
+          </cit:phone>
+
+          <cit:address>
+            <cit:CI_Address>
+              {{ bl.bilingual('cit:deliveryPoint', 'address', contact['organization']) }}
+              {{ bl.bilingual('cit:city', 'city', contact['organization']) }}
+              {{ bl.bilingual('cit:country', 'country', contact['organization']) }}
+              {% if contact['organization']['email'] %}
+              <cit:electronicMailAddress>
+                <gco:CharacterString>{{ contact['organization']['email'] }}</gco:CharacterString>
+              </cit:electronicMailAddress>
+              {% endif %}
+            </cit:CI_Address>
+          </cit:address>
+
+          <cit:onlineResource>
+            <cit:CI_OnlineResource>
+              <cit:linkage>
+                <gco:CharacterString>{{ contact['organization']['url']|e }}</gco:CharacterString>
+              </cit:linkage>
+              <cit:protocol>
+                <gco:CharacterString>WWW:LINK</gco:CharacterString>
+              </cit:protocol>
+              <cit:function>
+                <cit:CI_OnLineFunctionCode codeList="https://standards.iso.org/iso/19115/resources/Codelists/cat/codelists.xml#CI_OnLineFunctionCode" codeListValue="information"></cit:CI_OnLineFunctionCode>
+              </cit:function>
+            </cit:CI_OnlineResource>
+          </cit:onlineResource>
+        </cit:CI_Contact>
+      </cit:contactInfo>
+      
+      {% if contact['individual'] %}
+      <cit:individual>
+        {{ get_individual(contact['individual']) }}
+      </cit:individual>
+      {% endif %}
+
+    </cit:CI_Organisation>
+    {% else %}
+
+    {{ get_individual(contact['individual']) }}
+
+    {% endif %}
+
+
+  </cit:party>
+</cit:CI_Responsibility>
+
+{% endmacro %}
+
+
+{% macro get_individual(contact) -%}
+
+ <cit:CI_Individual>
+    {{ bl.bilingual('cit:name', 'name', contact) }}
+    <cit:contactInfo>
+      <cit:CI_Contact>
+        {% if contact['city'] or contact['country'] or contact['email']%}
+        <cit:address>
+          <cit:CI_Address>
+            {{ bl.bilingual('cit:deliveryPoint', 'address', contact) }}
+            {{ bl.bilingual('cit:city', 'city', contact) }}
+            {{ bl.bilingual('cit:country', 'country', contact) }}
+            {% if contact['email'] %}
+            <cit:electronicMailAddress>
+              <gco:CharacterString>{{ contact['email'] }}</gco:CharacterString>
+            </cit:electronicMailAddress>
+            {% endif %}
+          </cit:CI_Address>
+        </cit:address>
+        {% endif %}
+        {% if contact['contactType'] %}
+        <cit:contactType>
+          <gco:CharacterString>{{ contact['contactType'] }}</gco:CharacterString>
+        </cit:contactType>
+        {% endif %}
+      </cit:CI_Contact>
+    </cit:contactInfo>
+    {{ bl.bilingual('cit:positionName', 'position', contact) }}
+</cit:CI_Individual>
+
+{% endmacro%}
