@@ -97,18 +97,51 @@ distribution:
       fr: pdf description in French
 
 platform:
-  name: platform_name
-  role: platform_role
-  authority: platform_authority
-  id: platform id
-  description: platform_description
-  instruments:
-    - id: 123
-      manufacturer: manufacturer en 1
-      version: A1.53
-      type:
-        en: type en 1
-        fr: type fr 1
-      description:
-        en: instrument description en 1
-        fr: instrument description fr 1
+  - id: platform 1 id
+    name: platform_name
+    role: platform_role
+    authority: platform_authority
+    description: platform_description
+    instruments:
+      - id: 123
+        manufacturer: manufacturer en 1
+        version: A1.53
+        type:
+          en: type en 1
+          fr: type fr 1
+        description:
+          en: instrument description en 1
+          fr: instrument description fr 1
+      - id: 345
+        manufacturer: manufacturer en 2
+        version: A2.19
+        type:
+          en: type en 2
+          fr: type fr 2
+        description:
+          en: instrument description en 2
+          fr: instrument description fr 2
+  - id: platform 2 id
+    name: platform_name
+    role: platform_role
+    authority: platform_authority
+    description: platform_description
+    instruments:
+      - id: 678
+        manufacturer: manufacturer en 3
+        version: A3.41
+        type:
+          en: type en 3
+          fr: type fr 3
+        description:
+          en: instrument description en 3
+          fr: instrument description fr 3
+      - id: 91011
+        manufacturer: manufacturer en 4
+        version: A4.78
+        type:
+          en: type en 4
+          fr: type fr 4
+        description:
+          en: instrument description en 4
+          fr: instrument description fr 4

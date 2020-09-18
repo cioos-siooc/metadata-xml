@@ -595,98 +595,100 @@
         </mcc:MD_Scope>
       </mac:scope>
       {# platform: Recommended #}
-      <mac:platform>
-        <mac:MI_Platform>
-          {# identifier: mandatory #}
-          <mac:identifier>
-            <mcc:MD_Identifier>
-              {# authority: mandatory #}
-              <mcc:authority>
-                <cit:CI_Citation>
-                  {# validation says cit:CI_Citation requires title #}
-                  {{ bl.bilingual('cit:title', 'name', record['platform']) }}
-                  {% if record['platform']['role'] and record['platform']['authority'] %}
-                  {# citedResponsibleParty: mandatory #}
-                  <cit:citedResponsibleParty>
-                    <cit:CI_Responsibility>
-                      {# role: mandatory #}
-                      <cit:role>
-                        <cit:CI_RoleCode codeList="http://standards.iso.org/iso/19115/resources/Codelists/cat/codelists.xml#CI_RoleCode" codeListValue="{{ record['platform']['role'] }}" />
-                        {# CIOOS core mandatory element #}
-                          {# MI_Metadata/acquisitionInformation/MI_AcquisitionInformation/platform/MI_Platform/identifier/MD_Identifier/authority/CI_Citation/citedResponsibleParty/CI_Responsibility/role/CI_RoleCode #}
-                      </cit:role>
-                      {# party: mandatory #}
-                      <cit:party>
-                        <cit:CI_Organisation>
-                          {# name: mandatory #}
-                          {{ bl.bilingual('cit:name', 'authority', record['platform']) }}
-                            {# CIOOS core mandatory element #}
-                            {# MI_Metadata/acquisitionInformation/MI_AcquisitionInformation/platform/MI_Platform/identifier/MD_Identifier/authority/CI_Citation/citedResponsibleParty/CI_Responsibility/party/CI_Party/name/CharacterString #}
-                        </cit:CI_Organisation>
-                      </cit:party>
-                    </cit:CI_Responsibility>
-                  </cit:citedResponsibleParty>
-                  {% endif %}
-                </cit:CI_Citation>
-              </mcc:authority>
-              {# code: mandatory #}
-              <mcc:code>
-                {# CIOOS core mandatory element #}
-                {# MI_Metadata/acquisitionInformation/MI_AcquisitionInformation/platform/MI_Platform/identifier/MD_Identifier/code/CharacterString #}
-                <gco:CharacterString>{{ record['platform']['id'] }}</gco:CharacterString>
-              </mcc:code>
-            </mcc:MD_Identifier>
-          </mac:identifier>
-          {# description: mandatory #}
-            {# CIOOS core mandatory element #}
-            {# MI_Metadata/acquisitionInformation/MI_AcquisitionInformation/platform/MI_Platform/description/CharacterString #}
-          {{ bl.bilingual('mac:description', 'description', record['platform']) }}
-
-          {% for instrument in record['platform']['instruments'] %}
-            {# instrument: Recommended, if platform not used then this should be under mac:MI_AcquisitionInformation #}
-          <mac:instrument>
-            {# MI_Instrument: Recommended #}
-            <mac:MI_Instrument>
-              {# identifier: mandatory #}
-              <mac:identifier>
-                <mcc:MD_Identifier>
-                  {# authority: Recommended #}
-                    {% if instrument['manufacturer'] %}
-                  <mcc:authority>
-                    <cit:CI_Citation>
-                      {{ bl.bilingual('cit:title', 'manufacturer', instrument ) }}
-                      </cit:CI_Citation>
-                  </mcc:authority>
-                  {% endif %}
-                    {# code: mandatory #}
-                  <mcc:code>
-                    {# CIOOS core mandatory element #}
-                      {# MI_Metadata/acquisitionInformation/MI_AcquisitionInformation/instrument/MI_Instrument/identifier/MD_Identifier/code/CharacterString #}
-                    <gco:CharacterString>{{ instrument.id }}</gco:CharacterString>
-                  </mcc:code>
-                  {% if instrument.version %}
-                    {# version: mandatory #}
-                  <mcc:version>
-                    {# CIOOS core mandatory element #}
-                      {# MI_Metadata/acquisitionInformation/MI_AcquisitionInformation/instrument/MI_Instrument/identifier/MD_Identifier/version/CharacterString #}
-                    <gco:CharacterString>{{ instrument.version }}</gco:CharacterString>
-                  </mcc:version>
-                  {% endif %}
-                    {# description: mandatory #}
-                      {# CIOOS core mandatory element #}
-                      {# MI_Metadata/acquisitionInformation/MI_AcquisitionInformation/instrument/MI_Instrument/identifier/MD_Identifier/description/CharacterString #}                   
-                    {{ bl.bilingual('mcc:description', 'description', instrument ) }}
-                </mcc:MD_Identifier>
-              </mac:identifier>
-              {# type: mandatory #}
+      {% for platform_obj in record['platform'] %}
+        <mac:platform>
+          <mac:MI_Platform>
+            {# identifier: mandatory #}
+            <mac:identifier>
+              <mcc:MD_Identifier>
+                {# authority: mandatory #}
+                <mcc:authority>
+                  <cit:CI_Citation>
+                    {# validation says cit:CI_Citation requires title #}
+                    {{ bl.bilingual('cit:title', 'name', platform_obj) }}
+                    {% if platform_obj['role'] and platform_obj['authority'] %}
+                    {# citedResponsibleParty: mandatory #}
+                    <cit:citedResponsibleParty>
+                      <cit:CI_Responsibility>
+                        {# role: mandatory #}
+                        <cit:role>
+                          <cit:CI_RoleCode codeList="http://standards.iso.org/iso/19115/resources/Codelists/cat/codelists.xml#CI_RoleCode" codeListValue="{{ platform_obj['role'] }}" />
+                          {# CIOOS core mandatory element #}
+                            {# MI_Metadata/acquisitionInformation/MI_AcquisitionInformation/platform/MI_Platform/identifier/MD_Identifier/authority/CI_Citation/citedResponsibleParty/CI_Responsibility/role/CI_RoleCode #}
+                        </cit:role>
+                        {# party: mandatory #}
+                        <cit:party>
+                          <cit:CI_Organisation>
+                            {# name: mandatory #}
+                            {{ bl.bilingual('cit:name', 'authority', platform_obj) }}
+                              {# CIOOS core mandatory element #}
+                              {# MI_Metadata/acquisitionInformation/MI_AcquisitionInformation/platform/MI_Platform/identifier/MD_Identifier/authority/CI_Citation/citedResponsibleParty/CI_Responsibility/party/CI_Party/name/CharacterString #}
+                          </cit:CI_Organisation>
+                        </cit:party>
+                      </cit:CI_Responsibility>
+                    </cit:citedResponsibleParty>
+                    {% endif %}
+                  </cit:CI_Citation>
+                </mcc:authority>
+                {# code: mandatory #}
+                <mcc:code>
                   {# CIOOS core mandatory element #}
-                  {# MI_Metadata/acquisitionInformation/MI_AcquisitionInformation/instrument/MI_Instrument/type/CharacterString #}
-                {{ bl.bilingual('mac:type', 'type', instrument ) }}
-            </mac:MI_Instrument>
-          </mac:instrument>
-          {% endfor %}
-        </mac:MI_Platform>
-      </mac:platform>
+                  {# MI_Metadata/acquisitionInformation/MI_AcquisitionInformation/platform/MI_Platform/identifier/MD_Identifier/code/CharacterString #}
+                  <gco:CharacterString>{{ platform_obj['id'] }}</gco:CharacterString>
+                </mcc:code>
+              </mcc:MD_Identifier>
+            </mac:identifier>
+            {# description: mandatory #}
+              {# CIOOS core mandatory element #}
+              {# MI_Metadata/acquisitionInformation/MI_AcquisitionInformation/platform/MI_Platform/description/CharacterString #}
+            {{ bl.bilingual('mac:description', 'description', platform_obj) }}
+
+            {% for instrument in platform_obj['instruments'] %}
+              {# instrument: Recommended, if platform not used then this should be under mac:MI_AcquisitionInformation #}
+            <mac:instrument>
+              {# MI_Instrument: Recommended #}
+              <mac:MI_Instrument>
+                {# identifier: mandatory #}
+                <mac:identifier>
+                  <mcc:MD_Identifier>
+                    {# authority: Recommended #}
+                      {% if instrument['manufacturer'] %}
+                    <mcc:authority>
+                      <cit:CI_Citation>
+                        {{ bl.bilingual('cit:title', 'manufacturer', instrument ) }}
+                        </cit:CI_Citation>
+                    </mcc:authority>
+                    {% endif %}
+                      {# code: mandatory #}
+                    <mcc:code>
+                      {# CIOOS core mandatory element #}
+                        {# MI_Metadata/acquisitionInformation/MI_AcquisitionInformation/instrument/MI_Instrument/identifier/MD_Identifier/code/CharacterString #}
+                      <gco:CharacterString>{{ instrument.id }}</gco:CharacterString>
+                    </mcc:code>
+                    {% if instrument.version %}
+                      {# version: mandatory #}
+                    <mcc:version>
+                      {# CIOOS core mandatory element #}
+                        {# MI_Metadata/acquisitionInformation/MI_AcquisitionInformation/instrument/MI_Instrument/identifier/MD_Identifier/version/CharacterString #}
+                      <gco:CharacterString>{{ instrument.version }}</gco:CharacterString>
+                    </mcc:version>
+                    {% endif %}
+                      {# description: mandatory #}
+                        {# CIOOS core mandatory element #}
+                        {# MI_Metadata/acquisitionInformation/MI_AcquisitionInformation/instrument/MI_Instrument/identifier/MD_Identifier/description/CharacterString #}                   
+                      {{ bl.bilingual('mcc:description', 'description', instrument ) }}
+                  </mcc:MD_Identifier>
+                </mac:identifier>
+                {# type: mandatory #}
+                    {# CIOOS core mandatory element #}
+                    {# MI_Metadata/acquisitionInformation/MI_AcquisitionInformation/instrument/MI_Instrument/type/CharacterString #}
+                  {{ bl.bilingual('mac:type', 'type', instrument ) }}
+              </mac:MI_Instrument>
+            </mac:instrument>
+            {% endfor %}
+          </mac:MI_Platform>
+        </mac:platform>
+        {% endfor %}
     </mac:MI_AcquisitionInformation>
   </mdb:acquisitionInformation>
   {% endif %}
