@@ -20,7 +20,7 @@ from jinja2 import Environment, FileSystemLoader
 
 dir_path = os.path.dirname(os.path.realpath(__file__))
 this_directory = pathlib.Path(__file__).parent.absolute()
-schema_path = f'{this_directory }/iso19115-cioos-template'
+schema_path = os.path.join(this_directory, 'iso19115-cioos-template')
 
 
 def normalize_datestring(datestring, format_='default'):
