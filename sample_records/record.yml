@@ -16,7 +16,7 @@ metadata:
   maintenance_note: maintenance_note
   use_constraints:
     limitations: limitations
-    license:
+    licence:
       title: Creative Commons Attribution 4.0
       code: CC-BY-4.0
       url: https://creativecommons.org/licenses/by/4.0/
