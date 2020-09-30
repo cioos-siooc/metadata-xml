@@ -31,6 +31,7 @@ spatial:
   bbox: [-141, 42, -52, 84]
   polygon: polygon_data
   vertical: [0, 10]
+  vertical_positive: down
 identification:
   title:
     en: title in english
