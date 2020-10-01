@@ -315,6 +315,26 @@
                 <mrs:MD_ReferenceSystem>
                   {# referenceSystemIdentifier: optional #}
                   <mrs:referenceSystemIdentifier>
+                    {% if record['spatial']['vertical_positive'] == "up" %}
+                    <mcc:MD_Identifier>
+                      {# code: mandatory #}
+                      <mcc:code>
+                        <gco:CharacterString>5829</gco:CharacterString>
+                      </mcc:code>
+                      {# codeSpace: Optional #}
+                      <mcc:codeSpace>
+                        <gco:CharacterString>EPSG</gco:CharacterString>
+                      </mcc:codeSpace>
+                      {# version: Recommended #}
+                      <mcc:version>
+                        <gco:CharacterString>2012-08-10</gco:CharacterString>
+                      </mcc:version>
+                      {# description: Optional #}
+                      <mcc:description>
+                        <gco:CharacterString>EPSG::5829 - Instantaneous Water Level height - Height relative to instantaneous water level uncorrected for tide. Not specific to any location or epoch.</gco:CharacterString>
+                      </mcc:description>
+                    </mcc:MD_Identifier>
+                    {% else %}
                     <mcc:MD_Identifier>
                       {# code: mandatory #}
                       <mcc:code>
@@ -333,6 +353,7 @@
                         <gco:CharacterString>EPSG::5831 - Instantaneous Water Level depth - Depth relative to instantaneous water level uncorrected for tide. Not specific to any location or epoch.</gco:CharacterString>
                       </mcc:description>
                     </mcc:MD_Identifier>
+                    {% endif %}
                   </mrs:referenceSystemIdentifier>
                   {# referenceSystemType: CIOOS core mandatory #}
                   <mrs:referenceSystemType>
