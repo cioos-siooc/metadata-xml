@@ -51,7 +51,7 @@ def list_all_languages_in_record(record):
     return two_character_keys
 
 
-def render_template(record):
+def metadata_to_xml(record):
     template_loader = FileSystemLoader(searchpath=schema_path)
     template_env = Environment(loader=template_loader, trim_blocks=True,
                                lstrip_blocks=True)

@@ -9,7 +9,7 @@
  (eg, record.yaml -> record.xml)
 
 '''
-from metadata_xml.template_functions import render_template
+from metadata_xml.template_functions import metadata_to_xml
 import argparse
 import yaml
 import os
@@ -32,7 +32,7 @@ if __name__ == '__main__':
     basename = os.path.basename(filename)
     print("Input filename as: "+basename)
 
-    xml = render_template(record)
+    xml = metadata_to_xml(record)
 
     pre, ext = os.path.splitext(filename)
     yaml_filename = f'{pre}.xml'
