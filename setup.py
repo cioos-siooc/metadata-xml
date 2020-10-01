@@ -8,7 +8,10 @@ setup(name='metadata_xml',
       + 'CIOOS ISO profile',
       url='https://github.com/cioos-siooc/metadata-xml',
       packages=['metadata_xml'],
-      package_data={'metadata_xml': ['iso19115-cioos-template/*.j2']},
       include_package_data=True,
-      install_requires=['pygeometa']
+
+      install_requires=['Jinja2 == 2.10.3',
+                        'PyYAML == 5.1.2',
+                        ]
+
       )
