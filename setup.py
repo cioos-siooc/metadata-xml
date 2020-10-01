@@ -10,5 +10,4 @@ setup(name='metadata_xml',
       packages=['metadata_xml'],
       package_data={'metadata_xml': ['iso19115-cioos-template/*.j2']},
       include_package_data=True,
-      install_requires=['pygeometa']
       )
