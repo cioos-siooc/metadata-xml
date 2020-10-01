@@ -453,10 +453,10 @@
       </mri:descriptiveKeywords>
       {% endif %}
       
-      {% if record['metadata'].get('use_constraints',{}).get('license')%}
-        {% set license = record['metadata']['use_constraints']['license'] %}
+      {% if record['metadata'].get('use_constraints',{}).get('licence')%}
+        {% set licence = record['metadata']['use_constraints']['licence'] %}
       {% else %}
-        {% set license= {"title":"Creative Commons Attribution 4.0",
+        {% set licence = {"title":"Creative Commons Attribution 4.0",
                          "code":"CC-BY-4.0",
                          "url": "https://creativecommons.org/licenses/by/4.0/"
                          } %}
@@ -467,19 +467,19 @@
           <mco:reference>
             <cit:CI_Citation>
               <cit:title>
-                <gco:CharacterString>{{ license['title'] }}</gco:CharacterString>
+                <gco:CharacterString>{{ licence['title'] }}</gco:CharacterString>
               </cit:title>
               <cit:identifier>
                 <mcc:MD_Identifier>
                   <mcc:code>
-                    <gco:CharacterString>{{ license['code'] }}</gco:CharacterString>
+                    <gco:CharacterString>{{ licence['code'] }}</gco:CharacterString>
                   </mcc:code>
                 </mcc:MD_Identifier>
               </cit:identifier>
               <cit:onlineResource>
                 <cit:CI_OnlineResource>
                   <cit:linkage>
-                    <gco:CharacterString>{{ license['url'] }}</gco:CharacterString>
+                    <gco:CharacterString>{{ licence['url'] }}</gco:CharacterString>
                   </cit:linkage>
                   <cit:protocol>
                     <gco:CharacterString>WWW:LINK</gco:CharacterString>
@@ -489,7 +489,7 @@
             </cit:CI_Citation>
           </mco:reference>
           <mco:useConstraints>
-            <mco:MD_RestrictionCode codeList="https://standards.iso.org/iso/19115/resources/Codelists/cat/codelists.xml#MD_RestrictionCode" codeListValue="license" />
+            <mco:MD_RestrictionCode codeList="https://standards.iso.org/iso/19115/resources/Codelists/cat/codelists.xml#MD_RestrictionCode" codeListValue="licence" />
           </mco:useConstraints>
         </mco:MD_LegalConstraints>
       </mri:resourceConstraints>
