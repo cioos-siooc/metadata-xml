@@ -8,6 +8,7 @@ setup(name='metadata_xml',
       + 'CIOOS ISO profile',
       url='https://github.com/cioos-siooc/metadata-xml',
       packages=['metadata_xml'],
+      package_data={'metadata_xml': ['iso19115-cioos-template/*.j2']},
       include_package_data=True,
 
       install_requires=['Jinja2 == 2.10.3',
