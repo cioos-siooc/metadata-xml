@@ -9,13 +9,14 @@
  (eg, record.yaml -> record.xml)
 
 '''
-from metadata_xml.template_functions import metadata_to_xml
+import os
 import argparse
 import yaml
-import os
+from metadata_xml.template_functions import metadata_to_xml
 
-if __name__ == '__main__':
 
+def main():
+    'Handes argparse and calls metadata_to_xml()'
     parser = argparse.ArgumentParser(prog='metadata_xml',
                                      description="Convert yaml into CIOOS xml")
 
@@ -23,8 +24,14 @@ if __name__ == '__main__':
         '-f', type=str, dest="yaml_file",
         help="Enter filename of yaml file.", required=True)
 
+    parser.add_argument(
+        '-o', type=str, dest="output_folder",
+        help="Enter the folder to write your xml file to." +
+        "Defaults to the source file's directory.", required=False)
+
     args = parser.parse_args()
     filename = args.yaml_file
+    output_folder = args.output_folder
 
     with open(args.yaml_file) as stream:
         record = yaml.safe_load(stream)
@@ -35,7 +42,16 @@ if __name__ == '__main__':
     xml = metadata_to_xml(record)
 
     pre, ext = os.path.splitext(filename)
-    yaml_filename = f'{pre}.xml'
+
+    if output_folder:
+        yaml_filename = f'{output_folder}/{pre}.xml'
+    else:
+        yaml_filename = f'{pre}.xml'
+
     file = open(yaml_filename, "w")
     file.write(xml)
     print("Wrote " + file.name)
+
+
+if __name__ == '__main__':
+    main()

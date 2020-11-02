@@ -26,7 +26,7 @@ It can be used as a command line tool, or imported into other Python code.
 
 To convert a Yaml file to XML, run:
 
-`python -m metadata_xml -f <yaml_file_path>`
+`python -m metadata_xml -f <yaml_file_path> -o <optional_destination_folder>`
 
 eg:
 
