@@ -16,3 +16,7 @@ cd ..
 
 python -m metadata_xml -f sample_records/record.yml
 python -m cioos_iso_validate sample_records/record.xml
+
+apt update -qq  && apt install -qq  libxml2-utils
+
+python -m metadata_xml.erddap -f sample_records/record.yml | xmllint -

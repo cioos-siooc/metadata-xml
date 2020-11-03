@@ -79,6 +79,14 @@ deprecated, proposed, withdrawn, notAccepted, accepted, valid, tentative, supers
 
 oxygen, nutrients, nitrate, phosphate, silicate, inorganicCarbon, dissolvedOrganicCarbon, seaSurfaceHeight, seawaterDensity, potentialTemperature, potentialDensity, speedOfSound, seaIce, seaState, seaSurfaceSalinity, seaSurfaceTemperature, subSurfaceCurrents, subSurfaceSalinity, subSurfaceTemperature, surfaceCurrents
 
+## ERDDAP datasets.xml attributes chunk
+
+You can also use this module to create some attributes for your [ERDDAP](https://coastwatch.pfeg.noaa.gov/erddap/download/setup.html) dataset.
+
+```bash
+python -m metadata_xml.erddap -f sample_records/record.yml
+```
+
 ## Running tests
 
 `sh run_docker_tests.sh`
