@@ -1,3 +1,13 @@
+#!/usr/bin/env python3
+
+"""
+
+Defines custom functions used by the Jinja template
+
+Also defines metadata_to_xml()
+
+"""
+
 import pathlib
 
 from datetime import date
@@ -5,14 +15,13 @@ import os
 
 from jinja2 import Environment, FileSystemLoader
 
-dir_path = os.path.dirname(os.path.realpath(__file__))
-this_directory = pathlib.Path(__file__).parent.absolute()
-schema_path = os.path.join(this_directory, 'iso19115-cioos-template')
+SCHEMA_FOLDER_NAME = 'iso19115-cioos-template'
 
 
-def normalize_datestring(datestring, format_='default'):
+def normalize_datestring(datestring):
     """groks date string into ISO8601
-       Adopted from Pygeometa https: // github.com/geopython/pygeometa/blob/master/pygeometa/core.py
+       Adopted from Pygeometa,
+       https://github.com/geopython/pygeometa/blob/master/pygeometa/core.py
     """
 
     try:
@@ -33,18 +42,19 @@ def normalize_datestring(datestring, format_='default'):
 
 
 def list_all_languages_in_record(record):
-    '''So that we can list all languages used in the otherLocale section of XML'''
-    def list_keys_in_dict(d, all_keys=[]):
-        # recursive function, works on nested dict for example
-        for k, v in d.items():
-            if isinstance(v, dict):
-                all_keys.append(k)
-                list_keys_in_dict(v, all_keys)
+    """Lists all languages used, so that we can list all
+    languages used in the otherLocale section of XML"""
+    def list_keys_in_record(record_subset, all_keys):
+        """recursive function, works on nested dict for example"""
+        for key, val in record_subset.items():
+            if isinstance(val, dict):
+                all_keys.append(key)
+                list_keys_in_record(val, all_keys)
             else:
-                all_keys.append(k)
+                all_keys.append(key)
         return set(all_keys)
 
-    keys_in_record = list_keys_in_dict(record)
+    keys_in_record = list_keys_in_record(record, [])
 
     two_character_keys = list(
         filter(lambda x: (len(x) == 2) and (x != 'id'), keys_in_record))
@@ -52,6 +62,11 @@ def list_all_languages_in_record(record):
 
 
 def metadata_to_xml(record):
+    """Runs steps needed to render the Jinja template"""
+
+    this_directory = pathlib.Path(__file__).parent.absolute()
+    schema_path = os.path.join(this_directory, SCHEMA_FOLDER_NAME)
+
     template_loader = FileSystemLoader(searchpath=schema_path)
     template_env = Environment(loader=template_loader, trim_blocks=True,
                                lstrip_blocks=True)
