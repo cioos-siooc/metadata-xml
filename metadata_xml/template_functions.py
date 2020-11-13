@@ -1,12 +1,12 @@
 #!/usr/bin/env python3
 
-'''
+"""
 
 Defines custom functions used by the Jinja template
 
 Also defines metadata_to_xml()
 
-'''
+"""
 
 import pathlib
 
@@ -42,10 +42,10 @@ def normalize_datestring(datestring):
 
 
 def list_all_languages_in_record(record):
-    '''Lists all languages used, so that we can list all
-    languages used in the otherLocale section of XML'''
-    def list_keys_in_record(record_subset, all_keys=[]):
-        'recursive function, works on nested dict for example'
+    """Lists all languages used, so that we can list all
+    languages used in the otherLocale section of XML"""
+    def list_keys_in_record(record_subset, all_keys):
+        """recursive function, works on nested dict for example"""
         for key, val in record_subset.items():
             if isinstance(val, dict):
                 all_keys.append(key)
@@ -54,7 +54,7 @@ def list_all_languages_in_record(record):
                 all_keys.append(key)
         return set(all_keys)
 
-    keys_in_record = list_keys_in_record(record)
+    keys_in_record = list_keys_in_record(record, [])
 
     two_character_keys = list(
         filter(lambda x: (len(x) == 2) and (x != 'id'), keys_in_record))
@@ -62,7 +62,7 @@ def list_all_languages_in_record(record):
 
 
 def metadata_to_xml(record):
-    'Runs steps needed to render the Jinja template'
+    """Runs steps needed to render the Jinja template"""
 
     this_directory = pathlib.Path(__file__).parent.absolute()
     schema_path = os.path.join(this_directory, SCHEMA_FOLDER_NAME)

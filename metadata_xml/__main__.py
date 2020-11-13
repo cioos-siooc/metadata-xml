@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 
-'''
+"""
 
  Code to handle command line usage of this module
  eg `python -m metadata_xml my_record.yaml`
@@ -8,7 +8,7 @@
  Creates an XML file with same base name as Yaml file
  (eg, record.yaml -> record.xml)
 
-'''
+"""
 import os
 import argparse
 import yaml
@@ -16,7 +16,7 @@ from metadata_xml.template_functions import metadata_to_xml
 
 
 def main():
-    'Handes argparse and calls metadata_to_xml()'
+    """Handles argparse and calls metadata_to_xml()"""
     parser = argparse.ArgumentParser(prog='metadata_xml',
                                      description="Convert yaml into CIOOS xml")
 
@@ -41,12 +41,13 @@ def main():
 
     xml = metadata_to_xml(record)
 
-    pre, ext = os.path.splitext(filename)
+    pre = os.path.splitext(basename)[0]
+    path_with_file = os.path.splitext(filename)[0]
 
     if output_folder:
         yaml_filename = f'{output_folder}/{pre}.xml'
     else:
-        yaml_filename = f'{pre}.xml'
+        yaml_filename = f'{path_with_file}.xml'
 
     file = open(yaml_filename, "w")
     file.write(xml)
