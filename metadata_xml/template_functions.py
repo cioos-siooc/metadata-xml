@@ -9,6 +9,7 @@ Also defines metadata_to_xml()
 """
 
 import pathlib
+import xml.dom.minidom
 
 from datetime import date
 import os
@@ -76,4 +77,8 @@ def metadata_to_xml(record):
     template_env.filters['normalize_datestring'] = normalize_datestring
     template = template_env.get_template('main.j2')
 
-    return template.render({"record": record})
+    xml_string = template.render({"record": record})
+    dom = xml.dom.minidom.parseString(xml_string)
+
+    pretty_xml_as_string = dom.toprettyxml(newl='').replace("\n\n", "\n")
+    return pretty_xml_as_string
