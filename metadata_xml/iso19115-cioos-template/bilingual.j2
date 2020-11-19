@@ -1,7 +1,10 @@
-{% macro bilingual(element,key,mapping) -%}
-{% set value = mapping[key] %}
+{% macro bilingual(element,key,record_section) -%}
+{% set value = record_section[key] %}
 
-{% if value is not mapping %}
+{% if (value is not mapping) or (value.items()|length==1 and lang in value)  %}
+      {% if value is mapping %}
+          {% set value = value[lang] %}
+      {% endif %}
       {% if value|trim != "None" %}
       <{{ element }}>
         <gco:CharacterString>{{ value|e }}</gco:CharacterString>
