@@ -9,7 +9,9 @@
  (eg, record.yaml -> record.xml)
 
 """
+
 import os
+
 import argparse
 import yaml
 from metadata_xml.template_functions import metadata_to_xml
@@ -39,7 +41,7 @@ def main():
     basename = os.path.basename(filename)
     print("Input filename as: "+basename)
 
-    xml = metadata_to_xml(record)
+    xml_string = metadata_to_xml(record)
 
     pre = os.path.splitext(basename)[0]
     path_with_file = os.path.splitext(filename)[0]
@@ -50,7 +52,7 @@ def main():
         yaml_filename = f'{path_with_file}.xml'
 
     file = open(yaml_filename, "w")
-    file.write(xml)
+    file.write(xml_string)
     print("Wrote " + file.name)
 
 
