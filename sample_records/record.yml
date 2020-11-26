@@ -48,7 +48,9 @@ identification:
     default:
       en: [kw1 in English, kw2 in English, kw3 in English]
       fr: [kw1 in French, kw2 in French, kw3 in French]
-    eov: [oxygen]
+    eov:
+      en: [oxygen]
+      fr: [oxygène]
   temporal_begin: 1950-07-31
   temporal_end: now
   temporal_duration: P1D
@@ -113,3 +115,13 @@ platform:
       description:
         en: instrument description en 1
         fr: instrument description fr 1
+instruments:
+  - id: id not in platform
+    manufacturer: manufacturer  not in platform
+    version: version not in platform
+    type:
+      en: type en not in platform
+      fr: type fr not in platform
+    description:
+      en: instrument description not in platform
+      fr: instrument description not in platform
