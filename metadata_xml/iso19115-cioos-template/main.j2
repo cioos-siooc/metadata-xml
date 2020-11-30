@@ -215,12 +215,12 @@
 
           {% if record['identification']['identifier'] %}
           <cit:identifier>
-    		        <mcc:MD_Identifier>
-    		            <mcc:code>
-                      <gco:CharacterString>{{ record['identification']['identifier'] }}</gco:CharacterString>
-                    </mcc:code>
-    		        </mcc:MD_Identifier>
-    		    </cit:identifier>
+            <mcc:MD_Identifier>
+                <mcc:code>
+                  <gco:CharacterString>{{ record['identification']['identifier'] }}</gco:CharacterString>
+                </mcc:code>
+            </mcc:MD_Identifier>
+    		  </cit:identifier>
           {% endif %}
 
           {% for c in record['contact'] %}
@@ -437,7 +437,7 @@
               <cit:onlineResource>
                 <cit:CI_OnlineResource>
                   <cit:linkage>
-                      {{ key }}
+                      {{ key|e }}
                     </cit:linkage>
                   <cit:protocol>
                     <gco:CharacterString>WWW:LINK</gco:CharacterString>
@@ -489,7 +489,7 @@
               <cit:onlineResource>
                 <cit:CI_OnlineResource>
                   <cit:linkage>
-                    <gco:CharacterString>{{ licence['url'] }}</gco:CharacterString>
+                    <gco:CharacterString>{{ licence['url']|e }}</gco:CharacterString>
                   </cit:linkage>
                   <cit:protocol>
                     <gco:CharacterString>WWW:LINK</gco:CharacterString>
