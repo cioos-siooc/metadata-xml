@@ -105,11 +105,13 @@
   </mdb:metadataScope>
   {# contact: mandatory #}
   {% for c in record['contact'] %}
-    {% for role in c.roles %}
-    <mdb:contact>
-            {{ contact.get_contact(c, role or 'pointOfContact; contact', role or 'pointOfContact') }}
-    </mdb:contact>
-    {% endfor %}
+      {% for role in c.roles %}
+        {% if role in ['custodian','pointOfContact']%}
+      <mdb:contact>
+              {{ contact.get_contact(c, role) }}
+      </mdb:contact>
+        {% endif %}
+      {% endfor %}
   {% endfor %}
 
   {# schema requires at least one mdb:dateInfo field #}
@@ -227,9 +229,9 @@
 
           {% for c in record['contact'] %}
           {% for role in c['roles'] %}
-          {% if role in ['author','contributor','creator'] %}
+          {% if role not in ['custodian','pointOfContact','distributor'] %}
           <cit:citedResponsibleParty>
-            {{ contact.get_contact(c, role + '; contact', role) }}
+            {{ contact.get_contact(c, role) }}
           </cit:citedResponsibleParty>
           {% endif %}
           {% endfor %}
@@ -528,7 +530,7 @@
       <mrd:distributor>
         <mrd:MD_Distributor>
           <mrd:distributorContact>
-        {{ contact.get_contact(c, 'distributor; contact', 'distributor') }}
+        {{ contact.get_contact(c, 'distributor') }}
             </mrd:distributorContact>
         </mrd:MD_Distributor>
       </mrd:distributor>

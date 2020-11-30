@@ -62,7 +62,7 @@ identification:
     fr: [project_a in french, project_b in french]
 contact:
   - roles:
-      - pointOfContact
+      - custodian
     organization:
       name: Environment Canada
       url: https://www.ec.gc.ca/
