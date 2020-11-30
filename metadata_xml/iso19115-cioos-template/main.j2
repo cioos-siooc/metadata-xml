@@ -14,6 +14,7 @@
 {% import 'bilingual.j2' as bl with context %}
 {% import 'contact.j2' as contact with context %}
 {% import 'charstring.j2' as cs %}
+{% import 'instrument.j2' as instr with context %}
 
 <mdb:MD_Metadata xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
   xsi:schemaLocation="http://standards.iso.org/iso/19115/-3/mdb/2.0 https://standards.iso.org/iso/19115/-3/mds/2.0/mds.xsd"
@@ -150,6 +151,17 @@
       </cit:title>
       <cit:edition>
         <gco:CharacterString>Second Edition 2019-01</gco:CharacterString>
+      </cit:edition>
+    </cit:CI_Citation>
+  </mdb:metadataStandard>
+  <mdb:metadataStandard>
+    <cit:CI_Citation>
+      <cit:title>
+
+          <gco:CharacterString>ISO 19115-1 Geographic Information - Metadata Amendment 1</gco:CharacterString>
+      </cit:title>
+      <cit:edition>
+          <gco:CharacterString>2018-02</gco:CharacterString>
       </cit:edition>
     </cit:CI_Citation>
   </mdb:metadataStandard>
@@ -665,50 +677,36 @@
 
           {% for instrument in record['platform']['instruments'] %}
             {# instrument: Recommended, if platform not used then this should be under mac:MI_AcquisitionInformation #}
-          <mac:instrument>
-            {# MI_Instrument: Recommended #}
-            <mac:MI_Instrument>
-              {# identifier: mandatory #}
-              <mac:identifier>
-                <mcc:MD_Identifier>
-                  {# authority: Recommended #}
-                    {% if instrument['manufacturer'] %}
-                  <mcc:authority>
-                    <cit:CI_Citation>
-                      {{ bl.bilingual('cit:title', 'manufacturer', instrument ) }}
-                      </cit:CI_Citation>
-                  </mcc:authority>
-                  {% endif %}
-                    {# code: mandatory #}
-                  <mcc:code>
-                    {# CIOOS core mandatory element #}
-                      {# MI_Metadata/acquisitionInformation/MI_AcquisitionInformation/instrument/MI_Instrument/identifier/MD_Identifier/code/CharacterString #}
-                    <gco:CharacterString>{{ instrument.id }}</gco:CharacterString>
-                  </mcc:code>
-                  {% if instrument.version %}
-                    {# version: mandatory #}
-                  <mcc:version>
-                    {# CIOOS core mandatory element #}
-                      {# MI_Metadata/acquisitionInformation/MI_AcquisitionInformation/instrument/MI_Instrument/identifier/MD_Identifier/version/CharacterString #}
-                    <gco:CharacterString>{{ instrument.version }}</gco:CharacterString>
-                  </mcc:version>
-                  {% endif %}
-                    {# description: mandatory #}
-                      {# CIOOS core mandatory element #}
-                      {# MI_Metadata/acquisitionInformation/MI_AcquisitionInformation/instrument/MI_Instrument/identifier/MD_Identifier/description/CharacterString #}                   
-                    {{ bl.bilingual('mcc:description', 'description', instrument ) }}
-                </mcc:MD_Identifier>
-              </mac:identifier>
-              {# type: mandatory #}
-                  {# CIOOS core mandatory element #}
-                  {# MI_Metadata/acquisitionInformation/MI_AcquisitionInformation/instrument/MI_Instrument/type/CharacterString #}
-                {{ bl.bilingual('mac:type', 'type', instrument ) }}
-            </mac:MI_Instrument>
-          </mac:instrument>
+          
+          {{ instr.get_instrument(instrument) }}
+
           {% endfor %}
         </mac:MI_Platform>
       </mac:platform>
     </mac:MI_AcquisitionInformation>
   </mdb:acquisitionInformation>
   {% endif %}
+      
+  {# If there are instruments outside of a platform #}
+  {% if record['instruments']%}
+    <mdb:acquisitionInformation>
+      <mac:MI_AcquisitionInformation>
+        {# scope: CIOOS core mandatory #}
+        <mac:scope>
+          <mcc:MD_Scope>
+            {# level: mandatory #}
+            <mcc:level>
+              <mcc:MD_ScopeCode codeList="http://standards.iso.org/iso/19115/resources/Codelists/cat/codelists.xml#MD_ScopeCode" codeListValue="dataset" />
+            </mcc:level>
+          </mcc:MD_Scope>
+      </mac:scope>
+      
+      {% for instrument in record['instruments'] %}
+          {{ instr.get_instrument(instrument) }}
+      {% endfor %}
+
+      </mac:MI_AcquisitionInformation>
+    </mdb:acquisitionInformation>
+  {% endif %}
+
 </mdb:MD_Metadata>
