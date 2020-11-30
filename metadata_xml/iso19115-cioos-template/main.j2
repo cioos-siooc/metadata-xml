@@ -214,16 +214,6 @@
         <cit:CI_Citation>
           {# title: mandatory #}
           {{ bl.bilingual('cit:title','title', record['identification']) }}
-          
-          {% if record['identification']['identification'] %}
-          <cit:identifier>
-    		        <mcc:MD_Identifier>
-    		            <mcc:code>
-                      <gco:CharacterString>{{ record['identification']['identification'] }}</gco:CharacterString>
-                    </mcc:code>
-    		        </mcc:MD_Identifier>
-    		    </cit:identifier>
-          {% endif %}
 
           {% for c in record['contact'] %}
           {% for role in c['roles'] %}
