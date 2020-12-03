@@ -645,35 +645,16 @@
           {# identifier: mandatory #}
           <mac:identifier>
             <mcc:MD_Identifier>
+
               {# authority: mandatory #}
+              {% if record['platform']['authority'] %}
               <mcc:authority>
                 <cit:CI_Citation>
-                  {# validation says cit:CI_Citation requires title #}
-                  {{ bl.bilingual('cit:title', 'name', record['platform']) }}
-                  {% if record['platform']['role'] and record['platform']['authority'] %}
-                  {# citedResponsibleParty: mandatory #}
-                  <cit:citedResponsibleParty>
-                    <cit:CI_Responsibility>
-                      {# role: mandatory #}
-                      <cit:role>
-                        <cit:CI_RoleCode codeList="http://standards.iso.org/iso/19115/resources/Codelists/cat/codelists.xml#CI_RoleCode" codeListValue="originator" />
-                        {# CIOOS core mandatory element #}
-                          {# MI_Metadata/acquisitionInformation/MI_AcquisitionInformation/platform/MI_Platform/identifier/MD_Identifier/authority/CI_Citation/citedResponsibleParty/CI_Responsibility/role/CI_RoleCode #}
-                      </cit:role>
-                      {# party: mandatory #}
-                      <cit:party>
-                        <cit:CI_Organisation>
-                          {# name: mandatory #}
-                          {{ bl.bilingual('cit:name', 'authority', record['platform']) }}
-                            {# CIOOS core mandatory element #}
-                            {# MI_Metadata/acquisitionInformation/MI_AcquisitionInformation/platform/MI_Platform/identifier/MD_Identifier/authority/CI_Citation/citedResponsibleParty/CI_Responsibility/party/CI_Party/name/CharacterString #}
-                        </cit:CI_Organisation>
-                      </cit:party>
-                    </cit:CI_Responsibility>
-                  </cit:citedResponsibleParty>
-                  {% endif %}
+                  {{ bl.bilingual('cit:title', 'authority', record['platform']) }}
                 </cit:CI_Citation>
               </mcc:authority>
+              {% endif %}
+
               {# code: mandatory #}
               <mcc:code>
                 {# CIOOS core mandatory element #}
