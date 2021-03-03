@@ -215,6 +215,16 @@
           {# title: mandatory #}
           {{ bl.bilingual('cit:title','title', record['identification']) }}
 
+          {% if record['identification']['identifier'] %}
+          <cit:identifier>
+            <mcc:MD_Identifier>
+                <mcc:code>
+                  <gco:CharacterString>{{ record['identification']['identifier'] }}</gco:CharacterString>
+                </mcc:code>
+            </mcc:MD_Identifier>
+    		  </cit:identifier>
+          {% endif %}
+
           {% for c in record['contact'] %}
           {% for role in c['roles'] %}
           {% if role not in ['custodian','pointOfContact','distributor'] %}
@@ -410,6 +420,36 @@
           {{ bl.bilingual('mmi:maintenanceNote', 'maintenance_note', record['metadata']) }}
         </mmi:MD_MaintenanceInformation>
       </mri:resourceMaintenance>
+      
+      {# Adding a Government of Canada keyword  #}
+      <mri:descriptiveKeywords>
+        <mri:MD_Keywords>
+          <mri:keyword>
+            <gco:CharacterString>Oceans</gco:CharacterString>
+          </mri:keyword>
+          <mri:thesaurusName>
+            <cit:CI_Citation>
+              <cit:title>
+                <gco:CharacterString>Government of Canada Core Subject Thesaurus</gco:CharacterString>
+              </cit:title>
+              <cit:date>
+                <cit:CI_Date>
+                  <cit:date>
+                    <gco:Date>2016-10-13</gco:Date>
+                  </cit:date>
+                  <cit:dateType>
+                    <cit:CI_DateTypeCode codeList="http://wiki.esipfed.org/index.php/ISO_19115-3_Codelists#CI_DateTypeCode" codeListValue="revision"/>
+                  </cit:dateType>
+                </cit:CI_Date>
+              </cit:date>
+              <cit:edition>
+                <gco:CharacterString>N/A</gco:CharacterString>
+              </cit:edition>
+            </cit:CI_Citation>
+          </mri:thesaurusName>
+        </mri:MD_Keywords>
+      </mri:descriptiveKeywords>
+
       {# for each keyword theme #}
       {% for key, value in record['identification']['keywords'].items() %}
       <mri:descriptiveKeywords>
@@ -429,7 +469,7 @@
               <cit:onlineResource>
                 <cit:CI_OnlineResource>
                   <cit:linkage>
-                      {{ key }}
+                      {{ key|e }}
                     </cit:linkage>
                   <cit:protocol>
                     <gco:CharacterString>WWW:LINK</gco:CharacterString>
@@ -481,7 +521,7 @@
               <cit:onlineResource>
                 <cit:CI_OnlineResource>
                   <cit:linkage>
-                    <gco:CharacterString>{{ licence['url'] }}</gco:CharacterString>
+                    <gco:CharacterString>{{ licence['url']|e }}</gco:CharacterString>
                   </cit:linkage>
                   <cit:protocol>
                     <gco:CharacterString>WWW:LINK</gco:CharacterString>
