@@ -1,0 +1,44 @@
+{# Macro to render instrument XML, used within platform or on its own  #}
+
+ {% macro get_instrument(instrument) -%}
+ <mac:instrument>
+    {# MI_Instrument: Recommended #}
+    <mac:MI_Instrument>
+      {# identifier: mandatory #}
+      <mac:identifier>
+        <mcc:MD_Identifier>
+          {# authority: Recommended #}
+            {% if instrument['manufacturer'] %}
+          <mcc:authority>
+            <cit:CI_Citation>
+              {{ bl.bilingual('cit:title', 'manufacturer', instrument ) }}
+              </cit:CI_Citation>
+          </mcc:authority>
+          {% endif %}
+            {# code: mandatory #}
+          <mcc:code>
+            {# CIOOS core mandatory element #}
+              {# MI_Metadata/acquisitionInformation/MI_AcquisitionInformation/instrument/MI_Instrument/identifier/MD_Identifier/code/CharacterString #}
+            <gco:CharacterString>{{ instrument.id }}</gco:CharacterString>
+          </mcc:code>
+          {% if instrument.version %}
+            {# version: mandatory #}
+          <mcc:version>
+            {# CIOOS core mandatory element #}
+              {# MI_Metadata/acquisitionInformation/MI_AcquisitionInformation/instrument/MI_Instrument/identifier/MD_Identifier/version/CharacterString #}
+            <gco:CharacterString>{{ instrument.version }}</gco:CharacterString>
+          </mcc:version>
+          {% endif %}
+            {# description: mandatory #}
+              {# CIOOS core mandatory element #}
+              {# MI_Metadata/acquisitionInformation/MI_AcquisitionInformation/instrument/MI_Instrument/identifier/MD_Identifier/description/CharacterString #}                   
+            {{ bl.bilingual('mcc:description', 'description', instrument ) }}
+        </mcc:MD_Identifier>
+      </mac:identifier>
+      {# type: mandatory #}
+          {# CIOOS core mandatory element #}
+          {# MI_Metadata/acquisitionInformation/MI_AcquisitionInformation/instrument/MI_Instrument/type/CharacterString #}
+        {{ bl.bilingual('mac:type', 'type', instrument ) }}
+    </mac:MI_Instrument>
+  </mac:instrument>
+{% endmacro %}
