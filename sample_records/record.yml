@@ -36,6 +36,7 @@ identification:
   title:
     en: title in english
     fr: title in french
+  identifier: http://dx.doi.org/10.1093/ajae/aaq063
 
   abstract:
     en: abstract in French
@@ -62,7 +63,7 @@ identification:
     fr: [project_a in french, project_b in french]
 contact:
   - roles:
-      - pointOfContact
+      - custodian
     organization:
       name: Environment Canada
       url: https://www.ec.gc.ca/

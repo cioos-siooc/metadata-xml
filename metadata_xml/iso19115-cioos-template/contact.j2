@@ -1,8 +1,8 @@
-{% macro get_contact(contact, role ,role_codelist_value) -%}
+{% macro get_contact(contact, role_codelist_value) -%}
 
 <cit:CI_Responsibility>
   <cit:role>
-    <cit:CI_RoleCode codeList="https://standards.iso.org/iso/19115/resources/Codelists/cat/codelists.xml#CI_RoleCode" codeListValue="{{ role_codelist_value }}">{{ role }}</cit:CI_RoleCode>
+    <cit:CI_RoleCode codeList="https://standards.iso.org/iso/19115/resources/Codelists/cat/codelists.xml#CI_RoleCode" codeListValue="{{ role_codelist_value }}"/>
   </cit:role>
   <cit:party>
   {% if contact['organization'] %}
