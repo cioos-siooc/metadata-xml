@@ -102,7 +102,6 @@ distribution:
 
 platform:
   name: platform_name
-  role: platform_role
   authority: platform_authority
   id: platform id
   description: platform_description
