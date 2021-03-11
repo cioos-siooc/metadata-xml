@@ -26,6 +26,8 @@ metadata:
   history:
     en: history in english
     fr: history in french
+  dates:
+    creation: 2011-11-11
 
 spatial:
   bbox: [-141, 42, -52, 84]
@@ -42,9 +44,9 @@ identification:
     en: abstract in French
     fr: abstract in English
   dates:
-    creation: 2011-11-11
     publication: 2000-09-01T00:00:00Z
     revision: 2000-09-01T00:00:00Z
+
   keywords:
     default:
       en: [kw1 in English, kw2 in English, kw3 in English]
