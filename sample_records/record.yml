@@ -43,6 +43,7 @@ identification:
   abstract:
     en: abstract in French
     fr: abstract in English
+  topic_category: elevation
   dates:
     publication: 2000-09-01T00:00:00Z
     revision: 2000-09-01T00:00:00Z
