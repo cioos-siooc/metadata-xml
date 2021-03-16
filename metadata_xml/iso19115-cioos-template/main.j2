@@ -266,9 +266,14 @@
         <gco:TM_PeriodDuration>{{ record['identification']['time_coverage_resolution'] }}</gco:TM_PeriodDuration>
       </mri:temporalResolution>
       {% endif %}
+      
+      {% set topic_categories = list_or_value_to_list(record['identification'].get('topic_category') or "oceans")  %}
+      {% for topic_category in topic_categories %}
       <mri:topicCategory>
-        <mri:MD_TopicCategoryCode>oceans</mri:MD_TopicCategoryCode>
+        <mri:MD_TopicCategoryCode>{{ topic_category }}</mri:MD_TopicCategoryCode>
       </mri:topicCategory>
+      {% endfor %}
+      
       {% if record['spatial']['bbox'] %}
       <mri:extent>
         {% set bbox = record['spatial']['bbox'] %}
