@@ -41,6 +41,7 @@ identification:
   abstract:
     en: abstract in French
     fr: abstract in English
+  topic_category: elevation
   dates:
     creation: 2011-11-11
     publication: 2000-09-01T00:00:00Z

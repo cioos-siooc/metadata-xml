@@ -267,7 +267,7 @@
       </mri:temporalResolution>
       {% endif %}
       <mri:topicCategory>
-        <mri:MD_TopicCategoryCode>oceans</mri:MD_TopicCategoryCode>
+        <mri:MD_TopicCategoryCode>{{ record['identification'].get('topic_category') or "oceans" }}</mri:MD_TopicCategoryCode>
       </mri:topicCategory>
       {% if record['spatial']['bbox'] %}
       <mri:extent>
