@@ -12,7 +12,7 @@ setup(name='metadata_xml',
       include_package_data=True,
 
       install_requires=['Jinja2 == 2.10.3',
-                        'PyYAML == 5.1.2',
+                        'PyYAML == 5.4',
                         ]
 
       )
