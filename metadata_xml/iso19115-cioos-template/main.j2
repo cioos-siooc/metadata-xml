@@ -116,7 +116,8 @@
 
   {# schema requires at least one mdb:dateInfo field #}
   {# dateInfo: mandatory #}
-        {% for date_type, date in record['metadata']['dates'].items() %}
+  
+        {% for date_type, date in record['metadata'].items() %}
           {% set datestamp = date|normalize_datestring %}
   <mdb:dateInfo>
     <cit:CI_Date>
@@ -226,7 +227,9 @@
         <cit:CI_Citation>
           {# title: mandatory #}
           {{ bl.bilingual('cit:title','title', record['identification']) }}
-
+          
+          {# date pubished/revised isnt required #}
+          {% if 'dates' in record['identification'] %}
           {% for date_type, date in record['identification']['dates'].items() %}
             {% set datestamp = date|normalize_datestring %}
           <cit:date>
@@ -244,6 +247,7 @@
             </cit:CI_Date>
           </cit:date>
           {% endfor %}
+          {% endif %}
 
           {% if record['identification']['identifier'] %}
           <cit:identifier>
