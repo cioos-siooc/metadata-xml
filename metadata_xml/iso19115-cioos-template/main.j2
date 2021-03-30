@@ -117,7 +117,7 @@
   {# schema requires at least one mdb:dateInfo field #}
   {# dateInfo: mandatory #}
   
-        {% for date_type, date in record['metadata'].items() %}
+        {% for date_type, date in record['metadata']['dates'].items() %}
           {% set datestamp = date|normalize_datestring %}
   <mdb:dateInfo>
     <cit:CI_Date>
