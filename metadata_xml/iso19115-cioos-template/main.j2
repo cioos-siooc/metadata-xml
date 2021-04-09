@@ -274,7 +274,7 @@
       {{ bl.bilingual('mri:abstract', 'abstract', record['identification']) }}
       {{ bl.bilingual('mri:credit', 'acknowledgement', record['identification']) }}
       <mri:status>
-        <mcc:MD_ProgressCode codeList="http://standards.iso.org/iso/19115/resources/Codelists/cat/codelists.xml#MD_ProgressCode" codeListValue="{{ record['identification']['status'] or 'onGoing' }}">
+        <mcc:MD_ProgressCode codeList="http://standards.iso.org/iso/19115/resources/Codelists/cat/codelists.xml#MD_ProgressCode" codeListValue="{{ record['identification']['progress_code'] or 'onGoing' }}">
           {# CIOOS core mandatory element #}
           {# MI_Metadata/identificationInfo/MD_DataIdentification/status/MD_ProgressCode #}
         </mcc:MD_ProgressCode>
