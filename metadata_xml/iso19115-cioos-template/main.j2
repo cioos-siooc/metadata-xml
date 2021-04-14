@@ -284,34 +284,6 @@
         </mcc:MD_ProgressCode>
       </mri:status>
 
-      {% if record['identification']['associated_resources']}
-      <mri:associatedResource>
-				<mri:MD_AssociatedResource>
-					<mri:name>
-						<cit:CI_Citation>
-							<cit:title>{{ record['identification']['associated_resources']['title'] }}</cit:title>
-              <cit:identifier>
-                <mcc:MD_Identifier>
-                  <mcc:authority>
-                    <gco:CharacterString>{{ record['identification']['associated_resources']['authority'] }}<gco:CharacterString>
-                  </mcc:authority>
-                  <mcc:code>
-                    <gco:CharacterString>{{ record['identification']['associated_resources']['code'] }}<gco:CharacterString>
-                  </mcc:code>
-                </mcc:MD_Identifier>
-              </cit:identifier>
-						</cit:CI_Citation>
-					</mri:name>
-					<mri:associationType>
-						<mri:DS_AssociationTypeCode codeList="https://standards.iso.org/iso/19115/resources/Codelists/cat/codelists.xml#DS_AssociationTypeCode" codeListValue="{{ record['identification']['associated_resources']['association_type'] }}"></mri:DS_AssociationTypeCode>
-					</mri:associationType>
-					<mri:initiativeType>
-						<mri:DS_InitiativeTypeCode codeList="https://standards.iso.org/iso/19115/resources/Codelists/cat/codelists.xml#DS_InitiativeTypeCode" codeListValue="{{ record['identification']['associated_resources']['initiative_type']  }}"></mri:DS_InitiativeTypeCode>
-					</mri:initiativeType>
-				</mri:MD_AssociatedResource>
-			</mri:associatedResource>
-      {% endif %}
-
       {% if record['identification']['time_coverage_resolution'] %}
       <mri:temporalResolution>
         <gco:TM_PeriodDuration>{{ record['identification']['time_coverage_resolution'] }}</gco:TM_PeriodDuration>
@@ -612,6 +584,36 @@
         </mco:MD_Constraints>
       </mri:resourceConstraints>
       {% endif %}
+
+      {% for associated_resources in record['identification']['associated_resources'] %}
+      <mri:associatedResource>
+				<mri:MD_AssociatedResource>
+					<mri:name>
+						<cit:CI_Citation>
+							{{ bl.bilingual('cit:title','title', associated_resources) }}
+              <cit:identifier>
+                <mcc:MD_Identifier>
+                  <mcc:authority>
+                    <cit:CI_Citation>
+                      {{ bl.bilingual('cit:title', 'authority',associated_resources) }}
+                    </cit:CI_Citation>
+                  </mcc:authority>
+                  <mcc:code>
+                    <gco:CharacterString>{{ associated_resources['code'] }}</gco:CharacterString>
+                  </mcc:code>
+                </mcc:MD_Identifier>
+              </cit:identifier>
+						</cit:CI_Citation>
+					</mri:name>
+					<mri:associationType>
+						<mri:DS_AssociationTypeCode codeList="https://standards.iso.org/iso/19115/resources/Codelists/cat/codelists.xml#DS_AssociationTypeCode" codeListValue="{{ associated_resources['association_type'] }}"></mri:DS_AssociationTypeCode>
+					</mri:associationType>
+					<mri:initiativeType>
+						<mri:DS_InitiativeTypeCode codeList="https://standards.iso.org/iso/19115/resources/Codelists/cat/codelists.xml#DS_InitiativeTypeCode" codeListValue="{{ associated_resources['initiative_type']  }}"></mri:DS_InitiativeTypeCode>
+					</mri:initiativeType>
+				</mri:MD_AssociatedResource>
+			</mri:associatedResource>
+      {% endfor %}
 
       {{ bl.bilingual('mri:supplementalInformation', 'comment', record['metadata']) }}
     </mri:MD_DataIdentification>
