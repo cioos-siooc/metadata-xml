@@ -116,7 +116,7 @@
 
   {# schema requires at least one mdb:dateInfo field #}
   {# dateInfo: mandatory #}
-  
+
         {% for date_type, date in record['metadata']['dates'].items() %}
           {% set datestamp = date|normalize_datestring %}
   <mdb:dateInfo>
@@ -227,7 +227,7 @@
         <cit:CI_Citation>
           {# title: mandatory #}
           {{ bl.bilingual('cit:title','title', record['identification']) }}
-          
+
           {# date pubished/revised isnt required #}
           {% if 'dates' in record['identification'] %}
           {% for date_type, date in record['identification']['dates'].items() %}
@@ -283,19 +283,20 @@
           {# MI_Metadata/identificationInfo/MD_DataIdentification/status/MD_ProgressCode #}
         </mcc:MD_ProgressCode>
       </mri:status>
+
       {% if record['identification']['time_coverage_resolution'] %}
       <mri:temporalResolution>
         <gco:TM_PeriodDuration>{{ record['identification']['time_coverage_resolution'] }}</gco:TM_PeriodDuration>
       </mri:temporalResolution>
       {% endif %}
-      
+
       {% set topic_categories = list_or_value_to_list(record['identification'].get('topic_category') or "oceans")  %}
       {% for topic_category in topic_categories %}
       <mri:topicCategory>
         <mri:MD_TopicCategoryCode>{{ topic_category }}</mri:MD_TopicCategoryCode>
       </mri:topicCategory>
       {% endfor %}
-      
+
       {% if record['spatial']['bbox'] %}
       <mri:extent>
         {% set bbox = record['spatial']['bbox'] %}
@@ -459,7 +460,7 @@
           {{ bl.bilingual('mmi:maintenanceNote', 'maintenance_note', record['metadata']) }}
         </mmi:MD_MaintenanceInformation>
       </mri:resourceMaintenance>
-      
+
       {# Adding a Government of Canada keyword  #}
       <mri:descriptiveKeywords>
         <mri:MD_Keywords>
@@ -533,7 +534,7 @@
         </mri:MD_Keywords>
       </mri:descriptiveKeywords>
       {% endif %}
-      
+
       {% if record['metadata'].get('use_constraints',{}).get('licence')%}
         {% set licence = record['metadata']['use_constraints']['licence'] %}
       {% else %}
@@ -584,6 +585,36 @@
       </mri:resourceConstraints>
       {% endif %}
 
+      {% for associated_resources in record['identification']['associated_resources'] %}
+      <mri:associatedResource>
+				<mri:MD_AssociatedResource>
+					<mri:name>
+						<cit:CI_Citation>
+							{{ bl.bilingual('cit:title','title', associated_resources) }}
+              <cit:identifier>
+                <mcc:MD_Identifier>
+                  <mcc:authority>
+                    <cit:CI_Citation>
+                      {{ bl.bilingual('cit:title', 'authority',associated_resources) }}
+                    </cit:CI_Citation>
+                  </mcc:authority>
+                  <mcc:code>
+                    <gco:CharacterString>{{ associated_resources['code'] }}</gco:CharacterString>
+                  </mcc:code>
+                </mcc:MD_Identifier>
+              </cit:identifier>
+						</cit:CI_Citation>
+					</mri:name>
+					<mri:associationType>
+						<mri:DS_AssociationTypeCode codeList="https://standards.iso.org/iso/19115/resources/Codelists/cat/codelists.xml#DS_AssociationTypeCode" codeListValue="{{ associated_resources['association_type'] }}"></mri:DS_AssociationTypeCode>
+					</mri:associationType>
+					<mri:initiativeType>
+						<mri:DS_InitiativeTypeCode codeList="https://standards.iso.org/iso/19115/resources/Codelists/cat/codelists.xml#DS_InitiativeTypeCode" codeListValue="{{ associated_resources['initiative_type']  }}"></mri:DS_InitiativeTypeCode>
+					</mri:initiativeType>
+				</mri:MD_AssociatedResource>
+			</mri:associatedResource>
+      {% endfor %}
+
       {{ bl.bilingual('mri:supplementalInformation', 'comment', record['metadata']) }}
     </mri:MD_DataIdentification>
   </mdb:identificationInfo>
@@ -606,7 +637,7 @@
 
 
       {% for distribution in record['distribution'] %}
-      
+
       {% if '/erddap' in distribution['url']%}
       <mrd:transferOptions>
         <mrd:MD_DigitalTransferOptions>
@@ -631,7 +662,7 @@
       </mrd:transferOptions>
 
       {% else %}
-      
+
       <mrd:transferOptions>
         <mrd:MD_DigitalTransferOptions>
           <mrd:onLine>
@@ -746,7 +777,7 @@
 
           {% for instrument in record['platform']['instruments'] %}
             {# instrument: Recommended, if platform not used then this should be under mac:MI_AcquisitionInformation #}
-          
+
           {{ instr.get_instrument(instrument) }}
 
           {% endfor %}
@@ -755,7 +786,7 @@
     </mac:MI_AcquisitionInformation>
   </mdb:acquisitionInformation>
   {% endif %}
-      
+
   {# If there are instruments outside of a platform #}
   {% if record['instruments']%}
     <mdb:acquisitionInformation>
@@ -769,7 +800,7 @@
             </mcc:level>
           </mcc:MD_Scope>
       </mac:scope>
-      
+
       {% for instrument in record['instruments'] %}
           {{ instr.get_instrument(instrument) }}
       {% endfor %}
