@@ -80,7 +80,7 @@ def metadata_to_xml(record):
 
     template_loader = FileSystemLoader(searchpath=schema_path)
     template_env = Environment(
-        loader=template_loader, trim_blocks=True, lstrip_blocks=True
+        loader=template_loader, trim_blocks=True, lstrip_blocks=True, autoescape=True
     )
 
     template_env.globals.update(
@@ -90,8 +90,8 @@ def metadata_to_xml(record):
     template_env.filters["normalize_datestring"] = normalize_datestring
     template = template_env.get_template("main.j2")
 
-    xml_string = template.render({"record": record}).replace("\n\n", "\n")
+    xml_string = template.render({"record": record})
     dom = xml.dom.minidom.parseString(xml_string)
 
-    pretty_xml_as_string = dom.toprettyxml(newl="", encoding="utf-8").decode()
+    pretty_xml_as_string = dom.toprettyxml(newl="").replace("\n\n", "\n")
     return pretty_xml_as_string
