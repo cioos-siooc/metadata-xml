@@ -90,8 +90,8 @@ def metadata_to_xml(record):
     template_env.filters["normalize_datestring"] = normalize_datestring
     template = template_env.get_template("main.j2")
 
-    xml_string = template.render({"record": record})
+    xml_string = template.render({"record": record}).replace("\n\n", "\n")
     dom = xml.dom.minidom.parseString(xml_string)
 
-    pretty_xml_as_string = dom.toprettyxml(newl="").replace("\n\n", "\n")
+    pretty_xml_as_string = dom.toprettyxml(newl="", encoding="utf-8").decode()
     return pretty_xml_as_string
