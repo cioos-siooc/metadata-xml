@@ -47,7 +47,9 @@
       {% if record['metadata']['naming_authority'] %}
       <mcc:authority>
         <cit:CI_Citation>
-            {{ bl.bilingual('cit:title', 'naming_authority',record['metadata']) }}
+            <cit:title>	
+              <gco:CharacterString>{{ record['metadata']['naming_authority'] }}</gco:CharacterString>
+            </cit:title>	
           </cit:CI_Citation>
       </mcc:authority>
       {% endif %}

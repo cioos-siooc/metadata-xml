@@ -8,9 +8,7 @@
 #
 
 metadata:
-  naming_authority:
-    en: namingauthority in en
-    fr: namingauthority in fr
+  naming_authority: ca.cioos
   identifier: 3f342f64-9348-11df-ba6a-0014c2c00eab
   language: en
   maintenance_note: maintenance_note
@@ -21,7 +19,9 @@ metadata:
       code: CC-BY-4.0
       url: https://creativecommons.org/licenses/by/4.0/
 
-  comment: just in the main language
+  comment:
+    en: comment in english
+    fr: comment in french
 
   history:
     en: history in english
