@@ -16,7 +16,7 @@ metadata:
   maintenance_note: maintenance_note
   use_constraints:
     limitations: limitations
-    license:
+    licence:
       title: Creative Commons Attribution 4.0
       code: CC-BY-4.0
       url: https://creativecommons.org/licenses/by/4.0/
@@ -26,28 +26,35 @@ metadata:
   history:
     en: history in english
     fr: history in french
+  dates:
+    creation: 2011-11-11
 
 spatial:
   bbox: [-141, 42, -52, 84]
   polygon: polygon_data
   vertical: [0, 10]
+  vertical_positive: down
 identification:
   title:
     en: title in english
     fr: title in french
+  identifier: http://dx.doi.org/10.1093/ajae/aaq063
 
   abstract:
     en: abstract in French
     fr: abstract in English
+  topic_category: elevation
   dates:
-    creation: 2011-11-11
     publication: 2000-09-01T00:00:00Z
     revision: 2000-09-01T00:00:00Z
+
   keywords:
     default:
       en: [kw1 in English, kw2 in English, kw3 in English]
       fr: [kw1 in French, kw2 in French, kw3 in French]
-    eov: [oxygen]
+    eov:
+      en: [oxygen]
+      fr: [oxygène]
   temporal_begin: 1950-07-31
   temporal_end: now
   temporal_duration: P1D
@@ -59,7 +66,7 @@ identification:
     fr: [project_a in french, project_b in french]
 contact:
   - roles:
-      - pointOfContact
+      - custodian
     organization:
       name: Environment Canada
       url: https://www.ec.gc.ca/
@@ -97,9 +104,8 @@ distribution:
       fr: pdf description in French
 
 platform:
-  - id: platform 1 id
+  - id: platform id
     name: platform_name
-    role: platform_role
     authority: platform_authority
     description: platform_description
     instruments:
@@ -112,36 +118,13 @@ platform:
         description:
           en: instrument description en 1
           fr: instrument description fr 1
-      - id: 345
-        manufacturer: manufacturer en 2
-        version: A2.19
-        type:
-          en: type en 2
-          fr: type fr 2
-        description:
-          en: instrument description en 2
-          fr: instrument description fr 2
-  - id: platform 2 id
-    name: platform_name
-    role: platform_role
-    authority: platform_authority
-    description: platform_description
-    instruments:
-      - id: 678
-        manufacturer: manufacturer en 3
-        version: A3.41
-        type:
-          en: type en 3
-          fr: type fr 3
-        description:
-          en: instrument description en 3
-          fr: instrument description fr 3
-      - id: 91011
-        manufacturer: manufacturer en 4
-        version: A4.78
-        type:
-          en: type en 4
-          fr: type fr 4
-        description:
-          en: instrument description en 4
-          fr: instrument description fr 4
+        instruments:
+         - id: id not in platform
+           manufacturer: manufacturer  not in platform
+           version: version not in platform
+           type:
+             en: type en not in platform
+             fr: type fr not in platform
+           description:
+             en: instrument description not in platform
+             fr: instrument description not in platform

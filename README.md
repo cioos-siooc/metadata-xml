@@ -26,11 +26,26 @@ It can be used as a command line tool, or imported into other Python code.
 
 To convert a Yaml file to XML, run:
 
-`python -m metadata_xml -f <yaml_file_path>`
+`python -m metadata_xml -f <yaml_file_path> -o <optional_destination_folder>`
 
 eg:
 
 `python -m metadata_xml -f sample_records/record.yaml`
+
+## Importing into other Python projects
+
+You can perform the yaml to XML conversion in other projects this way:
+
+```python
+from metadata_xml.template_functions import metadata_to_xml
+
+record = {...}
+xml = metadata_to_xml(record)
+```
+
+and add to your requirements.txt:
+
+`git+git://github.com/cioos-siooc/metadata-xml.git`
 
 ## YAML Metadata format
 

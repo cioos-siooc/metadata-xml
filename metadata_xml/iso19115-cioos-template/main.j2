@@ -14,6 +14,7 @@
 {% import 'bilingual.j2' as bl with context %}
 {% import 'contact.j2' as contact with context %}
 {% import 'charstring.j2' as cs %}
+{% import 'instrument.j2' as instr with context %}
 
 <mdb:MD_Metadata xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
   xsi:schemaLocation="http://standards.iso.org/iso/19115/-3/mdb/2.0 https://standards.iso.org/iso/19115/-3/mds/2.0/mds.xsd"
@@ -104,16 +105,19 @@
   </mdb:metadataScope>
   {# contact: mandatory #}
   {% for c in record['contact'] %}
-    {% for role in c.roles %}
-    <mdb:contact>
-            {{ contact.get_contact(c, role or 'pointOfContact; contact', role or 'pointOfContact') }}
-    </mdb:contact>
-    {% endfor %}
+      {% for role in c.roles %}
+        {% if role in ['custodian','pointOfContact']%}
+      <mdb:contact>
+              {{ contact.get_contact(c, role) }}
+      </mdb:contact>
+        {% endif %}
+      {% endfor %}
   {% endfor %}
 
   {# schema requires at least one mdb:dateInfo field #}
   {# dateInfo: mandatory #}
-        {% for date_type, date in record['identification']['dates'].items() %}
+  
+        {% for date_type, date in record['metadata']['dates'].items() %}
           {% set datestamp = date|normalize_datestring %}
   <mdb:dateInfo>
     <cit:CI_Date>
@@ -150,6 +154,17 @@
       </cit:title>
       <cit:edition>
         <gco:CharacterString>Second Edition 2019-01</gco:CharacterString>
+      </cit:edition>
+    </cit:CI_Citation>
+  </mdb:metadataStandard>
+  <mdb:metadataStandard>
+    <cit:CI_Citation>
+      <cit:title>
+
+          <gco:CharacterString>ISO 19115-1 Geographic Information - Metadata Amendment 1</gco:CharacterString>
+      </cit:title>
+      <cit:edition>
+          <gco:CharacterString>2018-02</gco:CharacterString>
       </cit:edition>
     </cit:CI_Citation>
   </mdb:metadataStandard>
@@ -212,12 +227,43 @@
         <cit:CI_Citation>
           {# title: mandatory #}
           {{ bl.bilingual('cit:title','title', record['identification']) }}
+          
+          {# date pubished/revised isnt required #}
+          {% if 'dates' in record['identification'] %}
+          {% for date_type, date in record['identification']['dates'].items() %}
+            {% set datestamp = date|normalize_datestring %}
+          <cit:date>
+            <cit:CI_Date>
+              <cit:date>
+                {% if datestamp|length > 11 %}
+                <gco:DateTime>{{ datestamp }}</gco:DateTime>
+                {% else %}
+                <gco:Date>{{ datestamp }}</gco:Date>
+                {% endif %}
+              </cit:date>
+              <cit:dateType>
+                <cit:CI_DateTypeCode codeList="http://standards.iso.org/iso/19115/resources/Codelists/cat/codelists.xml#CI_DateTypeCode" codeListValue="{{ date_type }}">{{ date_type }}</cit:CI_DateTypeCode>
+              </cit:dateType>
+            </cit:CI_Date>
+          </cit:date>
+          {% endfor %}
+          {% endif %}
+
+          {% if record['identification']['identifier'] %}
+          <cit:identifier>
+            <mcc:MD_Identifier>
+                <mcc:code>
+                  <gco:CharacterString>{{ record['identification']['identifier'] }}</gco:CharacterString>
+                </mcc:code>
+            </mcc:MD_Identifier>
+    		  </cit:identifier>
+          {% endif %}
 
           {% for c in record['contact'] %}
           {% for role in c['roles'] %}
-          {% if role in ['author','contributor','creator'] %}
+          {% if role not in ['custodian','pointOfContact','distributor'] %}
           <cit:citedResponsibleParty>
-            {{ contact.get_contact(c, role + '; contact', role) }}
+            {{ contact.get_contact(c, role) }}
           </cit:citedResponsibleParty>
           {% endif %}
           {% endfor %}
@@ -232,7 +278,7 @@
       {{ bl.bilingual('mri:abstract', 'abstract', record['identification']) }}
       {{ bl.bilingual('mri:credit', 'acknowledgement', record['identification']) }}
       <mri:status>
-        <mcc:MD_ProgressCode codeList="http://standards.iso.org/iso/19115/resources/Codelists/cat/codelists.xml#MD_ProgressCode" codeListValue="{{ record['identification']['status'] or 'onGoing' }}">
+        <mcc:MD_ProgressCode codeList="http://standards.iso.org/iso/19115/resources/Codelists/cat/codelists.xml#MD_ProgressCode" codeListValue="{{ record['identification']['progress_code'] or 'onGoing' }}">
           {# CIOOS core mandatory element #}
           {# MI_Metadata/identificationInfo/MD_DataIdentification/status/MD_ProgressCode #}
         </mcc:MD_ProgressCode>
@@ -242,9 +288,14 @@
         <gco:TM_PeriodDuration>{{ record['identification']['time_coverage_resolution'] }}</gco:TM_PeriodDuration>
       </mri:temporalResolution>
       {% endif %}
+      
+      {% set topic_categories = list_or_value_to_list(record['identification'].get('topic_category') or "oceans")  %}
+      {% for topic_category in topic_categories %}
       <mri:topicCategory>
-        <mri:MD_TopicCategoryCode>oceans</mri:MD_TopicCategoryCode>
+        <mri:MD_TopicCategoryCode>{{ topic_category }}</mri:MD_TopicCategoryCode>
       </mri:topicCategory>
+      {% endfor %}
+      
       {% if record['spatial']['bbox'] %}
       <mri:extent>
         {% set bbox = record['spatial']['bbox'] %}
@@ -315,6 +366,26 @@
                 <mrs:MD_ReferenceSystem>
                   {# referenceSystemIdentifier: optional #}
                   <mrs:referenceSystemIdentifier>
+                    {% if record['spatial']['vertical_positive'] == "up" %}
+                    <mcc:MD_Identifier>
+                      {# code: mandatory #}
+                      <mcc:code>
+                        <gco:CharacterString>5829</gco:CharacterString>
+                      </mcc:code>
+                      {# codeSpace: Optional #}
+                      <mcc:codeSpace>
+                        <gco:CharacterString>EPSG</gco:CharacterString>
+                      </mcc:codeSpace>
+                      {# version: Recommended #}
+                      <mcc:version>
+                        <gco:CharacterString>2012-08-10</gco:CharacterString>
+                      </mcc:version>
+                      {# description: Optional #}
+                      <mcc:description>
+                        <gco:CharacterString>EPSG::5829 - Instantaneous Water Level height - Height relative to instantaneous water level uncorrected for tide. Not specific to any location or epoch.</gco:CharacterString>
+                      </mcc:description>
+                    </mcc:MD_Identifier>
+                    {% else %}
                     <mcc:MD_Identifier>
                       {# code: mandatory #}
                       <mcc:code>
@@ -333,6 +404,7 @@
                         <gco:CharacterString>EPSG::5831 - Instantaneous Water Level depth - Depth relative to instantaneous water level uncorrected for tide. Not specific to any location or epoch.</gco:CharacterString>
                       </mcc:description>
                     </mcc:MD_Identifier>
+                    {% endif %}
                   </mrs:referenceSystemIdentifier>
                   {# referenceSystemType: CIOOS core mandatory #}
                   <mrs:referenceSystemType>
@@ -387,6 +459,36 @@
           {{ bl.bilingual('mmi:maintenanceNote', 'maintenance_note', record['metadata']) }}
         </mmi:MD_MaintenanceInformation>
       </mri:resourceMaintenance>
+      
+      {# Adding a Government of Canada keyword  #}
+      <mri:descriptiveKeywords>
+        <mri:MD_Keywords>
+          <mri:keyword>
+            <gco:CharacterString>Oceans</gco:CharacterString>
+          </mri:keyword>
+          <mri:thesaurusName>
+            <cit:CI_Citation>
+              <cit:title>
+                <gco:CharacterString>Government of Canada Core Subject Thesaurus</gco:CharacterString>
+              </cit:title>
+              <cit:date>
+                <cit:CI_Date>
+                  <cit:date>
+                    <gco:Date>2016-10-13</gco:Date>
+                  </cit:date>
+                  <cit:dateType>
+                    <cit:CI_DateTypeCode codeList="http://wiki.esipfed.org/index.php/ISO_19115-3_Codelists#CI_DateTypeCode" codeListValue="revision"/>
+                  </cit:dateType>
+                </cit:CI_Date>
+              </cit:date>
+              <cit:edition>
+                <gco:CharacterString>N/A</gco:CharacterString>
+              </cit:edition>
+            </cit:CI_Citation>
+          </mri:thesaurusName>
+        </mri:MD_Keywords>
+      </mri:descriptiveKeywords>
+
       {# for each keyword theme #}
       {% for key, value in record['identification']['keywords'].items() %}
       <mri:descriptiveKeywords>
@@ -406,7 +508,7 @@
               <cit:onlineResource>
                 <cit:CI_OnlineResource>
                   <cit:linkage>
-                      {{ key }}
+                      {{ key|e }}
                     </cit:linkage>
                   <cit:protocol>
                     <gco:CharacterString>WWW:LINK</gco:CharacterString>
@@ -432,10 +534,10 @@
       </mri:descriptiveKeywords>
       {% endif %}
       
-      {% if record['metadata'].get('use_constraints',{}).get('license')%}
-        {% set license = record['metadata']['use_constraints']['license'] %}
+      {% if record['metadata'].get('use_constraints',{}).get('licence')%}
+        {% set licence = record['metadata']['use_constraints']['licence'] %}
       {% else %}
-        {% set license= {"title":"Creative Commons Attribution 4.0",
+        {% set licence = {"title":"Creative Commons Attribution 4.0",
                          "code":"CC-BY-4.0",
                          "url": "https://creativecommons.org/licenses/by/4.0/"
                          } %}
@@ -446,19 +548,19 @@
           <mco:reference>
             <cit:CI_Citation>
               <cit:title>
-                <gco:CharacterString>{{ license['title'] }}</gco:CharacterString>
+                <gco:CharacterString>{{ licence['title'] }}</gco:CharacterString>
               </cit:title>
               <cit:identifier>
                 <mcc:MD_Identifier>
                   <mcc:code>
-                    <gco:CharacterString>{{ license['code'] }}</gco:CharacterString>
+                    <gco:CharacterString>{{ licence['code'] }}</gco:CharacterString>
                   </mcc:code>
                 </mcc:MD_Identifier>
               </cit:identifier>
               <cit:onlineResource>
                 <cit:CI_OnlineResource>
                   <cit:linkage>
-                    <gco:CharacterString>{{ license['url'] }}</gco:CharacterString>
+                    <gco:CharacterString>{{ licence['url']|e }}</gco:CharacterString>
                   </cit:linkage>
                   <cit:protocol>
                     <gco:CharacterString>WWW:LINK</gco:CharacterString>
@@ -468,7 +570,7 @@
             </cit:CI_Citation>
           </mco:reference>
           <mco:useConstraints>
-            <mco:MD_RestrictionCode codeList="https://standards.iso.org/iso/19115/resources/Codelists/cat/codelists.xml#MD_RestrictionCode" codeListValue="license" />
+            <mco:MD_RestrictionCode codeList="https://standards.iso.org/iso/19115/resources/Codelists/cat/codelists.xml#MD_RestrictionCode" codeListValue="licence" />
           </mco:useConstraints>
         </mco:MD_LegalConstraints>
       </mri:resourceConstraints>
@@ -495,7 +597,7 @@
       <mrd:distributor>
         <mrd:MD_Distributor>
           <mrd:distributorContact>
-        {{ contact.get_contact(c, 'distributor; contact', 'distributor') }}
+        {{ contact.get_contact(c, 'distributor') }}
             </mrd:distributorContact>
         </mrd:MD_Distributor>
       </mrd:distributor>
@@ -595,101 +697,85 @@
         </mcc:MD_Scope>
       </mac:scope>
       {# platform: Recommended #}
-      {% for platform_obj in record['platform'] %}
-        <mac:platform>
-          <mac:MI_Platform>
-            {# identifier: mandatory #}
-            <mac:identifier>
-              <mcc:MD_Identifier>
-                {# authority: mandatory #}
-                <mcc:authority>
-                  <cit:CI_Citation>
-                    {# validation says cit:CI_Citation requires title #}
-                    {{ bl.bilingual('cit:title', 'name', platform_obj) }}
-                    {% if platform_obj['role'] and platform_obj['authority'] %}
-                    {# citedResponsibleParty: mandatory #}
-                    <cit:citedResponsibleParty>
-                      <cit:CI_Responsibility>
-                        {# role: mandatory #}
-                        <cit:role>
-                          <cit:CI_RoleCode codeList="http://standards.iso.org/iso/19115/resources/Codelists/cat/codelists.xml#CI_RoleCode" codeListValue="{{ platform_obj['role'] }}" />
-                          {# CIOOS core mandatory element #}
-                            {# MI_Metadata/acquisitionInformation/MI_AcquisitionInformation/platform/MI_Platform/identifier/MD_Identifier/authority/CI_Citation/citedResponsibleParty/CI_Responsibility/role/CI_RoleCode #}
-                        </cit:role>
-                        {# party: mandatory #}
-                        <cit:party>
-                          <cit:CI_Organisation>
-                            {# name: mandatory #}
-                            {{ bl.bilingual('cit:name', 'authority', platform_obj) }}
-                              {# CIOOS core mandatory element #}
-                              {# MI_Metadata/acquisitionInformation/MI_AcquisitionInformation/platform/MI_Platform/identifier/MD_Identifier/authority/CI_Citation/citedResponsibleParty/CI_Responsibility/party/CI_Party/name/CharacterString #}
-                          </cit:CI_Organisation>
-                        </cit:party>
-                      </cit:CI_Responsibility>
-                    </cit:citedResponsibleParty>
-                    {% endif %}
-                  </cit:CI_Citation>
-                </mcc:authority>
-                {# code: mandatory #}
-                <mcc:code>
-                  {# CIOOS core mandatory element #}
-                  {# MI_Metadata/acquisitionInformation/MI_AcquisitionInformation/platform/MI_Platform/identifier/MD_Identifier/code/CharacterString #}
-                  <gco:CharacterString>{{ platform_obj['id'] }}</gco:CharacterString>
-                </mcc:code>
-              </mcc:MD_Identifier>
-            </mac:identifier>
-            {# description: mandatory #}
-              {# CIOOS core mandatory element #}
-              {# MI_Metadata/acquisitionInformation/MI_AcquisitionInformation/platform/MI_Platform/description/CharacterString #}
-            {{ bl.bilingual('mac:description', 'description', platform_obj) }}
-
-            {% for instrument in platform_obj['instruments'] %}
-              {# instrument: Recommended, if platform not used then this should be under mac:MI_AcquisitionInformation #}
-            <mac:instrument>
-              {# MI_Instrument: Recommended #}
-              <mac:MI_Instrument>
-                {# identifier: mandatory #}
-                <mac:identifier>
-                  <mcc:MD_Identifier>
-                    {# authority: Recommended #}
-                      {% if instrument['manufacturer'] %}
-                    <mcc:authority>
-                      <cit:CI_Citation>
-                        {{ bl.bilingual('cit:title', 'manufacturer', instrument ) }}
-                        </cit:CI_Citation>
-                    </mcc:authority>
-                    {% endif %}
-                      {# code: mandatory #}
-                    <mcc:code>
-                      {# CIOOS core mandatory element #}
-                        {# MI_Metadata/acquisitionInformation/MI_AcquisitionInformation/instrument/MI_Instrument/identifier/MD_Identifier/code/CharacterString #}
-                      <gco:CharacterString>{{ instrument.id }}</gco:CharacterString>
-                    </mcc:code>
-                    {% if instrument.version %}
-                      {# version: mandatory #}
-                    <mcc:version>
-                      {# CIOOS core mandatory element #}
-                        {# MI_Metadata/acquisitionInformation/MI_AcquisitionInformation/instrument/MI_Instrument/identifier/MD_Identifier/version/CharacterString #}
-                      <gco:CharacterString>{{ instrument.version }}</gco:CharacterString>
-                    </mcc:version>
-                    {% endif %}
-                      {# description: mandatory #}
+      <mac:platform>
+        <mac:MI_Platform>
+          {# identifier: mandatory #}
+          <mac:identifier>
+            <mcc:MD_Identifier>
+              {# authority: mandatory #}
+              <mcc:authority>
+                <cit:CI_Citation>
+                  {# validation says cit:CI_Citation requires title #}
+                  {{ bl.bilingual('cit:title', 'name', record['platform']) }}
+                  {% if record['platform']['role'] and record['platform']['authority'] %}
+                  {# citedResponsibleParty: mandatory #}
+                  <cit:citedResponsibleParty>
+                    <cit:CI_Responsibility>
+                      {# role: mandatory #}
+                      <cit:role>
+                        <cit:CI_RoleCode codeList="http://standards.iso.org/iso/19115/resources/Codelists/cat/codelists.xml#CI_RoleCode" codeListValue="originator" />
                         {# CIOOS core mandatory element #}
-                        {# MI_Metadata/acquisitionInformation/MI_AcquisitionInformation/instrument/MI_Instrument/identifier/MD_Identifier/description/CharacterString #}                   
-                      {{ bl.bilingual('mcc:description', 'description', instrument ) }}
-                  </mcc:MD_Identifier>
-                </mac:identifier>
-                {# type: mandatory #}
-                    {# CIOOS core mandatory element #}
-                    {# MI_Metadata/acquisitionInformation/MI_AcquisitionInformation/instrument/MI_Instrument/type/CharacterString #}
-                  {{ bl.bilingual('mac:type', 'type', instrument ) }}
-              </mac:MI_Instrument>
-            </mac:instrument>
-            {% endfor %}
-          </mac:MI_Platform>
-        </mac:platform>
-        {% endfor %}
+                          {# MI_Metadata/acquisitionInformation/MI_AcquisitionInformation/platform/MI_Platform/identifier/MD_Identifier/authority/CI_Citation/citedResponsibleParty/CI_Responsibility/role/CI_RoleCode #}
+                      </cit:role>
+                      {# party: mandatory #}
+                      <cit:party>
+                        <cit:CI_Organisation>
+                          {# name: mandatory #}
+                          {{ bl.bilingual('cit:name', 'authority', record['platform']) }}
+                            {# CIOOS core mandatory element #}
+                            {# MI_Metadata/acquisitionInformation/MI_AcquisitionInformation/platform/MI_Platform/identifier/MD_Identifier/authority/CI_Citation/citedResponsibleParty/CI_Responsibility/party/CI_Party/name/CharacterString #}
+                        </cit:CI_Organisation>
+                      </cit:party>
+                    </cit:CI_Responsibility>
+                  </cit:citedResponsibleParty>
+                  {% endif %}
+                </cit:CI_Citation>
+              </mcc:authority>
+              {# code: mandatory #}
+              <mcc:code>
+                {# CIOOS core mandatory element #}
+                {# MI_Metadata/acquisitionInformation/MI_AcquisitionInformation/platform/MI_Platform/identifier/MD_Identifier/code/CharacterString #}
+                <gco:CharacterString>{{ record['platform']['id'] }}</gco:CharacterString>
+              </mcc:code>
+            </mcc:MD_Identifier>
+          </mac:identifier>
+          {# description: mandatory #}
+            {# CIOOS core mandatory element #}
+            {# MI_Metadata/acquisitionInformation/MI_AcquisitionInformation/platform/MI_Platform/description/CharacterString #}
+          {{ bl.bilingual('mac:description', 'description', record['platform']) }}
+
+          {% for instrument in record['platform']['instruments'] %}
+            {# instrument: Recommended, if platform not used then this should be under mac:MI_AcquisitionInformation #}
+          
+          {{ instr.get_instrument(instrument) }}
+
+          {% endfor %}
+        </mac:MI_Platform>
+      </mac:platform>
     </mac:MI_AcquisitionInformation>
   </mdb:acquisitionInformation>
   {% endif %}
+      
+  {# If there are instruments outside of a platform #}
+  {% if record['instruments']%}
+    <mdb:acquisitionInformation>
+      <mac:MI_AcquisitionInformation>
+        {# scope: CIOOS core mandatory #}
+        <mac:scope>
+          <mcc:MD_Scope>
+            {# level: mandatory #}
+            <mcc:level>
+              <mcc:MD_ScopeCode codeList="http://standards.iso.org/iso/19115/resources/Codelists/cat/codelists.xml#MD_ScopeCode" codeListValue="dataset" />
+            </mcc:level>
+          </mcc:MD_Scope>
+      </mac:scope>
+      
+      {% for instrument in record['instruments'] %}
+          {{ instr.get_instrument(instrument) }}
+      {% endfor %}
+
+      </mac:MI_AcquisitionInformation>
+    </mdb:acquisitionInformation>
+  {% endif %}
+
 </mdb:MD_Metadata>
