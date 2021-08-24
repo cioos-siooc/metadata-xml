@@ -31,15 +31,32 @@ def main():
         help="Enter the folder to write your xml file to." +
         "Defaults to the source file's directory.", required=False)
 
+    parser.add_argument(
+        '--multiple-platforms', '-m', dest='multiple_platforms', action='store_true',
+        help="YAML source file formatted to contain multiple platforms instead of one.",
+        required=False)
+
+    parser.add_argument(
+        '--encoding', '-e', type=str, default='utf-8', dest='encoding',
+        help="The encoding of the source file, default: utf-8",
+        required=False)
+
     args = parser.parse_args()
     filename = args.yaml_file
     output_folder = args.output_folder
 
-    with open(args.yaml_file) as stream:
+    with open(args.yaml_file, encoding=args.encoding) as stream:
         record = yaml.safe_load(stream)
 
     basename = os.path.basename(filename)
     print("Input filename as: "+basename)
+
+    # rearrange single platform records to be an array of one to allow the 
+    # Jinja template to work with 1 or more platforms
+    if not args.multiple_platforms:
+        record['platform'] = [record['platform']]
+    else:
+        print("Multiple platform format enabled.")
 
     xml_string = metadata_to_xml(record)
 

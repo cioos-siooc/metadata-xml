@@ -683,7 +683,7 @@
       </mmi:maintenanceAndUpdateFrequency>
     </mmi:MD_MaintenanceInformation>
   </mdb:metadataMaintenance>
-  {% if record['platform'] %}
+  {% for platform_obj in record['platform'] %}
   {# acquisitionInformation: Recommended #}
   <mdb:acquisitionInformation>
     <mac:MI_AcquisitionInformation>
@@ -706,8 +706,8 @@
               <mcc:authority>
                 <cit:CI_Citation>
                   {# validation says cit:CI_Citation requires title #}
-                  {{ bl.bilingual('cit:title', 'name', record['platform']) }}
-                  {% if record['platform']['role'] and record['platform']['authority'] %}
+                  {{ bl.bilingual('cit:title', 'name', platform_obj) }}
+                  {% if platform_obj['role'] and platform_obj['authority'] %}
                   {# citedResponsibleParty: mandatory #}
                   <cit:citedResponsibleParty>
                     <cit:CI_Responsibility>
@@ -721,7 +721,7 @@
                       <cit:party>
                         <cit:CI_Organisation>
                           {# name: mandatory #}
-                          {{ bl.bilingual('cit:name', 'authority', record['platform']) }}
+                          {{ bl.bilingual('cit:name', 'authority', platform_obj) }}
                             {# CIOOS core mandatory element #}
                             {# MI_Metadata/acquisitionInformation/MI_AcquisitionInformation/platform/MI_Platform/identifier/MD_Identifier/authority/CI_Citation/citedResponsibleParty/CI_Responsibility/party/CI_Party/name/CharacterString #}
                         </cit:CI_Organisation>
@@ -735,16 +735,16 @@
               <mcc:code>
                 {# CIOOS core mandatory element #}
                 {# MI_Metadata/acquisitionInformation/MI_AcquisitionInformation/platform/MI_Platform/identifier/MD_Identifier/code/CharacterString #}
-                <gco:CharacterString>{{ record['platform']['id'] }}</gco:CharacterString>
+                <gco:CharacterString>{{ platform_obj['id'] }}</gco:CharacterString>
               </mcc:code>
             </mcc:MD_Identifier>
           </mac:identifier>
           {# description: mandatory #}
             {# CIOOS core mandatory element #}
             {# MI_Metadata/acquisitionInformation/MI_AcquisitionInformation/platform/MI_Platform/description/CharacterString #}
-          {{ bl.bilingual('mac:description', 'description', record['platform']) }}
+          {{ bl.bilingual('mac:description', 'description', platform_obj) }}
 
-          {% for instrument in record['platform']['instruments'] %}
+          {% for instrument in platform_obj['instruments'] %}
             {# instrument: Recommended, if platform not used then this should be under mac:MI_AcquisitionInformation #}
           
           {{ instr.get_instrument(instrument) }}
@@ -754,7 +754,7 @@
       </mac:platform>
     </mac:MI_AcquisitionInformation>
   </mdb:acquisitionInformation>
-  {% endif %}
+  {% endfor %}
       
   {# If there are instruments outside of a platform #}
   {% if record['instruments']%}
