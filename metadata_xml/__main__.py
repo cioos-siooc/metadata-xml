@@ -38,7 +38,12 @@ def main():
 
     parser.add_argument(
         '--encoding', '-e', type=str, default='utf-8', dest='encoding',
-        help="The encoding of the source file, default: utf-8",
+        help="The encoding of the YAML source file, default: utf-8",
+        required=False)
+
+    parser.add_argument(
+        '--output-encoding', '-w', type=str, default='utf-8', dest='encoding',
+        help="The encoding of the XML destination file, default: utf-8",
         required=False)
 
     args = parser.parse_args()
@@ -68,7 +73,7 @@ def main():
     else:
         yaml_filename = f'{path_with_file}.xml'
 
-    file = open(yaml_filename, "w")
+    file = open(yaml_filename, "w", encoding='utf-8')
     file.write(xml_string)
     print("Wrote " + file.name)
 
