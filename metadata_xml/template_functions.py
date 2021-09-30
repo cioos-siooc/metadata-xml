@@ -80,7 +80,7 @@ def metadata_to_xml(record):
 
     template_loader = FileSystemLoader(searchpath=schema_path)
     template_env = Environment(
-        loader=template_loader, trim_blocks=True, lstrip_blocks=True
+        loader=template_loader, trim_blocks=True, lstrip_blocks=True, autoescape=True
     )
 
     template_env.globals.update(
