@@ -550,9 +550,7 @@
         <mco:MD_LegalConstraints>
           <mco:reference>
             <cit:CI_Citation>
-              <cit:title>
-                <gco:CharacterString>{{ licence['title'] }}</gco:CharacterString>
-              </cit:title>
+                {{ bl.bilingual('cit:title', 'title', licence) }}
               <cit:identifier>
                 <mcc:MD_Identifier>
                   <mcc:code>
