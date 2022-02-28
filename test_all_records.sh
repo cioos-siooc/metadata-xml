@@ -5,11 +5,11 @@ echo "Downloading YAML files..."
 wget -qr -np -nd https://pac-dev1.cioos.org/dev/metadata/ --accept "*.yaml"
 
 # 2) Create an XML for each yaml record
-echo "Coverting to XML..."
+echo "Converting to XML..."
 for f in *.yaml; do python -m metadata_xml -f $f >/dev/null; done
 
-echo "Validating..."
 # 3) Validate each XML record
+echo "Validating..."
 for f in *.xml; do sh ../validate.sh $f 2>&1 | grep -v 'validates'; done
 
 echo "Done"
