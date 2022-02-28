@@ -1,18 +1,15 @@
 #!/bin/bash
-# This script is run by Docker and CircleCI
+
+# stop on errors
 set -e
 
-# install this package 
-pip install .
+# First install this package with `pip install -e .`
 
-# download an install cioos-iso-validate
-wget https://codeload.github.com/cioos-siooc/cioos-iso-validate/zip/master -O cioos-iso-validate.zip
-unzip cioos-iso-validate.zip
-cd cioos-iso-validate-master
-sh download_schema_files.sh
-pip install .
+# extract schema if doesnt exist
+[ ! -d "cioos-schema" ] && unzip -q cioos-schema.zip
 
-cd ..
-
+# create an xml from a yaml file
 python -m metadata_xml -f sample_records/record.yml
-python -m cioos_iso_validate sample_records/record.xml
+
+# make sure it validates with the schema
+sh validate.sh sample_records/record.xml
