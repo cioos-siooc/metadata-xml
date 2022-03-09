@@ -8,3 +8,4 @@ venv/
 .mypy*
 notforrepo
 *.xml
+cioos-schema
