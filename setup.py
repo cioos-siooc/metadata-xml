@@ -13,6 +13,7 @@ setup(name='metadata_xml',
 
       install_requires=['Jinja2 == 2.10.3',
                         'PyYAML == 5.1.2',
+                        'yattag == 1.14.0'
                         ]
 
       )
