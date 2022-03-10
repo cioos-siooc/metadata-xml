@@ -16,8 +16,7 @@
 {% import 'charstring.j2' as cs %}
 {% import 'instrument.j2' as instr with context %}
 
-<mdb:MD_Metadata xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-  xsi:schemaLocation="http://standards.iso.org/iso/19115/-3/mdb/2.0 https://standards.iso.org/iso/19115/-3/mds/2.0/mds.xsd"
+<mdb:MD_Metadata xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://standards.iso.org/iso/19115/-3/mdb/2.0 https://standards.iso.org/iso/19115/-3/mds/2.0/mds.xsd"
   xmlns:gml="http://www.opengis.net/gml/3.2"
   xmlns:mpc="http://standards.iso.org/iso/19115/-3/mpc/1.0"
   xmlns:mri="http://standards.iso.org/iso/19115/-3/mri/1.0"
@@ -47,10 +46,10 @@
       {% if record['metadata']['naming_authority'] %}
       <mcc:authority>
         <cit:CI_Citation>
-            <cit:title>	
-              <gco:CharacterString>{{- record['metadata']['naming_authority'] -}}</gco:CharacterString>
-            </cit:title>	
-          </cit:CI_Citation>
+          <cit:title>
+            <gco:CharacterString>{{- record['metadata']['naming_authority'] -}}</gco:CharacterString>
+          </cit:title>
+        </cit:CI_Citation>
       </mcc:authority>
       {% endif %}
 
@@ -109,9 +108,9 @@
   {% for c in record['contact'] %}
       {% for role in c.roles %}
         {% if role in ['custodian','pointOfContact']%}
-      <mdb:contact>
+  <mdb:contact>
               {{- contact.get_contact(c, role) -}}
-      </mdb:contact>
+  </mdb:contact>
         {% endif %}
       {% endfor %}
   {% endfor %}
@@ -163,10 +162,10 @@
     <cit:CI_Citation>
       <cit:title>
 
-          <gco:CharacterString>ISO 19115-1 Geographic Information - Metadata Amendment 1</gco:CharacterString>
+        <gco:CharacterString>ISO 19115-1 Geographic Information - Metadata Amendment 1</gco:CharacterString>
       </cit:title>
       <cit:edition>
-          <gco:CharacterString>2018-02</gco:CharacterString>
+        <gco:CharacterString>2018-02</gco:CharacterString>
       </cit:edition>
     </cit:CI_Citation>
   </mdb:metadataStandard>
@@ -254,11 +253,11 @@
           {% if record['identification']['identifier'] %}
           <cit:identifier>
             <mcc:MD_Identifier>
-                <mcc:code>
-                  <gco:CharacterString>{{- record['identification']['identifier'] -}}</gco:CharacterString>
-                </mcc:code>
+              <mcc:code>
+                <gco:CharacterString>{{- record['identification']['identifier'] -}}</gco:CharacterString>
+              </mcc:code>
             </mcc:MD_Identifier>
-    		  </cit:identifier>
+          </cit:identifier>
           {% endif %}
 
           {% for c in record['contact'] %}
@@ -512,7 +511,7 @@
                 <cit:CI_OnlineResource>
                   <cit:linkage>
                       {{- key|e -}}
-                    </cit:linkage>
+                  </cit:linkage>
                   <cit:protocol>
                     <gco:CharacterString>WWW:LINK</gco:CharacterString>
                   </cit:protocol>
@@ -587,9 +586,9 @@
 
       {% for associated_resources in record['identification']['associated_resources'] %}
       <mri:associatedResource>
-				<mri:MD_AssociatedResource>
-					<mri:name>
-						<cit:CI_Citation>
+        <mri:MD_AssociatedResource>
+          <mri:name>
+            <cit:CI_Citation>
 							{{- bl.bilingual('cit:title','title', associated_resources) -}}
               <cit:identifier>
                 <mcc:MD_Identifier>
@@ -603,16 +602,16 @@
                   </mcc:code>
                 </mcc:MD_Identifier>
               </cit:identifier>
-						</cit:CI_Citation>
-					</mri:name>
-					<mri:associationType>
-						<mri:DS_AssociationTypeCode codeList="https://standards.iso.org/iso/19115/resources/Codelists/cat/codelists.xml#DS_AssociationTypeCode" codeListValue="{{- associated_resources['association_type'] -}}"></mri:DS_AssociationTypeCode>
-					</mri:associationType>
-					<mri:initiativeType>
-						<mri:DS_InitiativeTypeCode codeList="https://standards.iso.org/iso/19115/resources/Codelists/cat/codelists.xml#DS_InitiativeTypeCode" codeListValue="{{- associated_resources['initiative_type']  -}}"></mri:DS_InitiativeTypeCode>
-					</mri:initiativeType>
-				</mri:MD_AssociatedResource>
-			</mri:associatedResource>
+            </cit:CI_Citation>
+          </mri:name>
+          <mri:associationType>
+            <mri:DS_AssociationTypeCode codeList="https://standards.iso.org/iso/19115/resources/Codelists/cat/codelists.xml#DS_AssociationTypeCode" codeListValue="{{- associated_resources['association_type'] -}}"></mri:DS_AssociationTypeCode>
+          </mri:associationType>
+          <mri:initiativeType>
+            <mri:DS_InitiativeTypeCode codeList="https://standards.iso.org/iso/19115/resources/Codelists/cat/codelists.xml#DS_InitiativeTypeCode" codeListValue="{{- associated_resources['initiative_type']  -}}"></mri:DS_InitiativeTypeCode>
+          </mri:initiativeType>
+        </mri:MD_AssociatedResource>
+      </mri:associatedResource>
       {% endfor %}
 
       {{- bl.bilingual('mri:supplementalInformation', 'comment', record['metadata']) -}}
@@ -629,7 +628,7 @@
         <mrd:MD_Distributor>
           <mrd:distributorContact>
         {{- contact.get_contact(c, 'distributor') -}}
-            </mrd:distributorContact>
+          </mrd:distributorContact>
         </mrd:MD_Distributor>
       </mrd:distributor>
       {% endif %}
@@ -637,31 +636,6 @@
 
 
       {% for distribution in record['distribution'] %}
-
-      {% if '/erddap' in distribution['url']%}
-      <mrd:transferOptions>
-        <mrd:MD_DigitalTransferOptions>
-          <mrd:onLine>
-            <cit:CI_OnlineResource>
-              <cit:linkage>
-                <gco:CharacterString>{{- distribution['url']|e -}}</gco:CharacterString>
-              </cit:linkage>
-              <cit:protocol>
-                <gco:CharacterString>WWW:LINK</gco:CharacterString>
-              </cit:protocol>
-              <cit:name>
-                <gco:CharacterString>ERDDAP Data Subset Form</gco:CharacterString>
-              </cit:name>
-              {# TODO add french for this? #}
-              <cit:description>
-                <gco:CharacterString>ERDDAP's version of the OPeNDAP .html web page for this dataset. Specify a subset of the dataset and download the data via OPeNDAP or in many different file types.</gco:CharacterString>
-              </cit:description>
-            </cit:CI_OnlineResource>
-          </mrd:onLine>
-        </mrd:MD_DigitalTransferOptions>
-      </mrd:transferOptions>
-
-      {% else %}
 
       <mrd:transferOptions>
         <mrd:MD_DigitalTransferOptions>
@@ -681,7 +655,6 @@
           </mrd:onLine>
         </mrd:MD_DigitalTransferOptions>
       </mrd:transferOptions>
-      {% endif %}
     {% endfor %}
 
 
@@ -789,24 +762,24 @@
 
   {# If there are instruments outside of a platform #}
   {% if record['instruments']%}
-    <mdb:acquisitionInformation>
-      <mac:MI_AcquisitionInformation>
+  <mdb:acquisitionInformation>
+    <mac:MI_AcquisitionInformation>
         {# scope: CIOOS core mandatory #}
-        <mac:scope>
-          <mcc:MD_Scope>
+      <mac:scope>
+        <mcc:MD_Scope>
             {# level: mandatory #}
-            <mcc:level>
-              <mcc:MD_ScopeCode codeList="http://standards.iso.org/iso/19115/resources/Codelists/cat/codelists.xml#MD_ScopeCode" codeListValue="dataset" />
-            </mcc:level>
-          </mcc:MD_Scope>
+          <mcc:level>
+            <mcc:MD_ScopeCode codeList="http://standards.iso.org/iso/19115/resources/Codelists/cat/codelists.xml#MD_ScopeCode" codeListValue="dataset" />
+          </mcc:level>
+        </mcc:MD_Scope>
       </mac:scope>
 
       {% for instrument in record['instruments'] %}
           {{- instr.get_instrument(instrument) -}}
       {% endfor %}
 
-      </mac:MI_AcquisitionInformation>
-    </mdb:acquisitionInformation>
+    </mac:MI_AcquisitionInformation>
+  </mdb:acquisitionInformation>
   {% endif %}
 
 </mdb:MD_Metadata>
