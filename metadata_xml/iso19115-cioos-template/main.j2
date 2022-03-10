@@ -638,31 +638,6 @@
 
       {% for distribution in record['distribution'] %}
 
-      {% if '/erddap' in distribution['url']%}
-      <mrd:transferOptions>
-        <mrd:MD_DigitalTransferOptions>
-          <mrd:onLine>
-            <cit:CI_OnlineResource>
-              <cit:linkage>
-                <gco:CharacterString>{{- distribution['url']|e -}}</gco:CharacterString>
-              </cit:linkage>
-              <cit:protocol>
-                <gco:CharacterString>WWW:LINK</gco:CharacterString>
-              </cit:protocol>
-              <cit:name>
-                <gco:CharacterString>ERDDAP Data Subset Form</gco:CharacterString>
-              </cit:name>
-              {# TODO add french for this? #}
-              <cit:description>
-                <gco:CharacterString>ERDDAP's version of the OPeNDAP .html web page for this dataset. Specify a subset of the dataset and download the data via OPeNDAP or in many different file types.</gco:CharacterString>
-              </cit:description>
-            </cit:CI_OnlineResource>
-          </mrd:onLine>
-        </mrd:MD_DigitalTransferOptions>
-      </mrd:transferOptions>
-
-      {% else %}
-
       <mrd:transferOptions>
         <mrd:MD_DigitalTransferOptions>
           <mrd:onLine>
@@ -674,14 +649,18 @@
                 <gco:CharacterString>WWW:LINK</gco:CharacterString>
               </cit:protocol>
               <cit:name>
+                {% if '/erddap' in distribution['url'] and not distribution.name %}
+
+                <gco:CharacterString>ERDDAP</gco:CharacterString>
+                {% else %}
                 <gco:CharacterString>{{- distribution.name -}}</gco:CharacterString>
+                {% endif %}
               </cit:name>
               {{- bl.bilingual('cit:description','description',distribution) -}}
             </cit:CI_OnlineResource>
           </mrd:onLine>
         </mrd:MD_DigitalTransferOptions>
       </mrd:transferOptions>
-      {% endif %}
     {% endfor %}
 
 
