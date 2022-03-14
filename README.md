@@ -77,7 +77,7 @@ deprecated, proposed, withdrawn, notAccepted, accepted, valid, tentative, supers
 
 ### EOV codelist
 
-oxygen, nutrients, nitrate, phosphate, silicate, inorganicCarbon, dissolvedOrganicCarbon, seaSurfaceHeight, seawaterDensity, potentialTemperature, potentialDensity, speedOfSound, seaIce, seaState, seaSurfaceSalinity, seaSurfaceTemperature, subSurfaceCurrents, subSurfaceSalinity, subSurfaceTemperature, surfaceCurrents
+dissolvedOrganicCarbon, fishAbundanceAndDistribution, hardCoralCoverAndComposition, inorganicCarbon, invertebrateAbundanceAndDistribution, macroalgalCanopyCoverAndComposition, marineDebris, marineTurtlesBirdsMammalsAbundanceAndDistribution, microbeBiomassAndDiversity, nitrousOxide, nutrients, oceanColour, oceanSound, oceanSurfaceHeatFlux, oceanSurfaceStress, other, oxygen, particulateMatter, phytoplanktonBiomassAndDiversity, seagrassCoverAndComposition, seaIce, seaState, seaSurfaceHeight, seaSurfaceSalinity, seaSurfaceTemperature, stableCarbonIsotopes, subSurfaceCurrents, subSurfaceSalinity, subSurfaceTemperature, surfaceCurrents, transientTracers, zooplanktonBiomassAndDiversity
 
 ## Running tests
 
