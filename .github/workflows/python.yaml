@@ -23,6 +23,6 @@ jobs:
           # exit-zero treats all errors as warnings. The GitHub editor is 127 chars wide
           flake8 . --count --exit-zero --max-complexity=10 --max-line-length=127 --statistics
       - name: Install required packages
-        run: sudo apt-get install -y libxml2-utils
+        run: sudo apt-get update && sudo apt-get install -y libxml2-utils
       - name: Test generating and validating a record
         run: bash ./docker_init.sh
