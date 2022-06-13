@@ -112,6 +112,7 @@ distribution:
       fr: pdf description in French
 
 platform:
+  type: drifting subsurface profiling float
   name: platform_name
   authority: platform_authority
   id: platform id
