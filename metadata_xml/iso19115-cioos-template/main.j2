@@ -760,6 +760,21 @@
           {{- instr.get_instrument(instrument) -}}
 
           {% endfor %}
+
+          {% if record['platform']['type'] %}
+          
+          {# cant have 'otherProperty' without 'instrument'. This adds dummy instrument #}
+          {% if instrument not in record['platform']['instruments']%}
+          <mac:instrument/> 
+          {% endif %}
+
+          <mac:otherProperty xlink:href="http://vocab.nerc.ac.uk/collection/L06/current/" xlink:title="SeaVoX Platform Categories">
+            <gco:Record>
+                <gco:CharacterString>{{- record['platform']['type'] -}}</gco:CharacterString>
+            </gco:Record>
+          </mac:otherProperty>
+          {% endif %}
+
         </mac:MI_Platform>
       </mac:platform>
     </mac:MI_AcquisitionInformation>
