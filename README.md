@@ -1,6 +1,7 @@
 # metadata-xml
 
 [![Create and validate and XML file](https://github.com/cioos-siooc/metadata-xml/actions/workflows/python.yaml/badge.svg)](https://github.com/cioos-siooc/metadata-xml/actions/workflows/python.yaml)
+[![License: AGPL v3](https://img.shields.io/badge/License-AGPL_v3-blue.svg)](https://www.gnu.org/licenses/agpl-3.0)
 
 `metadata-xml` is a Python3 package for converting metadata records defined using
 ACDD-style field names into XML that fits into the [CIOOS](https://www.cioos.ca)
