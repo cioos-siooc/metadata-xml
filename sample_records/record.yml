@@ -86,6 +86,8 @@ contact:
       name: Shiela Jones
       position: Scientist
       email: foo@bar.ca
+    inCitation: true
+
   - roles:
       - author
     individual:
@@ -93,7 +95,7 @@ contact:
       position: Scientist
       email: foo2@bar.ca
       country: Canada
-
+    inCitation: true
   - roles:
       - distributor
     organization:
