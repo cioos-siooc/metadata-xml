@@ -107,13 +107,13 @@
   </mdb:metadataScope>
   {# contact: mandatory #}
   {% for c in record['contact'] %}
-      {% for role in c.roles %}
-        {% if role in ['custodian','pointOfContact']%}
+        {% if not c.inCitation %}
+        {% for role in c.roles %}
       <mdb:contact>
               {{- contact.get_contact(c, role) -}}
       </mdb:contact>
+        {% endfor %}
         {% endif %}
-      {% endfor %}
   {% endfor %}
 
   {# schema requires at least one mdb:dateInfo field #}
@@ -262,13 +262,13 @@
           {% endif %}
 
           {% for c in record['contact'] %}
+          {% if c.inCitation %}
           {% for role in c['roles'] %}
-          {% if role not in ['custodian','pointOfContact','distributor'] %}
-          <cit:citedResponsibleParty>
-            {{- contact.get_contact(c, role) -}}
-          </cit:citedResponsibleParty>
-          {% endif %}
+            <cit:citedResponsibleParty>
+              {{- contact.get_contact(c, role) -}}
+            </cit:citedResponsibleParty>
           {% endfor %}
+          {% endif %}
           {% endfor %}
 
 
