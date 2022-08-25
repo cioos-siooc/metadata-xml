@@ -648,14 +648,13 @@
               <cit:protocol>
                 <gco:CharacterString>WWW:LINK</gco:CharacterString>
               </cit:protocol>
-              <cit:name>
                 {% if '/erddap' in distribution['url'] and not distribution.name %}
-
-                <gco:CharacterString>ERDDAP</gco:CharacterString>
+                <cit:name>
+                  <gco:CharacterString>ERDDAP</gco:CharacterString>
+                </cit:name>
                 {% else %}
-                <gco:CharacterString>{{- distribution.name -}}</gco:CharacterString>
+                {{- bl.bilingual('cit:name','name',distribution) -}}
                 {% endif %}
-              </cit:name>
               {{- bl.bilingual('cit:description','description',distribution) -}}
             </cit:CI_OnlineResource>
           </mrd:onLine>

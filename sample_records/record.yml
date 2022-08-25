@@ -108,10 +108,12 @@ contact:
 distribution:
   - url: https://catalogue.hakai.org/erddap/tabledap/HakaiCTDKC10.html
   - url: https://dd.meteo.gc.ca/bla.pdf
-    name: my pdf resource
+    name:
+      en: resource name in English
+      fr: resource name in French
     description:
-      en: pdf description in English
-      fr: pdf description in French
+      en: resource description in English
+      fr: resource description in French
 
 platform:
   type: drifting subsurface profiling float
