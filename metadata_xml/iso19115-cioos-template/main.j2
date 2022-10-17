@@ -107,7 +107,7 @@
   </mdb:metadataScope>
   {# contact: mandatory #}
   {% for c in record['contact'] %}
-        {% if not c.inCitation %}
+        {% if not c.inCitation or "custodian" in c.roles %}
         {% for role in c.roles %}
       <mdb:contact>
               {{- contact.get_contact(c, role) -}}
