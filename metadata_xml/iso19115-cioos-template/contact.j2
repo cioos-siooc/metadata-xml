@@ -44,24 +44,18 @@
               </cit:function>
             </cit:CI_OnlineResource>
           </cit:onlineResource>
-
-          {% if contact['organization']['ror'] %}
-          <cit:onlineResource>
-              <cit:CI_OnlineResource>
-                <cit:linkage>
-                  <gco:CharacterString>{{- contact['organization']['ror']|e -}}</gco:CharacterString>
-                </cit:linkage>
-                <cit:protocol>
-                  <gco:CharacterString>WWW:LINK</gco:CharacterString>
-                </cit:protocol>
-                <cit:function>
-                  <cit:CI_OnLineFunctionCode codeList="https://standards.iso.org/iso/19115/resources/Codelists/cat/codelists.xml#CI_OnLineFunctionCode" codeListValue="information"></cit:CI_OnLineFunctionCode>
-                </cit:function>
-              </cit:CI_OnlineResource>
-          </cit:onlineResource>
-          {% endif %}
         </cit:CI_Contact>
       </cit:contactInfo>
+
+      {% if contact['organization']['ror'] %}
+      <cit:partyIdentifier>
+          <mcc:MD_Identifier>
+              <mcc:code>
+                  <gco:CharacterString>{{- contact['organization']['ror'] -}}</gco:CharacterString>
+              </mcc:code>
+          </mcc:MD_Identifier>
+      </cit:partyIdentifier>
+      {% endif %}
 
       {% if contact['individual'] %}
       <cit:individual>
@@ -108,23 +102,17 @@
           <gco:CharacterString>{{- contact['contactType'] -}}</gco:CharacterString>
         </cit:contactType>
         {% endif %}
-        {% if contact['orcid'] %}
-        <cit:onlineResource>
-          <cit:CI_OnlineResource>
-            <cit:linkage>
-              <gco:CharacterString>{{- contact['orcid']|e -}}</gco:CharacterString>
-            </cit:linkage>
-            <cit:protocol>
-              <gco:CharacterString>WWW:LINK</gco:CharacterString>
-            </cit:protocol>
-            <cit:function>
-              <cit:CI_OnLineFunctionCode codeList="https://standards.iso.org/iso/19115/resources/Codelists/cat/codelists.xml#CI_OnLineFunctionCode" codeListValue="information"></cit:CI_OnLineFunctionCode>
-            </cit:function>
-          </cit:CI_OnlineResource>
-        </cit:onlineResource>
-        {% endif %}
       </cit:CI_Contact>
     </cit:contactInfo>
+    {% if contact['orcid'] %}
+    <cit:partyIdentifier>
+        <mcc:MD_Identifier>
+            <mcc:code>
+                <gco:CharacterString>{{- contact['orcid'] -}}</gco:CharacterString>
+            </mcc:code>
+        </mcc:MD_Identifier>
+    </cit:partyIdentifier>
+    {% endif %}
     {{- bl.bilingual('cit:positionName', 'position', contact) -}}
 </cit:CI_Individual>
 
