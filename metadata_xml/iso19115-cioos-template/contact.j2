@@ -44,9 +44,25 @@
               </cit:function>
             </cit:CI_OnlineResource>
           </cit:onlineResource>
+
+          {% if contact['organization']['ror'] %}
+          <cit:onlineResource>
+              <cit:CI_OnlineResource>
+                <cit:linkage>
+                  <gco:CharacterString>{{- contact['organization']['ror']|e -}}</gco:CharacterString>
+                </cit:linkage>
+                <cit:protocol>
+                  <gco:CharacterString>WWW:LINK</gco:CharacterString>
+                </cit:protocol>
+                <cit:function>
+                  <cit:CI_OnLineFunctionCode codeList="https://standards.iso.org/iso/19115/resources/Codelists/cat/codelists.xml#CI_OnLineFunctionCode" codeListValue="information"></cit:CI_OnLineFunctionCode>
+                </cit:function>
+              </cit:CI_OnlineResource>
+          </cit:onlineResource>
+          {% endif %}
         </cit:CI_Contact>
       </cit:contactInfo>
-      
+
       {% if contact['individual'] %}
       <cit:individual>
         {{- get_individual(contact['individual']) -}}
@@ -91,6 +107,21 @@
         <cit:contactType>
           <gco:CharacterString>{{- contact['contactType'] -}}</gco:CharacterString>
         </cit:contactType>
+        {% endif %}
+        {% if contact['orcid'] %}
+        <cit:onlineResource>
+          <cit:CI_OnlineResource>
+            <cit:linkage>
+              <gco:CharacterString>{{- contact['orcid']|e -}}</gco:CharacterString>
+            </cit:linkage>
+            <cit:protocol>
+              <gco:CharacterString>WWW:LINK</gco:CharacterString>
+            </cit:protocol>
+            <cit:function>
+              <cit:CI_OnLineFunctionCode codeList="https://standards.iso.org/iso/19115/resources/Codelists/cat/codelists.xml#CI_OnLineFunctionCode" codeListValue="information"></cit:CI_OnLineFunctionCode>
+            </cit:function>
+          </cit:CI_OnlineResource>
+        </cit:onlineResource>
         {% endif %}
       </cit:CI_Contact>
     </cit:contactInfo>
