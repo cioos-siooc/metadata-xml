@@ -9,3 +9,4 @@ venv/
 notforrepo
 *.xml
 cioos-schema
+build

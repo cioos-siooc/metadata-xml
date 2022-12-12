@@ -82,10 +82,12 @@ contact:
       city: Toronto
       country: Canada
       email: foo@bar.ca
+      ror: https://ror.org/026ny0e17
     individual:
       name: Shiela Jones
       position: Scientist
       email: foo@bar.ca
+      orcid: https://orcid.org/0000-0002-1825-0097
     inCitation: true
 
   - roles:

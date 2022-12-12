@@ -46,7 +46,17 @@
           </cit:onlineResource>
         </cit:CI_Contact>
       </cit:contactInfo>
-      
+
+      {% if contact['organization']['ror'] %}
+      <cit:partyIdentifier>
+          <mcc:MD_Identifier>
+              <mcc:code>
+                  <gco:CharacterString>{{- contact['organization']['ror'] -}}</gco:CharacterString>
+              </mcc:code>
+          </mcc:MD_Identifier>
+      </cit:partyIdentifier>
+      {% endif %}
+
       {% if contact['individual'] %}
       <cit:individual>
         {{- get_individual(contact['individual']) -}}
@@ -94,6 +104,15 @@
         {% endif %}
       </cit:CI_Contact>
     </cit:contactInfo>
+    {% if contact['orcid'] %}
+    <cit:partyIdentifier>
+        <mcc:MD_Identifier>
+            <mcc:code>
+                <gco:CharacterString>{{- contact['orcid'] -}}</gco:CharacterString>
+            </mcc:code>
+        </mcc:MD_Identifier>
+    </cit:partyIdentifier>
+    {% endif %}
     {{- bl.bilingual('cit:positionName', 'position', contact) -}}
 </cit:CI_Individual>
 
