@@ -47,9 +47,9 @@
       {% if record['metadata']['naming_authority'] %}
       <mcc:authority>
         <cit:CI_Citation>
-            <cit:title>	
+            <cit:title>
               <gco:CharacterString>{{- record['metadata']['naming_authority'] -}}</gco:CharacterString>
-            </cit:title>	
+            </cit:title>
           </cit:CI_Citation>
       </mcc:authority>
       {% endif %}
@@ -249,6 +249,12 @@
             </cit:CI_Date>
           </cit:date>
           {% endfor %}
+          {% endif %}
+
+          {% if 'version' in record['identification']['version'] %}
+          <cit:edition>
+            <gco:CharacterString>{{ record['identification']['version'] }}</gco:CharacterString>
+          </cit:edition>
           {% endif %}
 
           {% if record['identification']['identifier'] %}
@@ -761,10 +767,10 @@
           {% endfor %}
 
           {% if record['platform']['type'] %}
-          
+
           {# cant have 'otherProperty' without 'instrument'. This adds dummy instrument #}
           {% if instrument not in record['platform']['instruments']%}
-          <mac:instrument/> 
+          <mac:instrument/>
           {% endif %}
 
           <mac:otherProperty xlink:href="http://vocab.nerc.ac.uk/collection/L06/current/" xlink:title="SeaVoX Platform Categories">
