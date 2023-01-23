@@ -251,9 +251,9 @@
           {% endfor %}
           {% endif %}
 
-          {% if 'version' in record['identification']['version'] %}
+          {% if 'edition' in record['identification']['edition'] %}
           <cit:edition>
-            <gco:CharacterString>{{ record['identification']['version'] }}</gco:CharacterString>
+            <gco:CharacterString>{{ record['identification']['edition'] }}</gco:CharacterString>
           </cit:edition>
           {% endif %}
 
