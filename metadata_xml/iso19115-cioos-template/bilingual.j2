@@ -7,20 +7,20 @@
       {% endif %}
       {% if value|trim != "None" %}
       <{{ element }}>
-        <gco:CharacterString>{{ value|e }}</gco:CharacterString>
+        <gco:CharacterString>{{- value|e -}}</gco:CharacterString>
       </{{ element }}>
       {% endif %}
 {% else %}
       <{{ element }} xsi:type="lan:PT_FreeText_PropertyType">
 
       {% if value[lang]|trim != "None" %}
-        <gco:CharacterString>{{ value[lang]|e }}</gco:CharacterString>
+        <gco:CharacterString>{{- value[lang]|e -}}</gco:CharacterString>
     {% endif %}
           <lan:PT_FreeText>
           {% for secondary_lang,val in value.items() %}
           {% if secondary_lang != lang %}
             <lan:textGroup>
-              <lan:LocalisedCharacterString locale="#{{secondary_lang}}">{{ val|e }}</lan:LocalisedCharacterString>
+              <lan:LocalisedCharacterString locale="#{{secondary_lang}}">{{- val|e -}}</lan:LocalisedCharacterString>
             </lan:textGroup>
           {% endif %}
           {% endfor %}
@@ -42,7 +42,7 @@
         {% if default_lang_list|length>0 %}
           {% for keyword in default_lang_list %}
               <mri:keyword>
-                    <gco:CharacterString>{{ keyword|e }}</gco:CharacterString>
+                    <gco:CharacterString>{{- keyword|e -}}</gco:CharacterString>
               </mri:keyword>
           {% endfor %}
           {% endif %}
@@ -55,7 +55,7 @@
                 <mri:keyword xsi:type="lan:PT_FreeText_PropertyType">
                   <lan:PT_FreeText>
                     <lan:textGroup>
-                      <lan:LocalisedCharacterString locale="#{{ secondary_lang }}">{{ keyword|e }}</lan:LocalisedCharacterString>
+                      <lan:LocalisedCharacterString locale="#{{- secondary_lang -}}">{{- keyword|e -}}</lan:LocalisedCharacterString>
                     </lan:textGroup>
                   </lan:PT_FreeText>
                 </mri:keyword>

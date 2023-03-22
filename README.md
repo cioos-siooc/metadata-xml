@@ -1,5 +1,8 @@
 # metadata-xml
 
+[![Create and validate and XML file](https://github.com/cioos-siooc/metadata-xml/actions/workflows/python.yaml/badge.svg)](https://github.com/cioos-siooc/metadata-xml/actions/workflows/python.yaml)
+[![License: AGPL v3](https://img.shields.io/badge/License-AGPL_v3-blue.svg)](https://www.gnu.org/licenses/agpl-3.0)
+
 `metadata-xml` is a Python3 package for converting metadata records defined using
 ACDD-style field names into XML that fits into the [CIOOS](https://www.cioos.ca)
 metadata profile.
@@ -77,7 +80,7 @@ deprecated, proposed, withdrawn, notAccepted, accepted, valid, tentative, supers
 
 ### EOV codelist
 
-oxygen, nutrients, nitrate, phosphate, silicate, inorganicCarbon, dissolvedOrganicCarbon, seaSurfaceHeight, seawaterDensity, potentialTemperature, potentialDensity, speedOfSound, seaIce, seaState, seaSurfaceSalinity, seaSurfaceTemperature, subSurfaceCurrents, subSurfaceSalinity, subSurfaceTemperature, surfaceCurrents
+dissolvedOrganicCarbon, fishAbundanceAndDistribution, hardCoralCoverAndComposition, inorganicCarbon, invertebrateAbundanceAndDistribution, macroalgalCanopyCoverAndComposition, marineDebris, marineTurtlesBirdsMammalsAbundanceAndDistribution, microbeBiomassAndDiversity, nitrousOxide, nutrients, oceanColour, oceanSound, oceanSurfaceHeatFlux, oceanSurfaceStress, other, oxygen, particulateMatter, phytoplanktonBiomassAndDiversity, seagrassCoverAndComposition, seaIce, seaState, seaSurfaceHeight, seaSurfaceSalinity, seaSurfaceTemperature, stableCarbonIsotopes, subSurfaceCurrents, subSurfaceSalinity, subSurfaceTemperature, surfaceCurrents, transientTracers, zooplanktonBiomassAndDiversity
 
 ## Running tests
 

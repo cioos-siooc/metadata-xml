@@ -8,9 +8,7 @@
 #
 
 metadata:
-  naming_authority:
-    en: namingauthority in en
-    fr: namingauthority in fr
+  naming_authority: ca.cioos
   identifier: 3f342f64-9348-11df-ba6a-0014c2c00eab
   language: en
   maintenance_note: maintenance_note
@@ -21,7 +19,9 @@ metadata:
       code: CC-BY-4.0
       url: https://creativecommons.org/licenses/by/4.0/
 
-  comment: just in the main language
+  comment:
+    en: comment in english
+    fr: comment in french
 
   history:
     en: history in english
@@ -41,12 +41,21 @@ identification:
   identifier: http://dx.doi.org/10.1093/ajae/aaq063
 
   abstract:
-    en: abstract in French
-    fr: abstract in English
+    en: abstract in english
+    fr: abstract in french
+  associated_resources:
+    - title:
+        en: associated resource title in english
+        fr: associated resource title in french
+      authority: ca.cioos
+      code: 26443ab2-964f-4031-a53b-f132434573e8
+      association_type: crossReference
+      initiative_type: study
   topic_category: elevation
   dates:
     publication: 2000-09-01T00:00:00Z
     revision: 2000-09-01T00:00:00Z
+  edition: 15
 
   keywords:
     default:
@@ -74,10 +83,14 @@ contact:
       city: Toronto
       country: Canada
       email: foo@bar.ca
+      ror: https://ror.org/026ny0e17
     individual:
       name: Shiela Jones
       position: Scientist
       email: foo@bar.ca
+      orcid: https://orcid.org/0000-0002-1825-0097
+    inCitation: true
+
   - roles:
       - author
     individual:
@@ -85,7 +98,7 @@ contact:
       position: Scientist
       email: foo2@bar.ca
       country: Canada
-
+    inCitation: true
   - roles:
       - distributor
     organization:
@@ -98,13 +111,16 @@ contact:
 distribution:
   - url: https://catalogue.hakai.org/erddap/tabledap/HakaiCTDKC10.html
   - url: https://dd.meteo.gc.ca/bla.pdf
-    name: my pdf resource
+    name:
+      en: resource name in English
+      fr: resource name in French
     description:
-      en: pdf description in English
-      fr: pdf description in French
+      en: resource description in English
+      fr: resource description in French
 
 platform:
   - id: platform id
+    type: drifting subsurface profiling float
     name: platform_name
     authority: platform_authority
     description: platform_description

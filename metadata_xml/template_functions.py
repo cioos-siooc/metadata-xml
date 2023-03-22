@@ -7,14 +7,11 @@ Defines custom functions used by the Jinja template
 Also defines metadata_to_xml()
 
 """
-
-import pathlib
-import xml.dom.minidom
-
-from datetime import date
 import os
-
+import pathlib
+from datetime import date
 from jinja2 import Environment, FileSystemLoader
+from yattag import indent
 
 SCHEMA_FOLDER_NAME = "iso19115-cioos-template"
 
@@ -80,7 +77,7 @@ def metadata_to_xml(record):
 
     template_loader = FileSystemLoader(searchpath=schema_path)
     template_env = Environment(
-        loader=template_loader, trim_blocks=True, lstrip_blocks=True
+        loader=template_loader, trim_blocks=True, lstrip_blocks=True, autoescape=True
     )
 
     template_env.globals.update(
@@ -91,7 +88,6 @@ def metadata_to_xml(record):
     template = template_env.get_template("main.j2")
 
     xml_string = template.render({"record": record})
-    dom = xml.dom.minidom.parseString(xml_string)
+    pretty_string = indent(xml_string)
 
-    pretty_xml_as_string = dom.toprettyxml(newl="").replace("\n\n", "\n")
-    return pretty_xml_as_string
+    return pretty_string

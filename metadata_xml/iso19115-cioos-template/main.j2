@@ -17,7 +17,7 @@
 {% import 'instrument.j2' as instr with context %}
 
 <mdb:MD_Metadata xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-  xsi:schemaLocation="http://standards.iso.org/iso/19115/-3/mdb/2.0 https://standards.iso.org/iso/19115/-3/mds/2.0/mds.xsd"
+  xsi:schemaLocation="http://standards.iso.org/iso/19115/-3/mdb/2.0 https://schemas.isotc211.org/19115/-3/mdb/2.0/mdb.xsd"
   xmlns:gml="http://www.opengis.net/gml/3.2"
   xmlns:mpc="http://standards.iso.org/iso/19115/-3/mpc/1.0"
   xmlns:mri="http://standards.iso.org/iso/19115/-3/mri/1.0"
@@ -47,7 +47,9 @@
       {% if record['metadata']['naming_authority'] %}
       <mcc:authority>
         <cit:CI_Citation>
-            {{ bl.bilingual('cit:title', 'naming_authority',record['metadata']) }}
+            <cit:title>
+              <gco:CharacterString>{{- record['metadata']['naming_authority'] -}}</gco:CharacterString>
+            </cit:title>
           </cit:CI_Citation>
       </mcc:authority>
       {% endif %}
@@ -57,7 +59,7 @@
       <mcc:code>
         {# CIOOS core mandatory element #}
         {# MI_Metadata/metadataIdentifier/MD_Identifier/code/CharacterString #}
-        <gco:CharacterString>{{ record['metadata']['identifier'] }}</gco:CharacterString>
+        <gco:CharacterString>{{- record['metadata']['identifier'] -}}</gco:CharacterString>
       </mcc:code>
       {% endif %}
     </mcc:MD_Identifier>
@@ -70,7 +72,7 @@
     <lan:PT_Locale>
       {# language: mandatory #}
       <lan:language>
-        <lan:LanguageCode codeList="http://standards.iso.org/iso/19115/resources/Codelist/lan/LanguageCode.xml" codeListValue="{{ lang_code  }}">
+        <lan:LanguageCode codeList="http://standards.iso.org/iso/19115/resources/Codelist/lan/LanguageCode.xml" codeListValue="{{- lang_code  -}}">
           {# CIOOS core mandatory element #}
           {# MI_Metadata/defaultLocale/PT_Locale/language/LanguageCode (ISO639-2) #}
         </lan:LanguageCode>
@@ -105,18 +107,18 @@
   </mdb:metadataScope>
   {# contact: mandatory #}
   {% for c in record['contact'] %}
-      {% for role in c.roles %}
-        {% if role in ['custodian','pointOfContact']%}
+        {% if not c.inCitation or "custodian" in c.roles %}
+        {% for role in c.roles %}
       <mdb:contact>
-              {{ contact.get_contact(c, role) }}
+              {{- contact.get_contact(c, role) -}}
       </mdb:contact>
+        {% endfor %}
         {% endif %}
-      {% endfor %}
   {% endfor %}
 
   {# schema requires at least one mdb:dateInfo field #}
   {# dateInfo: mandatory #}
-  
+
         {% for date_type, date in record['metadata']['dates'].items() %}
           {% set datestamp = date|normalize_datestring %}
   <mdb:dateInfo>
@@ -124,13 +126,13 @@
       {# date: mandatory #}
       <cit:date>
         {% if datestamp|length > 11 %}
-        <gco:DateTime>{{ datestamp }}</gco:DateTime>
+        <gco:DateTime>{{- datestamp -}}</gco:DateTime>
         {% else %}
-        <gco:Date>{{ datestamp }}</gco:Date>
+        <gco:Date>{{- datestamp -}}</gco:Date>
         {% endif %}
       </cit:date>
       <cit:dateType>
-        <cit:CI_DateTypeCode codeList="http://standards.iso.org/iso/19115/resources/Codelists/cat/codelists.xml#CI_DateTypeCode" codeListValue="{{ date_type }}">{{ date_type }}</cit:CI_DateTypeCode>
+        <cit:CI_DateTypeCode codeList="http://standards.iso.org/iso/19115/resources/Codelists/cat/codelists.xml#CI_DateTypeCode" codeListValue="{{- date_type -}}">{{- date_type -}}</cit:CI_DateTypeCode>
       </cit:dateType>
     </cit:CI_Date>
   </mdb:dateInfo>
@@ -198,7 +200,7 @@
     <lan:PT_Locale>
       {# language: mandatory #}
       <lan:language>
-        <lan:LanguageCode codeList="http://standards.iso.org/iso/19115/resources/Codelist/lan/LanguageCode.xml" codeListValue="{{ alternate_lang_code }}">
+        <lan:LanguageCode codeList="http://standards.iso.org/iso/19115/resources/Codelist/lan/LanguageCode.xml" codeListValue="{{- alternate_lang_code -}}">
           {# CIOOS core mandatory element #}
           {# MI_Metadata/otherLocale/PT_Locale/language/LanguageCode (ISO639-2) #}
         </lan:LanguageCode>
@@ -226,8 +228,8 @@
       <mri:citation>
         <cit:CI_Citation>
           {# title: mandatory #}
-          {{ bl.bilingual('cit:title','title', record['identification']) }}
-          
+          {{- bl.bilingual('cit:title','title', record['identification']) -}}
+
           {# date pubished/revised isnt required #}
           {% if 'dates' in record['identification'] %}
           {% for date_type, date in record['identification']['dates'].items() %}
@@ -236,37 +238,43 @@
             <cit:CI_Date>
               <cit:date>
                 {% if datestamp|length > 11 %}
-                <gco:DateTime>{{ datestamp }}</gco:DateTime>
+                <gco:DateTime>{{- datestamp -}}</gco:DateTime>
                 {% else %}
-                <gco:Date>{{ datestamp }}</gco:Date>
+                <gco:Date>{{- datestamp -}}</gco:Date>
                 {% endif %}
               </cit:date>
               <cit:dateType>
-                <cit:CI_DateTypeCode codeList="http://standards.iso.org/iso/19115/resources/Codelists/cat/codelists.xml#CI_DateTypeCode" codeListValue="{{ date_type }}">{{ date_type }}</cit:CI_DateTypeCode>
+                <cit:CI_DateTypeCode codeList="http://standards.iso.org/iso/19115/resources/Codelists/cat/codelists.xml#CI_DateTypeCode" codeListValue="{{- date_type -}}">{{- date_type -}}</cit:CI_DateTypeCode>
               </cit:dateType>
             </cit:CI_Date>
           </cit:date>
           {% endfor %}
           {% endif %}
 
+          {% if 'edition' in record['identification'] %}
+          <cit:edition>
+            <gco:CharacterString>{{ record['identification']['edition'] }}</gco:CharacterString>
+          </cit:edition>
+          {% endif %}
+
           {% if record['identification']['identifier'] %}
           <cit:identifier>
             <mcc:MD_Identifier>
                 <mcc:code>
-                  <gco:CharacterString>{{ record['identification']['identifier'] }}</gco:CharacterString>
+                  <gco:CharacterString>{{- record['identification']['identifier'] -}}</gco:CharacterString>
                 </mcc:code>
             </mcc:MD_Identifier>
     		  </cit:identifier>
           {% endif %}
 
           {% for c in record['contact'] %}
+          {% if c.inCitation %}
           {% for role in c['roles'] %}
-          {% if role not in ['custodian','pointOfContact','distributor'] %}
-          <cit:citedResponsibleParty>
-            {{ contact.get_contact(c, role) }}
-          </cit:citedResponsibleParty>
-          {% endif %}
+            <cit:citedResponsibleParty>
+              {{- contact.get_contact(c, role) -}}
+            </cit:citedResponsibleParty>
           {% endfor %}
+          {% endif %}
           {% endfor %}
 
 
@@ -275,27 +283,28 @@
       {# abstract: mandatory #}
         {# CIOOS core mandatory element #}
         {# MI_Metadata/identificationInfo/MD_DataIdentification/abstract/CharacterString #}
-      {{ bl.bilingual('mri:abstract', 'abstract', record['identification']) }}
-      {{ bl.bilingual('mri:credit', 'acknowledgement', record['identification']) }}
+      {{- bl.bilingual('mri:abstract', 'abstract', record['identification']) -}}
+      {{- bl.bilingual('mri:credit', 'acknowledgement', record['identification']) -}}
       <mri:status>
-        <mcc:MD_ProgressCode codeList="http://standards.iso.org/iso/19115/resources/Codelists/cat/codelists.xml#MD_ProgressCode" codeListValue="{{ record['identification']['progress_code'] or 'onGoing' }}">
+        <mcc:MD_ProgressCode codeList="http://standards.iso.org/iso/19115/resources/Codelists/cat/codelists.xml#MD_ProgressCode" codeListValue="{{- record['identification']['progress_code'] or 'onGoing' -}}">
           {# CIOOS core mandatory element #}
           {# MI_Metadata/identificationInfo/MD_DataIdentification/status/MD_ProgressCode #}
         </mcc:MD_ProgressCode>
       </mri:status>
+
       {% if record['identification']['time_coverage_resolution'] %}
       <mri:temporalResolution>
-        <gco:TM_PeriodDuration>{{ record['identification']['time_coverage_resolution'] }}</gco:TM_PeriodDuration>
+        <gco:TM_PeriodDuration>{{- record['identification']['time_coverage_resolution'] -}}</gco:TM_PeriodDuration>
       </mri:temporalResolution>
       {% endif %}
-      
+
       {% set topic_categories = list_or_value_to_list(record['identification'].get('topic_category') or "oceans")  %}
       {% for topic_category in topic_categories %}
       <mri:topicCategory>
-        <mri:MD_TopicCategoryCode>{{ topic_category }}</mri:MD_TopicCategoryCode>
+        <mri:MD_TopicCategoryCode>{{- topic_category -}}</mri:MD_TopicCategoryCode>
       </mri:topicCategory>
       {% endfor %}
-      
+
       {% if record['spatial']['bbox'] %}
       <mri:extent>
         {% set bbox = record['spatial']['bbox'] %}
@@ -307,16 +316,16 @@
                 <gco:Boolean>true</gco:Boolean>
               </gex:extentTypeCode>
               <gex:westBoundLongitude>
-                <gco:Decimal>{{ bbox[0] }}</gco:Decimal>
+                <gco:Decimal>{{- bbox[0] -}}</gco:Decimal>
               </gex:westBoundLongitude>
               <gex:eastBoundLongitude>
-                <gco:Decimal>{{ bbox[2] }}</gco:Decimal>
+                <gco:Decimal>{{- bbox[2] -}}</gco:Decimal>
               </gex:eastBoundLongitude>
               <gex:southBoundLatitude>
-                <gco:Decimal>{{ bbox[1] }}</gco:Decimal>
+                <gco:Decimal>{{- bbox[1] -}}</gco:Decimal>
               </gex:southBoundLatitude>
               <gex:northBoundLatitude>
-                <gco:Decimal>{{ bbox[3] }}</gco:Decimal>
+                <gco:Decimal>{{- bbox[3] -}}</gco:Decimal>
               </gex:northBoundLatitude>
             </gex:EX_GeographicBoundingBox>
           </gex:geographicElement>
@@ -339,7 +348,7 @@
                   <gml:exterior>
                     <gml:LinearRing>
                       <gml:coordinates>
-                        {{ record['spatial']['polygon'] }}
+                        {{- record['spatial']['polygon'] -}}
                       </gml:coordinates>
                     </gml:LinearRing>
                   </gml:exterior>
@@ -356,10 +365,10 @@
           <gex:verticalElement>
             <gex:EX_VerticalExtent>
               <gex:minimumValue>
-                <gco:Real>{{ record['spatial']['vertical'][0] }}</gco:Real>
+                <gco:Real>{{- record['spatial']['vertical'][0] -}}</gco:Real>
               </gex:minimumValue>
               <gex:maximumValue>
-                <gco:Real>{{ record['spatial']['vertical'][1] }}</gco:Real>
+                <gco:Real>{{- record['spatial']['vertical'][1] -}}</gco:Real>
               </gex:maximumValue>
               {# verticalCRSId: CIOOS core mandatory #}
               <gex:verticalCRSId>
@@ -426,13 +435,13 @@
               <gex:extent>
                 <gml:TimePeriod gml:id="time_period">
                   {% if record['identification']['temporal_begin'] %}
-                  <gml:beginPosition>{{ record['identification']['temporal_begin'] }}</gml:beginPosition>
+                  <gml:beginPosition>{{- record['identification']['temporal_begin'] -}}</gml:beginPosition>
                   {% else %}
                   <gml:beginPosition indeterminatePosition="unknown" />
                   {% endif %}
 
                   {% if record['identification']['temporal_end'] %}
-                  <gml:endPosition>{{ record['identification']['temporal_end'] }}</gml:endPosition>
+                  <gml:endPosition>{{- record['identification']['temporal_end'] -}}</gml:endPosition>
                   {% elif not record['identification']['progress_code'] or record['identification']['progress_code'] == 'onGoing' %}
                   <gml:endPosition indeterminatePosition="now" />
                   {% else %}
@@ -440,7 +449,7 @@
                   {% endif %}
 
                   {% if record['identification']['temporal_duration']  %}
-                  <gml:duration>{{ record['identification']['temporal_duration'] }}</gml:duration>
+                  <gml:duration>{{- record['identification']['temporal_duration'] -}}</gml:duration>
                   {% endif %}
                 </gml:TimePeriod>
               </gex:extent>
@@ -456,10 +465,10 @@
           <mmi:maintenanceAndUpdateFrequency>
             <mmi:MD_MaintenanceFrequencyCode codeList="http://standards.iso.org/iso/19115/resources/Codelists/cat/codelists.xml#MD_MaintenanceFrequencyCode" codeListValue="asNeeded">asNeeded</mmi:MD_MaintenanceFrequencyCode>
           </mmi:maintenanceAndUpdateFrequency>
-          {{ bl.bilingual('mmi:maintenanceNote', 'maintenance_note', record['metadata']) }}
+          {{- bl.bilingual('mmi:maintenanceNote', 'maintenance_note', record['metadata']) -}}
         </mmi:MD_MaintenanceInformation>
       </mri:resourceMaintenance>
-      
+
       {# Adding a Government of Canada keyword  #}
       <mri:descriptiveKeywords>
         <mri:MD_Keywords>
@@ -495,20 +504,20 @@
 
         <mri:MD_Keywords>
           {% set keywords_xml = bl.bilingual_keyword_list(value) %}
-          {{ keywords_xml }}
+          {{- keywords_xml -}}
 
           {% if keywords_xml|trim|length>0 %}
           <mri:thesaurusName>
             <cit:CI_Citation>
               {# validation requires title #}
               <cit:title>
-                <gco:CharacterString>{{ key }}</gco:CharacterString>
+                <gco:CharacterString>{{- key -}}</gco:CharacterString>
               </cit:title>
               {% if key.startswith('http') %}
               <cit:onlineResource>
                 <cit:CI_OnlineResource>
                   <cit:linkage>
-                      {{ key|e }}
+                      {{- key|e -}}
                     </cit:linkage>
                   <cit:protocol>
                     <gco:CharacterString>WWW:LINK</gco:CharacterString>
@@ -526,14 +535,14 @@
       {% if record['identification']['project'] %}
       <mri:descriptiveKeywords>
         <mri:MD_Keywords>
-          {{ bl.bilingual_keyword_list(record['identification']['project']) }}
+          {{- bl.bilingual_keyword_list(record['identification']['project']) -}}
           <mri:type>
             <mri:MD_KeywordTypeCode codeList="https://standards.iso.org/iso/19115/resources/Codelists/cat/codelists.xml#MD_KeywordTypeCode" codeListValue="project">project</mri:MD_KeywordTypeCode>
           </mri:type>
         </mri:MD_Keywords>
       </mri:descriptiveKeywords>
       {% endif %}
-      
+
       {% if record['metadata'].get('use_constraints',{}).get('licence')%}
         {% set licence = record['metadata']['use_constraints']['licence'] %}
       {% else %}
@@ -547,20 +556,18 @@
         <mco:MD_LegalConstraints>
           <mco:reference>
             <cit:CI_Citation>
-              <cit:title>
-                <gco:CharacterString>{{ licence['title'] }}</gco:CharacterString>
-              </cit:title>
+                {{- bl.bilingual('cit:title', 'title', licence) }}
               <cit:identifier>
                 <mcc:MD_Identifier>
                   <mcc:code>
-                    <gco:CharacterString>{{ licence['code'] }}</gco:CharacterString>
+                    <gco:CharacterString>{{- licence['code'] -}}</gco:CharacterString>
                   </mcc:code>
                 </mcc:MD_Identifier>
               </cit:identifier>
               <cit:onlineResource>
                 <cit:CI_OnlineResource>
                   <cit:linkage>
-                    <gco:CharacterString>{{ licence['url']|e }}</gco:CharacterString>
+                    <gco:CharacterString>{{- licence['url']|e -}}</gco:CharacterString>
                   </cit:linkage>
                   <cit:protocol>
                     <gco:CharacterString>WWW:LINK</gco:CharacterString>
@@ -579,12 +586,42 @@
         {# MD_Constraints: CIOOS core mandatory #}
         <mco:MD_Constraints>
           {# useLimitation: CIOOS core mandatory #}
-           {{ bl.bilingual('mco:useLimitation', 'limitations', record['metadata']['use_constraints']) }}
+           {{- bl.bilingual('mco:useLimitation', 'limitations', record['metadata']['use_constraints']) -}}
         </mco:MD_Constraints>
       </mri:resourceConstraints>
       {% endif %}
 
-      {{ bl.bilingual('mri:supplementalInformation', 'comment', record['metadata']) }}
+      {% for associated_resources in record['identification']['associated_resources'] %}
+      <mri:associatedResource>
+				<mri:MD_AssociatedResource>
+					<mri:name>
+						<cit:CI_Citation>
+							{{- bl.bilingual('cit:title','title', associated_resources) -}}
+              <cit:identifier>
+                <mcc:MD_Identifier>
+                  <mcc:authority>
+                    <cit:CI_Citation>
+                      {{- bl.bilingual('cit:title', 'authority',associated_resources) -}}
+                    </cit:CI_Citation>
+                  </mcc:authority>
+                  <mcc:code>
+                    <gco:CharacterString>{{- associated_resources['code'] -}}</gco:CharacterString>
+                  </mcc:code>
+                </mcc:MD_Identifier>
+              </cit:identifier>
+						</cit:CI_Citation>
+					</mri:name>
+					<mri:associationType>
+						<mri:DS_AssociationTypeCode codeList="https://standards.iso.org/iso/19115/resources/Codelists/cat/codelists.xml#DS_AssociationTypeCode" codeListValue="{{- associated_resources['association_type'] -}}"></mri:DS_AssociationTypeCode>
+					</mri:associationType>
+					<mri:initiativeType>
+						<mri:DS_InitiativeTypeCode codeList="https://standards.iso.org/iso/19115/resources/Codelists/cat/codelists.xml#DS_InitiativeTypeCode" codeListValue="{{- associated_resources['initiative_type']  -}}"></mri:DS_InitiativeTypeCode>
+					</mri:initiativeType>
+				</mri:MD_AssociatedResource>
+			</mri:associatedResource>
+      {% endfor %}
+
+      {{- bl.bilingual('mri:supplementalInformation', 'comment', record['metadata']) -}}
     </mri:MD_DataIdentification>
   </mdb:identificationInfo>
 
@@ -597,7 +634,7 @@
       <mrd:distributor>
         <mrd:MD_Distributor>
           <mrd:distributorContact>
-        {{ contact.get_contact(c, 'distributor') }}
+        {{- contact.get_contact(c, 'distributor') -}}
             </mrd:distributorContact>
         </mrd:MD_Distributor>
       </mrd:distributor>
@@ -606,51 +643,29 @@
 
 
       {% for distribution in record['distribution'] %}
-      
-      {% if '/erddap' in distribution['url']%}
-      <mrd:transferOptions>
-        <mrd:MD_DigitalTransferOptions>
-          <mrd:onLine>
-            <cit:CI_OnlineResource>
-              <cit:linkage>
-                <gco:CharacterString>{{ distribution['url']|e }}</gco:CharacterString>
-              </cit:linkage>
-              <cit:protocol>
-                <gco:CharacterString>WWW:LINK</gco:CharacterString>
-              </cit:protocol>
-              <cit:name>
-                <gco:CharacterString>ERDDAP Data Subset Form</gco:CharacterString>
-              </cit:name>
-              {# TODO add french for this? #}
-              <cit:description>
-                <gco:CharacterString>ERDDAP's version of the OPeNDAP .html web page for this dataset. Specify a subset of the dataset and download the data via OPeNDAP or in many different file types.</gco:CharacterString>
-              </cit:description>
-            </cit:CI_OnlineResource>
-          </mrd:onLine>
-        </mrd:MD_DigitalTransferOptions>
-      </mrd:transferOptions>
 
-      {% else %}
-      
       <mrd:transferOptions>
         <mrd:MD_DigitalTransferOptions>
           <mrd:onLine>
             <cit:CI_OnlineResource>
               <cit:linkage>
-                <gco:CharacterString>{{ distribution.url|e }}</gco:CharacterString>
+                <gco:CharacterString>{{- distribution.url|e -}}</gco:CharacterString>
               </cit:linkage>
               <cit:protocol>
                 <gco:CharacterString>WWW:LINK</gco:CharacterString>
               </cit:protocol>
-              <cit:name>
-                <gco:CharacterString>{{ distribution.name }}</gco:CharacterString>
-              </cit:name>
-              {{ bl.bilingual('cit:description','description',distribution) }}
+                {% if '/erddap' in distribution['url'] and not distribution.name %}
+                <cit:name>
+                  <gco:CharacterString>ERDDAP</gco:CharacterString>
+                </cit:name>
+                {% else %}
+                {{- bl.bilingual('cit:name','name',distribution) -}}
+                {% endif %}
+              {{- bl.bilingual('cit:description','description',distribution) -}}
             </cit:CI_OnlineResource>
           </mrd:onLine>
         </mrd:MD_DigitalTransferOptions>
       </mrd:transferOptions>
-      {% endif %}
     {% endfor %}
 
 
@@ -660,7 +675,7 @@
   {% if record['metadata']['history'] %}
   <mdb:resourceLineage>
     <mrl:LI_Lineage>
-      {{ bl.bilingual('mrl:statement', 'history', record['metadata']) }}
+      {{- bl.bilingual('mrl:statement', 'history', record['metadata']) -}}
         {# scope: CIOOS core mandatory #}
       <mrl:scope>
         <mcc:MD_Scope>
@@ -706,7 +721,7 @@
               <mcc:authority>
                 <cit:CI_Citation>
                   {# validation says cit:CI_Citation requires title #}
-                  {{ bl.bilingual('cit:title', 'name', platform_obj) }}
+                  {{- bl.bilingual('cit:title', 'name', platform_obj) -}}
                   {% if platform_obj['role'] and platform_obj['authority'] %}
                   {# citedResponsibleParty: mandatory #}
                   <cit:citedResponsibleParty>
@@ -721,7 +736,7 @@
                       <cit:party>
                         <cit:CI_Organisation>
                           {# name: mandatory #}
-                          {{ bl.bilingual('cit:name', 'authority', platform_obj) }}
+                          {{- bl.bilingual('cit:name', 'authority', platform_obj) -}}
                             {# CIOOS core mandatory element #}
                             {# MI_Metadata/acquisitionInformation/MI_AcquisitionInformation/platform/MI_Platform/identifier/MD_Identifier/authority/CI_Citation/citedResponsibleParty/CI_Responsibility/party/CI_Party/name/CharacterString #}
                         </cit:CI_Organisation>
@@ -735,21 +750,36 @@
               <mcc:code>
                 {# CIOOS core mandatory element #}
                 {# MI_Metadata/acquisitionInformation/MI_AcquisitionInformation/platform/MI_Platform/identifier/MD_Identifier/code/CharacterString #}
-                <gco:CharacterString>{{ platform_obj['id'] }}</gco:CharacterString>
+                <gco:CharacterString>{{- platform_obj['id'] -}}</gco:CharacterString>
               </mcc:code>
             </mcc:MD_Identifier>
           </mac:identifier>
           {# description: mandatory #}
             {# CIOOS core mandatory element #}
             {# MI_Metadata/acquisitionInformation/MI_AcquisitionInformation/platform/MI_Platform/description/CharacterString #}
-          {{ bl.bilingual('mac:description', 'description', platform_obj) }}
+          {{- bl.bilingual('mac:description', 'description', platform_obj) -}}
 
           {% for instrument in platform_obj['instruments'] %}
             {# instrument: Recommended, if platform not used then this should be under mac:MI_AcquisitionInformation #}
-          
-          {{ instr.get_instrument(instrument) }}
+
+          {{- instr.get_instrument(instrument) -}}
 
           {% endfor %}
+
+          {% if record['platform']['type'] %}
+
+          {# cant have 'otherProperty' without 'instrument'. This adds dummy instrument #}
+          {% if instrument not in record['platform']['instruments']%}
+          <mac:instrument/>
+          {% endif %}
+
+          <mac:otherProperty xlink:href="http://vocab.nerc.ac.uk/collection/L06/current/" xlink:title="SeaVoX Platform Categories">
+            <gco:Record>
+                <gco:CharacterString>{{- record['platform']['type'] -}}</gco:CharacterString>
+            </gco:Record>
+          </mac:otherProperty>
+          {% endif %}
+
         </mac:MI_Platform>
       </mac:platform>
     </mac:MI_AcquisitionInformation>
@@ -769,9 +799,9 @@
             </mcc:level>
           </mcc:MD_Scope>
       </mac:scope>
-      
+
       {% for instrument in record['instruments'] %}
-          {{ instr.get_instrument(instrument) }}
+          {{- instr.get_instrument(instrument) -}}
       {% endfor %}
 
       </mac:MI_AcquisitionInformation>
