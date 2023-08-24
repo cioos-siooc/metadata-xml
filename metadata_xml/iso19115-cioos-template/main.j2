@@ -675,16 +675,68 @@
   {% if record['metadata']['history'] %}
   <mdb:resourceLineage>
     <mrl:LI_Lineage>
-      {{- bl.bilingual('mrl:statement', 'history', record['metadata']) -}}
+      {{- bl.bilingual('mrl:statement', 'statement', record['metadata']['history']) -}}
         {# scope: CIOOS core mandatory #}
       <mrl:scope>
         <mcc:MD_Scope>
           {# level: mandatory #}
           <mcc:level>
-            <mcc:MD_ScopeCode codeList="http://standards.iso.org/iso/19115/resources/Codelists/cat/codelists.xml#MD_ScopeCode" codeListValue="dataset" />
+            <mcc:MD_ScopeCode codeList="http://standards.iso.org/iso/19115/resources/Codelists/cat/codelists.xml#MD_ScopeCode" codeListValue="{{- record['metadata']['history']['scope'] or 'dataset' -}}" />
           </mcc:level>
         </mcc:MD_Scope>
       </mrl:scope>
+      {% for additional_documentation in record['metadata']['history']['additionalDocumentation'] %}
+      <mrl:additionalDocumentation>
+        <cit:CI_Citation>
+          {{- bl.bilingual('cit:title','title', additional_documentation) -}}
+          {% if additional_documentation['authority'] %}
+          <cit:identifier>
+            <mcc:MD_Identifier>
+              <mcc:authority>
+                <cit:CI_Citation>
+                  {{- bl.bilingual('cit:title', 'authority',additional_documentation) -}}
+                </cit:CI_Citation>
+              </mcc:authority>
+              <mcc:code>
+                <gco:CharacterString>{{- additional_documentation['code'] -}}</gco:CharacterString>
+              </mcc:code>
+            </mcc:MD_Identifier>
+          </cit:identifier>
+          {% endif %}
+        </cit:CI_Citation>
+      </mrl:additionalDocumentation>
+      {% endfor %}
+
+      {% for source in record['metadata']['history']['source'] %}
+      <mrl:source>
+        <mrl:LI_Source id="lineageSource">
+          {{- bl.bilingual('mrl:description','description', source) -}}
+          {% if source['title'] %}
+          <mrl:sourceCitation>
+            <cit:CI_Citation>
+              {{- bl.bilingual('cit:title','title', source) -}}
+              <cit:date gco:nilReason="missing"/>
+              {% if source['authority'] %}
+              <cit:identifier>
+                <mcc:MD_Identifier>
+                  <mcc:authority>
+                    <cit:CI_Citation>
+                      {{- bl.bilingual('cit:title', 'authority',source) -}}
+                    </cit:CI_Citation>
+                  </mcc:authority>
+                  <mcc:code>
+                    <gco:CharacterString>{{- source['code'] -}}</gco:CharacterString>
+                  </mcc:code>
+                </mcc:MD_Identifier>
+              </cit:identifier>
+              {% endif %}
+            </cit:CI_Citation>
+          </mrl:sourceCitation>
+          {% endif %}
+        </mrl:LI_Source>
+      </mrl:source>
+      {% endfor %}
+
     </mrl:LI_Lineage>
   </mdb:resourceLineage>
   {% endif %}
