@@ -11,6 +11,7 @@ metadata:
   naming_authority: ca.cioos
   identifier: 3f342f64-9348-11df-ba6a-0014c2c00eab
   language: en
+  language_alternate: fr
   maintenance_note: maintenance_note
   use_constraints:
     limitations: limitations
@@ -35,6 +36,9 @@ spatial:
   vertical: [0, 10]
   vertical_positive: down
 identification:
+  language: en
+  language_alternate: fr
+
   title:
     en: title in english
     fr: title in french
