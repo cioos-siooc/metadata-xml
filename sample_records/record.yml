@@ -24,8 +24,26 @@ metadata:
     fr: comment in french
 
   history:
-    en: history in english
-    fr: history in french
+    - statement:
+        en: history in english
+        fr: history in french
+      scope: model
+      additionalDocumentation:
+        - title:
+            en: title in english
+            fr: title in french
+          authority: citation authority
+          code: citation code
+      source:
+        - description:
+            en: description in english
+            fr: description in french
+          title:
+            en: title in english
+            fr: title in french
+          authority: citation authority for source
+          code: citation code for source
+
   dates:
     creation: 2011-11-11
   scope: model

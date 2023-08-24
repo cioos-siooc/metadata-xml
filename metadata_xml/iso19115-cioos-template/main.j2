@@ -672,20 +672,20 @@
     </mrd:MD_Distribution>
   </mdb:distributionInfo>
   {% endif %}
-  {% if record['metadata']['history'] %}
+  {% for history in record['metadata']['history'] %}
   <mdb:resourceLineage>
     <mrl:LI_Lineage>
-      {{- bl.bilingual('mrl:statement', 'statement', record['metadata']['history']) -}}
+      {{- bl.bilingual('mrl:statement', 'statement', history) -}}
         {# scope: CIOOS core mandatory #}
       <mrl:scope>
         <mcc:MD_Scope>
           {# level: mandatory #}
           <mcc:level>
-            <mcc:MD_ScopeCode codeList="http://standards.iso.org/iso/19115/resources/Codelists/cat/codelists.xml#MD_ScopeCode" codeListValue="{{- record['metadata']['history']['scope'] or 'dataset' -}}" />
+            <mcc:MD_ScopeCode codeList="http://standards.iso.org/iso/19115/resources/Codelists/cat/codelists.xml#MD_ScopeCode" codeListValue="{{- history['scope'] or 'dataset' -}}" />
           </mcc:level>
         </mcc:MD_Scope>
       </mrl:scope>
-      {% for additional_documentation in record['metadata']['history']['additionalDocumentation'] %}
+      {% for additional_documentation in history['additionalDocumentation'] %}
       <mrl:additionalDocumentation>
         <cit:CI_Citation>
           {{- bl.bilingual('cit:title','title', additional_documentation) -}}
@@ -694,7 +694,9 @@
             <mcc:MD_Identifier>
               <mcc:authority>
                 <cit:CI_Citation>
-                  {{- bl.bilingual('cit:title', 'authority',additional_documentation) -}}
+                  <cit:title>
+                    <gco:CharacterString>{{- additional_documentation['authority'] -}}</gco:CharacterString>
+                  </cit:title>
                 </cit:CI_Citation>
               </mcc:authority>
               <mcc:code>
@@ -707,7 +709,7 @@
       </mrl:additionalDocumentation>
       {% endfor %}
 
-      {% for source in record['metadata']['history']['source'] %}
+      {% for source in history['source'] %}
       <mrl:source>
         <mrl:LI_Source id="lineageSource">
           {{- bl.bilingual('mrl:description','description', source) -}}
@@ -721,7 +723,9 @@
                 <mcc:MD_Identifier>
                   <mcc:authority>
                     <cit:CI_Citation>
-                      {{- bl.bilingual('cit:title', 'authority',source) -}}
+                      <cit:title>
+                        <gco:CharacterString>{{- source['authority'] -}}</gco:CharacterString>
+                      </cit:title>
                     </cit:CI_Citation>
                   </mcc:authority>
                   <mcc:code>
@@ -739,7 +743,7 @@
 
     </mrl:LI_Lineage>
   </mdb:resourceLineage>
-  {% endif %}
+  {% endfor %}
 
     {# metadataMaintenance: CIOOS core mandatory #}
     {# refers to the maintenance of the metadata #}
