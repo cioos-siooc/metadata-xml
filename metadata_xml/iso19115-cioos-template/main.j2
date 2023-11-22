@@ -1,20 +1,14 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no" ?>
 
 {% set lang = record['metadata']['language'] %}
-{% set lang_alt = record['metadata']['language_alternate'] %}
 {% set language_codes = {"en":"eng",
                          "fr":"fra",
                         }
 %}
 {% set lang_code = language_codes[lang] %}
-
-{% set lang_alt_code = language_codes[lang_alt] %}
 {% set languages_used = list_all_languages_in_record(record) %}
-
-{% set resource_lang = record['identification']['language'] %}
-{% set resource_lang_alt = record['identification']['language_alternate'] %}
-{% set resource_lang_code = language_codes[resource_lang] %}
-{% set resource_lang_alt_code = language_codes[resource_lang_alt] %}
+{% set resource_lang_code = language_codes[record['identification']['language']] %}
+{% set resource_lang_alt_code = language_codes[record['identification']['language_alternate']] %}
 
 {% import 'bilingual.j2' as bl with context %}
 {% import 'contact.j2' as contact with context %}
