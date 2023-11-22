@@ -620,7 +620,7 @@
 			</mri:associatedResource>
       {% endfor %}
 
-      {% if record['identification']['language'] %}
+      {% if record['identification']['language'] and resource_lang_code %}
         {# defaultLocale: mandatory #}
         <mri:defaultLocale>
           <lan:PT_Locale>
@@ -647,7 +647,7 @@
           </lan:PT_Locale>
         </mri:defaultLocale>
         {% endif %}
-        {% if record['identification']['language_alternate']%}
+        {% if record['identification']['language_alternate'] and resource_lang_alt_code %}
           <mri:otherLocale>
             <lan:PT_Locale>
               {# language: mandatory #}
