@@ -1,4 +1,4 @@
-{% macro bilingual(element,key,record_section) -%}
+{% macro bilingual(element,key,record_section, translationKey) -%}
 {% set value = record_section[key] %}
 
 {% if (value is not mapping) or (value.items()|length==1 and lang in value)  %}
@@ -19,7 +19,11 @@
           <lan:PT_FreeText>
           {% for secondary_lang,val in value.items() %}
           {% if secondary_lang != lang %}
+          {% if translationKey %}
+            <lan:textGroup xlink:href="https://cioos.ca/translation_method" xlink:role="translation" xlink:title="{{record_section[translationKey]}}">
+          {% else %}
             <lan:textGroup>
+          {% endif %}
               <lan:LocalisedCharacterString locale="#{{secondary_lang}}">{{- val|e -}}</lan:LocalisedCharacterString>
             </lan:textGroup>
           {% endif %}
