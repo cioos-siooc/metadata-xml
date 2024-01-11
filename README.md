@@ -33,7 +33,7 @@ To convert a Yaml file to XML, run:
 
 eg:
 
-`python -m metadata_xml -f sample_records/record.yaml`
+`python -m metadata_xml -f sample_records/record.yml`
 
 ## Importing into other Python projects
 
