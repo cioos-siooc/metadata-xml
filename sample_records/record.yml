@@ -13,7 +13,13 @@ metadata:
   language: en
   maintenance_note: maintenance_note
   use_constraints:
-    limitations: limitations
+    limitations:
+      en: limitations in english
+      fr: limitations in french
+      translations:
+        fr: 
+          validated: false
+          message: Auto-translated using AWS
     licence:
       title: Creative Commons Attribution 4.0
       code: CC-BY-4.0
@@ -40,11 +46,19 @@ identification:
   title:
     en: title in english
     fr: title in french
+    translations:
+      fr: 
+        validated: false
+        message: Auto-translated using AWS
   identifier: http://dx.doi.org/10.1093/ajae/aaq063
 
   abstract:
     en: abstract in english
     fr: abstract in french
+    translations:
+        fr: 
+          validated: false
+          message: Auto-translated using AWS
   associated_resources:
     - title:
         en: associated resource title in english
@@ -125,7 +139,13 @@ platform:
   name: platform_name
   authority: platform_authority
   id: platform id
-  description: platform_description
+  description:
+    en: platformDescription in English
+    fr: platformDescription in French
+    translations:
+        fr: 
+          validated: true
+          message: Auto-translated using AWS
   instruments:
     - id: 123
       manufacturer: manufacturer en 1
