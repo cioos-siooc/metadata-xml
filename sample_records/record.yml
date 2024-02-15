@@ -32,6 +32,8 @@ metadata:
 spatial:
   bbox: [-141, 42, -52, 84]
   polygon: polygon_data
+  description: description of the spatial extent or study area of the dataset
+  descriptionIdentifier: A2345-FS323-DG434-345DG
   vertical: [0, 10]
   vertical_positive: down
 identification:

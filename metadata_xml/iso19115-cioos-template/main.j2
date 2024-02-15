@@ -359,6 +359,36 @@
         </gex:EX_Extent>
       </mri:extent>
       {% endif %}
+
+      {% if record['spatial']['description'] %}
+      <mri:extent>
+        <gex:EX_Extent>
+          <gex:geographicElement>
+            {# EX_GeopgraphicDescription: CIOOS core mandatory for biological datasets #}
+            <gex:EX_GeopgraphicDescription>
+              <gex:extentTypeCode>1</gex:extentTypeCode>
+              <gex:geographicIdentifier>
+                <mcc:MD_Identifier>
+                  <mcc:code>
+                    <gco:CharacterString>{{- record['spatial']['descriptionIdentifier'] -}}</gco:CharacterString>
+                  </mcc:code>
+                  <mcc:codeSpace>
+                    <gco:CharacterString>ca.cioos</gco:CharacterString>
+                  </mcc:codeSpace>
+                  <mcc:version>
+                    <gco:CharacterString>1</gco:CharacterString>
+                  </mcc:version>
+                  <mcc:description>
+                    <gco:CharacterString>{{- record['spatial']['description']-}}</gco:CharacterString>
+                  </mcc:description>
+                </mcc:MD_Identifier>
+              </gex:geographicIdentifier>
+            </gex:EX_GeopgraphicDescription>
+          </gex:geographicElement>
+        </gex:EX_Extent>
+      </mri:extent>
+      {% endif %}
+
       {% if record['spatial']['vertical'] %}
       <mri:extent>
         <gex:EX_Extent>
