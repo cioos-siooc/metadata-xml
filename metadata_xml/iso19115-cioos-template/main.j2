@@ -228,7 +228,7 @@
       <mri:citation>
         <cit:CI_Citation>
           {# title: mandatory #}
-          {{- bl.bilingual('cit:title','title', record['identification'], 'titleTranslationMethod') -}}
+          {{- bl.bilingual('cit:title','title', record['identification']) -}}
 
           {# date pubished/revised isnt required #}
           {% if 'dates' in record['identification'] %}
@@ -283,7 +283,7 @@
       {# abstract: mandatory #}
         {# CIOOS core mandatory element #}
         {# MI_Metadata/identificationInfo/MD_DataIdentification/abstract/CharacterString #}
-      {{- bl.bilingual('mri:abstract', 'abstract', record['identification'], 'abstractTranslationMethod') -}}
+      {{- bl.bilingual('mri:abstract', 'abstract', record['identification']) -}}
       {{- bl.bilingual('mri:credit', 'acknowledgement', record['identification']) -}}
       <mri:status>
         <mcc:MD_ProgressCode codeList="http://standards.iso.org/iso/19115/resources/Codelists/cat/codelists.xml#MD_ProgressCode" codeListValue="{{- record['identification']['progress_code'] or 'onGoing' -}}">
@@ -586,7 +586,7 @@
         {# MD_Constraints: CIOOS core mandatory #}
         <mco:MD_Constraints>
           {# useLimitation: CIOOS core mandatory #}
-           {{- bl.bilingual('mco:useLimitation', 'limitations', record['metadata']['use_constraints'], 'limitationsTranslationMethod') -}}
+           {{- bl.bilingual('mco:useLimitation', 'limitations', record['metadata']['use_constraints']) -}}
         </mco:MD_Constraints>
       </mri:resourceConstraints>
       {% endif %}
@@ -757,7 +757,7 @@
           {# description: mandatory #}
             {# CIOOS core mandatory element #}
             {# MI_Metadata/acquisitionInformation/MI_AcquisitionInformation/platform/MI_Platform/description/CharacterString #}
-          {{- bl.bilingual('mac:description', 'description', record['platform'], 'platformDescriptionTranslationMethod') -}}
+          {{- bl.bilingual('mac:description', 'description', record['platform']) -}}
 
           {% for instrument in record['platform']['instruments'] %}
             {# instrument: Recommended, if platform not used then this should be under mac:MI_AcquisitionInformation #}
