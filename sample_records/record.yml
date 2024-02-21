@@ -82,6 +82,7 @@ metadata:
 
   dates:
     creation: 2011-11-11
+  scope: model
 
 spatial:
   bbox: [-141, 42, -52, 84]
