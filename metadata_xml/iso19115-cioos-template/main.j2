@@ -706,18 +706,108 @@
   {% endif %}
   {% if record['metadata']['history'] %}
   <mdb:resourceLineage>
+    {% for lineageStep in record['metadata']['history'] %}
     <mrl:LI_Lineage>
-      {{- bl.bilingual('mrl:statement', 'history', record['metadata']) -}}
+      {{- bl.bilingual('mrl:statement', 'statement', lineageStep) -}}
         {# scope: CIOOS core mandatory #}
       <mrl:scope>
         <mcc:MD_Scope>
           {# level: mandatory #}
           <mcc:level>
-            <mcc:MD_ScopeCode codeList="http://standards.iso.org/iso/19115/resources/Codelists/cat/codelists.xml#MD_ScopeCode" codeListValue="dataset" />
+            <mcc:MD_ScopeCode codeList="http://standards.iso.org/iso/19115/resources/Codelists/cat/codelists.xml#MD_ScopeCode" codeListValue="{{lineageStep.scope}}" />
           </mcc:level>
         </mcc:MD_Scope>
       </mrl:scope>
+      {% for doc in lineageStep.additionalDocumentation %}
+      <mrl:additionalDocumentation>
+        <cit:CI_Citation>
+            {{- bl.bilingual('cit:title', 'title', doc) }}
+          <cit:identifier>
+            <mcc:MD_Identifier>
+              <mcc:code>
+                <gco:CharacterString>{{- doc['code'] -}}</gco:CharacterString>
+              </mcc:code>
+            </mcc:MD_Identifier>
+          </cit:identifier>
+          {% if is_url(doc['code']) %}
+          <cit:onlineResource>
+            <cit:CI_OnlineResource>
+              <cit:linkage>
+                <gco:CharacterString>{{- doc['code']|e -}}</gco:CharacterString>
+              </cit:linkage>
+              <cit:protocol>
+                <gco:CharacterString>WWW:LINK</gco:CharacterString>
+              </cit:protocol>
+            </cit:CI_OnlineResource>
+          </cit:onlineResource>
+          {% endif %}
+        </cit:CI_Citation>
+      </mrl:additionalDocumentation>
+      {% endfor %}
+      {% for source in lineageStep.source%}
+      <mrl:source>
+        <mrl:LI_Source>
+          {{- bl.bilingual('mrl:description', 'description', source) }}
+          <mrl:sourceCitation>
+            <cit:CI_Citation>
+                {{- bl.bilingual('cit:title', 'title', source) }}
+              <cit:identifier>
+                <mcc:MD_Identifier>
+                  <mcc:code>
+                    <gco:CharacterString>{{- source['code'] -}}</gco:CharacterString>
+                  </mcc:code>
+                </mcc:MD_Identifier>
+              </cit:identifier>
+              {% if is_url(source['code']) %}
+              <cit:onlineResource>
+                <cit:CI_OnlineResource>
+                  <cit:linkage>
+                    <gco:CharacterString>{{- source['code']|e -}}</gco:CharacterString>
+                  </cit:linkage>
+                  <cit:protocol>
+                    <gco:CharacterString>WWW:LINK</gco:CharacterString>
+                  </cit:protocol>
+                </cit:CI_OnlineResource>
+              </cit:onlineResource>
+              {% endif %}
+            </cit:CI_Citation>
+          </mrl:sourceCitation> 
+        </mrl:LI_Source>
+      </mrl:source>
+      {% endfor %}
+      {% for step in lineageStep.processingStep%}
+      <mrl:processStep>
+        <mrl:LI_ProcessStep>
+          {{- bl.bilingual('mrl:description', 'description', step) }}
+          <mrl:reference>
+            <cit:CI_Citation>
+                {{- bl.bilingual('cit:title', 'title', step) }}
+              <cit:identifier>
+                <mcc:MD_Identifier>
+                  <mcc:code>
+                    <gco:CharacterString>{{- step['code'] -}}</gco:CharacterString>
+                  </mcc:code>
+                </mcc:MD_Identifier>
+              </cit:identifier>
+              {% if is_url(step['code']) %}
+              <cit:onlineResource>
+                <cit:CI_OnlineResource>
+                  <cit:linkage>
+                    <gco:CharacterString>{{- step['code']|e -}}</gco:CharacterString>
+                  </cit:linkage>
+                  <cit:protocol>
+                    <gco:CharacterString>WWW:LINK</gco:CharacterString>
+                  </cit:protocol>
+                </cit:CI_OnlineResource>
+              </cit:onlineResource>
+              {% endif %}
+            </cit:CI_Citation>
+          </mrl:reference>
+        </mrl:LI_ProcessStep>
+      </mrl:processStep>
+      {% endfor %}
     </mrl:LI_Lineage>
+    {% endfor %}
   </mdb:resourceLineage>
   {% endif %}
 

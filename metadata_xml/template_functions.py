@@ -12,9 +12,12 @@ import pathlib
 from datetime import date
 from jinja2 import Environment, FileSystemLoader
 from yattag import indent
+import validators
 
 SCHEMA_FOLDER_NAME = "iso19115-cioos-template"
 
+def is_url(val):
+    return val and validators.url(val)
 
 def list_or_value_to_list(val):
     """turns a list or a single value into a list"""
@@ -83,6 +86,7 @@ def metadata_to_xml(record):
     template_env.globals.update(
         list_all_languages_in_record=list_all_languages_in_record,
         list_or_value_to_list=list_or_value_to_list,
+        is_url=is_url,
     )
     template_env.filters["normalize_datestring"] = normalize_datestring
     template = template_env.get_template("main.j2")
