@@ -644,11 +644,13 @@
 						</cit:CI_Citation>
 					</mri:name>
 					<mri:associationType>
-						<mri:DS_AssociationTypeCode codeList="https://standards.iso.org/iso/19115/resources/Codelists/cat/codelists.xml#DS_AssociationTypeCode" codeListValue="{{- associated_resources['association_type'] -}}"></mri:DS_AssociationTypeCode>
+						<mri:DS_AssociationTypeCode codeList="https://standards.iso.org/iso/19115/resources/Codelists/cat/codelists.xml#DS_AssociationTypeCode" codeListValue="{{- associated_resources['association_type_iso'] -}}"></mri:DS_AssociationTypeCode>
 					</mri:associationType>
+          {% if 'initiative_type' in associated_resources %}
 					<mri:initiativeType>
 						<mri:DS_InitiativeTypeCode codeList="https://standards.iso.org/iso/19115/resources/Codelists/cat/codelists.xml#DS_InitiativeTypeCode" codeListValue="{{- associated_resources['initiative_type']  -}}"></mri:DS_InitiativeTypeCode>
 					</mri:initiativeType>
+          {% endif %}
 				</mri:MD_AssociatedResource>
 			</mri:associatedResource>
       {% endfor %}
