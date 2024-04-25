@@ -706,7 +706,7 @@
     </mrd:MD_Distribution>
   </mdb:distributionInfo>
   {% endif %}
-  {% if record['metadata']['history'] %}
+  {% for history in record['metadata']['history'] %}
   <mdb:resourceLineage>
     {% for lineageStep in record['metadata']['history'] %}
     <mrl:LI_Lineage>
@@ -811,7 +811,7 @@
     </mrl:LI_Lineage>
     {% endfor %}
   </mdb:resourceLineage>
-  {% endif %}
+  {% endfor %}
 
     {# metadataMaintenance: CIOOS core mandatory #}
     {# refers to the maintenance of the metadata #}

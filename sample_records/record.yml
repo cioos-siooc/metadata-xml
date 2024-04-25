@@ -38,7 +38,7 @@ metadata:
             verified: false
             message: text translated using the Amazon translate service / texte traduit à l'aide du service de traduction Amazon
       scope: model
-      additionalDocumentation": 
+      additionalDocumentation:
         - title:
             en: English Title
             fr: French Title
@@ -46,6 +46,7 @@ metadata:
               fr:
                 verified: false
                 message: text translated using the Amazon translate service / texte traduit à l'aide du service de traduction Amazon
+          authority: citation authority
           code: https://doi.org/10.0000/123456
       source: 
         - description: 
@@ -62,6 +63,7 @@ metadata:
               fr:
                 verified: false
                 message: text translated using the Amazon translate service / texte traduit à l'aide du service de traduction Amazon
+          authority: citation authority for source
           code: https://doi.org/10.0000/123456
       processingStep:
         - description: 
