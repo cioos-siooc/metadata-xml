@@ -65,7 +65,8 @@ identification:
         fr: associated resource title in french
       authority: ca.cioos
       code: 26443ab2-964f-4031-a53b-f132434573e8
-      association_type: crossReference
+      association_type: Cites
+      association_type_iso: crossReference
       initiative_type: study
   topic_category: elevation
   dates:
