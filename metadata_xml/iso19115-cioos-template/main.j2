@@ -99,7 +99,7 @@
     <mdb:MD_MetadataScope>
       {# resourceScope: mandatory #}
       <mdb:resourceScope>
-        <mcc:MD_ScopeCode codeList="http://standards.iso.org/iso/19115/resources/Codelists/cat/codelists.xml#MD_ScopeCode" codeListValue="dataset" />
+        <mcc:MD_ScopeCode codeList="http://standards.iso.org/iso/19115/resources/Codelists/cat/codelists.xml#MD_ScopeCode" codeListValue="{{- record['metadata']['scope'] or 'dataset' -}}" />
         {# CIOOS core mandatory element #}
           {# MI_Metadata/metadataScope/MD_MetadataScope/resourceScope/MD_ScopeCode #}
       </mdb:resourceScope>
@@ -706,22 +706,78 @@
     </mrd:MD_Distribution>
   </mdb:distributionInfo>
   {% endif %}
-  {% if record['metadata']['history'] %}
+  {% for history in record['metadata']['history'] %}
   <mdb:resourceLineage>
     <mrl:LI_Lineage>
-      {{- bl.bilingual('mrl:statement', 'history', record['metadata']) -}}
+      {{- bl.bilingual('mrl:statement', 'statement', history) -}}
         {# scope: CIOOS core mandatory #}
       <mrl:scope>
         <mcc:MD_Scope>
           {# level: mandatory #}
           <mcc:level>
-            <mcc:MD_ScopeCode codeList="http://standards.iso.org/iso/19115/resources/Codelists/cat/codelists.xml#MD_ScopeCode" codeListValue="dataset" />
+            <mcc:MD_ScopeCode codeList="http://standards.iso.org/iso/19115/resources/Codelists/cat/codelists.xml#MD_ScopeCode" codeListValue="{{- history['scope'] or 'dataset' -}}" />
           </mcc:level>
         </mcc:MD_Scope>
       </mrl:scope>
+      {% for additional_documentation in history['additionalDocumentation'] %}
+      <mrl:additionalDocumentation>
+        <cit:CI_Citation>
+          {{- bl.bilingual('cit:title','title', additional_documentation) -}}
+          {% if additional_documentation['authority'] %}
+          <cit:identifier>
+            <mcc:MD_Identifier>
+              <mcc:authority>
+                <cit:CI_Citation>
+                  <cit:title>
+                    <gco:CharacterString>{{- additional_documentation['authority'] -}}</gco:CharacterString>
+                  </cit:title>
+                </cit:CI_Citation>
+              </mcc:authority>
+              <mcc:code>
+                <gco:CharacterString>{{- additional_documentation['code'] -}}</gco:CharacterString>
+              </mcc:code>
+            </mcc:MD_Identifier>
+          </cit:identifier>
+          {% endif %}
+        </cit:CI_Citation>
+      </mrl:additionalDocumentation>
+      {% endfor %}
+
+      {% for source in history['source'] %}
+      <mrl:source>
+        <mrl:LI_Source id="lineageSource">
+          {{- bl.bilingual('mrl:description','description', source) -}}
+          {% if source['title'] %}
+          <mrl:sourceCitation>
+            <cit:CI_Citation>
+              {{- bl.bilingual('cit:title','title', source) -}}
+              <cit:date gco:nilReason="missing"/>
+              {% if source['authority'] %}
+              <cit:identifier>
+                <mcc:MD_Identifier>
+                  <mcc:authority>
+                    <cit:CI_Citation>
+                      <cit:title>
+                        <gco:CharacterString>{{- source['authority'] -}}</gco:CharacterString>
+                      </cit:title>
+                    </cit:CI_Citation>
+                  </mcc:authority>
+                  <mcc:code>
+                    <gco:CharacterString>{{- source['code'] -}}</gco:CharacterString>
+                  </mcc:code>
+                </mcc:MD_Identifier>
+              </cit:identifier>
+              {% endif %}
+            </cit:CI_Citation>
+          </mrl:sourceCitation>
+          {% endif %}
+        </mrl:LI_Source>
+      </mrl:source>
+      {% endfor %}
+
     </mrl:LI_Lineage>
   </mdb:resourceLineage>
-  {% endif %}
+  {% endfor %}
 
     {# metadataMaintenance: CIOOS core mandatory #}
     {# refers to the maintenance of the metadata #}
