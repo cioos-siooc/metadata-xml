@@ -31,24 +31,56 @@ metadata:
 
   history:
     - statement:
-        en: history in english
-        fr: history in french
+        en: English statement
+        fr: French statement
+        translations:
+          fr:
+            verified: false
+            message: text translated using the Amazon translate service / texte traduit à l'aide du service de traduction Amazon
       scope: model
       additionalDocumentation:
         - title:
-            en: title in english
-            fr: title in french
+            en: English Title
+            fr: French Title
+            translations:
+              fr:
+                verified: false
+                message: text translated using the Amazon translate service / texte traduit à l'aide du service de traduction Amazon
           authority: citation authority
-          code: citation code
-      source:
-        - description:
-            en: description in english
-            fr: description in french
+          code: https://doi.org/10.0000/123456
+      source: 
+        - description: 
+            en: English Description
+            fr: French Description
+            translations:
+              fr:
+                verified: false
+                message: text translated using the Amazon translate service / texte traduit à l'aide du service de traduction Amazon
           title:
-            en: title in english
-            fr: title in french
+            en: English Title
+            fr: French Title
+            translations:
+              fr:
+                verified: false
+                message: text translated using the Amazon translate service / texte traduit à l'aide du service de traduction Amazon
           authority: citation authority for source
-          code: citation code for source
+          code: https://doi.org/10.0000/123456
+      processingStep:
+        - description: 
+            en: English Description
+            fr: French Description
+            translations:
+              fr:
+                verified: false
+                message: text translated using the Amazon translate service / texte traduit à l'aide du service de traduction Amazon
+          title:
+            en: English Title
+            fr: French Title
+            translations:
+              fr:
+                verified: false
+                message: text translated using the Amazon translate service / texte traduit à l'aide du service de traduction Amazon
+          code: https://doi.org/10.0000/123456
 
   dates:
     creation: 2011-11-11
@@ -100,6 +132,9 @@ identification:
     eov:
       en: [oxygen]
       fr: [oxygène]
+    taxa:
+      en: [Animalia, Arthropoda, Insecta, Hymenoptera, Apidae, Apis, Apis mellifera]
+      fr: [Animalia, Arthropoda, Insecta, Hymenoptera, Apidae, Apis, Apis mellifera]
   temporal_begin: 1950-07-31
   temporal_end: now
   temporal_duration: P1D

@@ -14,7 +14,8 @@ setup(name='metadata_xml',
       install_requires=['markupsafe == 2.0.1',
                         'Jinja2 == 2.10.3',
                         'PyYAML == 5.1.2',
-                        'yattag == 1.14.0'
+                        'yattag == 1.14.0',
+                        'validators == 0.20.0'
                         ]
 
       )
