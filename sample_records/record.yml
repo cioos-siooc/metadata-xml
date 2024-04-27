@@ -190,27 +190,27 @@ distribution:
       fr: resource description in French
 
 platform:
-  type: drifting subsurface profiling float
-  name: platform_name
-  authority: platform_authority
-  id: platform id
-  description:
-    en: platformDescription in English
-    fr: platformDescription in French
-    translations:
-        fr: 
-          validated: true
-          message: Auto-translated using AWS
-  instruments:
-    - id: 123
-      manufacturer: manufacturer en 1
-      version: A1.53
-      type:
-        en: type en 1
-        fr: type fr 1
-      description:
-        en: instrument description en 1
-        fr: instrument description fr 1
+  - type: drifting subsurface profiling float
+    name: platform_name
+    authority: platform_authority
+    id: platform id
+    description:
+      en: platformDescription in English
+      fr: platformDescription in French
+      translations:
+          fr: 
+            validated: true
+            message: Auto-translated using AWS
+    instruments:
+      - id: 123
+        manufacturer: manufacturer en 1
+        version: A1.53
+        type:
+          en: type en 1
+          fr: type fr 1
+        description:
+          en: instrument description en 1
+          fr: instrument description fr 1
 instruments:
   - id: id not in platform
     manufacturer: manufacturer  not in platform
