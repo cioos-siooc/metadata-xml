@@ -675,9 +675,7 @@
       {% endif %}
       {% endfor %}
 
-
       {% for distribution in record['distribution'] %}
-
       <mrd:transferOptions>
         <mrd:MD_DigitalTransferOptions>
           <mrd:onLine>
@@ -701,14 +699,12 @@
         </mrd:MD_DigitalTransferOptions>
       </mrd:transferOptions>
     {% endfor %}
-
-
     </mrd:MD_Distribution>
   </mdb:distributionInfo>
   {% endif %}
-  {% for history in record['metadata']['history'] %}
+
+  {% for lineageStep in record['metadata']['history'] %}
   <mdb:resourceLineage>
-    {% for lineageStep in record['metadata']['history'] %}
     <mrl:LI_Lineage>
       {{- bl.bilingual('mrl:statement', 'statement', lineageStep) -}}
         {# scope: CIOOS core mandatory #}
@@ -809,7 +805,6 @@
       </mrl:processStep>
       {% endfor %}
     </mrl:LI_Lineage>
-    {% endfor %}
   </mdb:resourceLineage>
   {% endfor %}
 
