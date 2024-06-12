@@ -411,19 +411,19 @@
                     <mcc:MD_Identifier>
                       {# code: mandatory #}
                       <mcc:code>
-                        <gco:CharacterString>{% record['spatial']['vertical_epsg']['Code'] %}</gco:CharacterString>
+                        <gco:CharacterString>{{ record['spatial']['vertical_epsg']['Code'] }}</gco:CharacterString>
                       </mcc:code>
                       {# codeSpace: Optional #}
                       <mcc:codeSpace>
-                        <gco:CharacterString>{% record['spatial']['vertical_epsg']['DataSource'] %}</gco:CharacterString>
+                        <gco:CharacterString>{{ record['spatial']['vertical_epsg']['DataSource'] }}</gco:CharacterString>
                       </mcc:codeSpace>
                       {# version: Recommended #}
                       <mcc:version>
-                        <gco:CharacterString>{% record['spatial']['vertical_epsg']['RevisionDate'] %}</gco:CharacterString>
+                        <gco:CharacterString>{{ record['spatial']['vertical_epsg']['RevisionDate'] }}</gco:CharacterString>
                       </mcc:version>
                       {# description: Optional #}
                       <mcc:description>
-                        <gco:CharacterString>{% record['spatial']['vertical_epsg']['Name'] %} - {% record['spatial']['vertical_epsg']['Remarks'] %}</gco:CharacterString>
+                        <gco:CharacterString>{{ record['spatial']['vertical_epsg']['Name'] }} - {{ record['spatial']['vertical_epsg']['Remarks'] }}</gco:CharacterString>
                       </mcc:description>
                     </mcc:MD_Identifier>
                     {% elif record['spatial']['vertical_positive'] == "up" %}
