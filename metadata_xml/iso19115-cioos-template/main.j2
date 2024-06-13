@@ -426,7 +426,7 @@
                         <gco:CharacterString>{{ record['spatial']['vertical_epsg']['Name'] }} - {{ record['spatial']['vertical_epsg']['Remarks'] }}</gco:CharacterString>
                       </mcc:description>
                     </mcc:MD_Identifier>
-                    {% elif record['spatial']['vertical_positive'] == "up" %}
+                    {% elif record['spatial']['vertical_positive'] == "heightPositive" %}
                     <mcc:MD_Identifier>
                       {# code: mandatory #}
                       <mcc:code>
