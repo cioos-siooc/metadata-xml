@@ -12,7 +12,7 @@ setup(name='metadata_xml',
       include_package_data=True,
 
       install_requires=['markupsafe >= 2.1.1',
-                        'Jinja2 == 2.10.3',
+                        'Jinja2 >= 3.1.2',
                         'PyYAML >= 6.0.1',
                         'yattag == 1.14.0',
                         'validators == 0.20.0'
