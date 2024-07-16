@@ -11,7 +11,7 @@ setup(name='metadata_xml',
       package_data={'metadata_xml': ['iso19115-cioos-template/*.j2']},
       include_package_data=True,
 
-      install_requires=['markupsafe == 2.0.1',
+      install_requires=['markupsafe >= 2.1.1',
                         'Jinja2 == 2.10.3',
                         'PyYAML >= 6.0.1',
                         'yattag == 1.14.0',
