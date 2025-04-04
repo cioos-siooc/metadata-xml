@@ -2,7 +2,7 @@
 mkdir -p tmp
 cd tmp
 echo "Downloading YAML files..."
-wget -qr -np -nd https://pac-dev1.cioos.org/dev/metadata/ --accept "*.yaml"
+wget -qr -np -nd https://waf.forms.cioos.ca/metadata/ --accept "*.yaml"
 
 # 2) Create an XML for each yaml record
 echo "Converting to XML..."

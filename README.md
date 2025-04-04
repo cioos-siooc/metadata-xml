@@ -11,29 +11,28 @@ It can be used as a command line tool, or imported into other Python code.
 
 ## Installation
 
-1. Setup and activate a new Python 3 environment
+Install via pip with:
+
+```
+pip install https://github.com/cioos-siooc/metadata-xml.git
+```
+
+## Development Installation
+
+1. Install the environment and package manager uv: https://docs.astral.sh/uv/getting-started/installation/
 2. From this directory, run:
 
-   `pip install .`
-
-3. To upgrade this package if you have already installed it, use:
-
-   `pip install . --upgrade`
-
-   - or If you are developing this package, to avoid reinstalling each time,
-     use:
-
-     `pip install -e .`
+   `uv sync --dev`
 
 ## Command line usage
 
 To convert a Yaml file to XML, run:
 
-`python -m metadata_xml -f <yaml_file_path> -o <optional_destination_folder>`
+`uv run python -m metadata_xml -f <yaml_file_path> -o <optional_destination_folder>`
 
 eg:
 
-`python -m metadata_xml -f sample_records/record.yml`
+`uv run python -m metadata_xml -f sample_records/record.yml`
 
 ## Importing into other Python projects
 
@@ -84,4 +83,8 @@ dissolvedOrganicCarbon, fishAbundanceAndDistribution, hardCoralCoverAndCompositi
 
 ## Running tests
 
-`sh run_docker_tests.sh`
+You need first to unzip the file `cioos-schema.zip` which contains all the necessary schemas within the base directory.
+
+Then run:
+
+`uv run pytest .`
