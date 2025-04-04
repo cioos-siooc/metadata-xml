@@ -69,7 +69,7 @@ def list_all_languages_in_record(record):
     two_character_keys = list(
         filter(lambda x: (len(x) == 2) and (x != "id"), keys_in_record)
     )
-    return two_character_keys
+    return sorted(two_character_keys)
 
 
 def metadata_to_xml(record):
