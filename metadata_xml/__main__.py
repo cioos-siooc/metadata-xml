@@ -40,12 +40,21 @@ def main():
         + "Defaults to the source file's directory.",
         required=False,
     )
+    parser.add_argument(
+        "--encoding",
+        type=str,
+        dest="encoding",
+        help="Enter the encoding of the yaml file.",
+        required=False,
+        default="utf-8",
+    )
 
     args = parser.parse_args()
     filename = args.yaml_file
     output_folder = args.output_folder
+    encoding = args.encoding
 
-    with open(args.yaml_file) as stream:
+    with open(args.yaml_file, encoding=encoding) as stream:
         record = yaml.safe_load(stream)
 
     basename = os.path.basename(filename)
