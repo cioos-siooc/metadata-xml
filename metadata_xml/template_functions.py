@@ -7,17 +7,21 @@ Defines custom functions used by the Jinja template
 Also defines metadata_to_xml()
 
 """
+
 import os
 import pathlib
 from datetime import date
+
+import validators
 from jinja2 import Environment, FileSystemLoader
 from yattag import indent
-import validators
 
 SCHEMA_FOLDER_NAME = "iso19115-cioos-template"
 
+
 def is_url(val):
     return val and validators.url(val)
+
 
 def list_or_value_to_list(val):
     """turns a list or a single value into a list"""
