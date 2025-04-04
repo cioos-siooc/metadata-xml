@@ -1,0 +1,221 @@
+# Most text fields can be either bilingual or not, eg either is valid:
+#
+#   comment: just in the main language
+#
+#   comment:
+#      en: in english
+#      fr: in french
+#
+
+metadata:
+  naming_authority: ca.cioos
+  identifier: 3f342f64-9348-11df-ba6a-0014c2c00eab
+  language: en
+  maintenance_note: maintenance_note
+  use_constraints:
+    limitations:
+      en: limitations in english
+      fr: limitations in french
+      translations:
+        fr: 
+          validated: false
+          message: Auto-translated using AWS
+    licence:
+      title: Creative Commons Attribution 4.0
+      code: CC-BY-4.0
+      url: https://creativecommons.org/licenses/by/4.0/
+
+  comment:
+    en: comment in english
+    fr: comment in french
+
+  history:
+    - statement:
+        en: English statement
+        fr: French statement
+        translations:
+          fr:
+            verified: false
+            message: text translated using the Amazon translate service / texte traduit à l'aide du service de traduction Amazon
+      scope: model
+      additionalDocumentation:
+        - title:
+            en: English Title
+            fr: French Title
+            translations:
+              fr:
+                verified: false
+                message: text translated using the Amazon translate service / texte traduit à l'aide du service de traduction Amazon
+          authority: citation authority
+          code: https://doi.org/10.0000/123456
+      source: 
+        - description: 
+            en: English Description
+            fr: French Description
+            translations:
+              fr:
+                verified: false
+                message: text translated using the Amazon translate service / texte traduit à l'aide du service de traduction Amazon
+          title:
+            en: English Title
+            fr: French Title
+            translations:
+              fr:
+                verified: false
+                message: text translated using the Amazon translate service / texte traduit à l'aide du service de traduction Amazon
+          authority: citation authority for source
+          code: https://doi.org/10.0000/123456
+      processingStep:
+        - description: 
+            en: English Description
+            fr: French Description
+            translations:
+              fr:
+                verified: false
+                message: text translated using the Amazon translate service / texte traduit à l'aide du service de traduction Amazon
+          title:
+            en: English Title
+            fr: French Title
+            translations:
+              fr:
+                verified: false
+                message: text translated using the Amazon translate service / texte traduit à l'aide du service de traduction Amazon
+          code: https://doi.org/10.0000/123456
+
+  dates:
+    creation: 2011-11-11
+  scope: model
+
+spatial:
+  bbox: [-141, 42, -52, 84]
+  polygon: polygon_data
+  description: description of the spatial extent or study area of the dataset
+  descriptionIdentifier: A2345-FS323-DG434-345DG
+  vertical: [0, 10]
+  vertical_positive: down
+identification:
+  title:
+    en: title in english
+    fr: title in french
+    translations:
+      fr: 
+        validated: false
+        message: Auto-translated using AWS
+  identifier: http://dx.doi.org/10.1093/ajae/aaq063
+
+  abstract:
+    en: abstract in english
+    fr: abstract in french
+    translations:
+        fr: 
+          validated: false
+          message: Auto-translated using AWS
+  associated_resources:
+    - title:
+        en: associated resource title in english
+        fr: associated resource title in french
+      authority: ca.cioos
+      code: 26443ab2-964f-4031-a53b-f132434573e8
+      association_type: Cites
+      association_type_iso: crossReference
+      initiative_type: study
+  topic_category: elevation
+  dates:
+    publication: 2000-09-01T00:00:00Z
+    revision: 2000-09-01T00:00:00Z
+  edition: 15
+
+  keywords:
+    default:
+      en: [kw1 in English, kw2 in English, kw3 in English]
+      fr: [kw1 in French, kw2 in French, kw3 in French]
+    eov:
+      en: [oxygen]
+      fr: [oxygène]
+    taxa:
+      en: [Animalia, Arthropoda, Insecta, Hymenoptera, Apidae, Apis, Apis mellifera]
+      fr: [Animalia, Arthropoda, Insecta, Hymenoptera, Apidae, Apis, Apis mellifera]
+  temporal_begin: 1950-07-31
+  temporal_end: now
+  temporal_duration: P1D
+  time_coverage_resolution: P1D
+  acknowledgement: acknowledgement
+  status: onGoing
+  project: []
+contact:
+  - roles:
+      - custodian
+    organization:
+      name: Environment Canada
+      url: https://www.ec.gc.ca/
+      address: 4905 Dufferin Street
+      city: Toronto
+      country: Canada
+      email: foo@bar.ca
+      ror: https://ror.org/026ny0e17
+    individual:
+      name: Shiela Jones
+      position: Scientist
+      email: foo@bar.ca
+      orcid: https://orcid.org/0000-0002-1825-0097
+    inCitation: true
+
+  - roles:
+      - author
+    individual:
+      name: X Y
+      position: Scientist
+      email: foo2@bar.ca
+      country: Canada
+    inCitation: true
+  - roles:
+      - distributor
+    organization:
+      name: Bill's Pubishing
+      address: 123 Main Street
+      city: Winnipeg
+      country: Canada
+      email: foo@bar.ca
+
+distribution:
+  - url: https://catalogue.hakai.org/erddap/tabledap/HakaiCTDKC10.html
+  - url: https://dd.meteo.gc.ca/bla.pdf
+    name:
+      en: resource name in English
+      fr: resource name in French
+    description:
+      en: resource description in English
+      fr: resource description in French
+
+platform:
+  - type: drifting subsurface profiling float
+    name: platform_name
+    authority: platform_authority
+    id: platform id
+    description:
+      en: platformDescription in English
+      fr: platformDescription in French
+      translations:
+          fr: 
+            validated: true
+            message: Auto-translated using AWS
+    instruments:
+      - id: 123
+        manufacturer: manufacturer en 1
+        version: A1.53
+        type:
+          en: type en 1
+          fr: type fr 1
+        description:
+          en: instrument description en 1
+          fr: instrument description fr 1
+instruments:
+  - id: id not in platform
+    manufacturer: manufacturer  not in platform
+    version: version not in platform
+    type:
+      en: type en not in platform
+      fr: type fr not in platform
+    description:
+      en: instrument description not in platform
+      fr: instrument description not in platform

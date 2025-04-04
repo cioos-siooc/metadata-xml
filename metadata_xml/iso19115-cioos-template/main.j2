@@ -551,13 +551,12 @@
 
       {# for each keyword theme #}
       {% for key, value in record['identification']['keywords'].items() %}
+      {% set keywords_xml = bl.bilingual_keyword_list(value) %}
+      {% if keywords_xml|trim|length>0 %}
       <mri:descriptiveKeywords>
 
         <mri:MD_Keywords>
-          {% set keywords_xml = bl.bilingual_keyword_list(value) %}
           {{- keywords_xml -}}
-
-          {% if keywords_xml|trim|length>0 %}
           <mri:thesaurusName>
             <cit:CI_Citation>
               {# validation requires title #}
@@ -578,9 +577,9 @@
               {% endif %}
             </cit:CI_Citation>
           </mri:thesaurusName>
-          {% endif %}
         </mri:MD_Keywords>
       </mri:descriptiveKeywords>
+      {% endif %}
       {% endfor %}
 
       {% if record['identification']['project'] %}
