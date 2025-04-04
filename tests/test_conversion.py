@@ -8,11 +8,15 @@ from lxml import etree
 SAMPLE_RECORDS_DIR = Path(__file__).parent / ".." / "sample_records"
 SAMPLE_RECORDS = SAMPLE_RECORDS_DIR.glob("*.yml")
 
-MBD_SCHEMA = Path(__file__).parent / "../xsd/schemas.isotc211.org/19115/-3/mdb/2.0/mdb.xsd"
-    
+CIOOS_SCHEMA = Path(__file__).parent / "../cioos-schema/schema/schemas.isotc211.org/19115/-3/mdb/2.0/mdb.xsd"
+
+def test_schema_exist():
+    """Test that the schema file exists."""
+    assert CIOOS_SCHEMA.exists(), f"Schema file does not exist: {CIOOS_SCHEMA}, unzip the cioos-schema.zip file in the base directory"
+
 
 @pytest.mark.parametrize("record_file", SAMPLE_RECORDS)
-def test_sample_records(record_file, tmp_path):
+def test_sample_records(record_file):
     """Test that sample records can be converted to XML."""
     with open(record_file) as stream:
         record = yaml.safe_load(stream)
@@ -28,6 +32,6 @@ def test_sample_records(record_file, tmp_path):
     assert xml_doc is not None, "XML document is None"
     assert isinstance(xml_doc, etree._Element), "XML document is not an Element"
 
-
-    schema = etree.XMLSchema(file=MBD_SCHEMA)
+    # Validate against cioos-schema
+    schema = etree.XMLSchema(file=CIOOS_SCHEMA)
     schema.assertValid(xml_doc)
