@@ -18,7 +18,7 @@ jobs:
         run: unzip -o cioos-schema.zip
       - name: Install dependencies
         run: uv sync --dev
-      - run: ruff format
-      - run: ruff check
+      - run: uv run ruff format
+      - run: uv run ruff check
       - name: Test generating and validating a record
         run: uv run pytest .
