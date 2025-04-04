@@ -15,7 +15,7 @@ jobs:
         with:
           version: "0.6.12"
       - name: Unzip CIOOS Schema
-        run: unzip -o cioos-schema.zip -d
+        run: unzip -o cioos-schema.zip
       - name: Install dependencies
         run: uv sync --dev
       - run: ruff format
