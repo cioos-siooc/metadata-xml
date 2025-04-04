@@ -3,7 +3,7 @@ name = "metadata-xml"
 version = "0.2.0"
 description = "Python module for converting ACDD style metadata into the CIOOS ISO profile"
 readme = "README.md"
-requires-python = ">=3.10"
+requires-python = ">=3.9"
 dependencies = [
     "jinja2>=3.1.2",
     "markupsafe>=2.1.1",
@@ -23,6 +23,9 @@ dev-dependencies = [
 [build-system]
 requires = ["setuptools"]
 build-backend = "setuptools.build_meta"
+
+[tool.setuptools]
+packages = ["metadata_xml"]
 
 [tool.uv.sources]
 xsd-download = { git = "https://github.com/cioos-siooc/XML-Schema-Downloader.git" }
