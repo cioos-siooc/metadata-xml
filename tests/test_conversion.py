@@ -25,7 +25,7 @@ def test_schema_exist():
 @pytest.mark.parametrize("record_file", SAMPLE_RECORDS)
 def test_sample_records(record_file):
     """Test that sample records can be converted to XML."""
-    with open(record_file) as stream:
+    with open(record_file, encoding="UTF-8") as stream:
         record = yaml.safe_load(stream)
 
     xml_string = metadata_to_xml(record)
@@ -51,7 +51,7 @@ external_sample_files = list(Path("metadata").glob("**/*.yaml"))
 @pytest.mark.parametrize("record", external_sample_files)
 def test_external_records(record):
     """Test that external records can be converted to XML."""
-    with open(record) as stream:
+    with open(record, encoding="UTF-8") as stream:
         record = yaml.safe_load(stream)
 
     xml_string = metadata_to_xml(record)
