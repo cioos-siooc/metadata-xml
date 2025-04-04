@@ -27,7 +27,7 @@ build-backend = "setuptools.build_meta"
 packages = ["metadata_xml"]
 
 [tool.setuptools.package-data]
-myModule = ["metadata_xml/iso19115-cioos-template/*.j2"]
+metadata_xml = ["metadata_xml/iso19115-cioos-template/*.j2"]
 
 [tool.ruff]
 lint.extend-select = ["I"]
