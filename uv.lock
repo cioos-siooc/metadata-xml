@@ -2,24 +2,6 @@ version = 1
 requires-python = ">=3.9"
 
 [[package]]
-name = "certifi"
-version = "2024.7.4"
-source = { registry = "https://pypi.org/simple" }
-sdist = { url = "https://files.pythonhosted.org/packages/c2/02/a95f2b11e207f68bc64d7aae9666fed2e2b3f307748d5123dffb72a1bbea/certifi-2024.7.4.tar.gz", hash = "sha256:5a1e7645bc0ec61a09e26c36f6106dd4cf40c6db3a1fb6352b0244e7fb057c7b", size = 164065 }
-wheels = [
-    { url = "https://files.pythonhosted.org/packages/1c/d5/c84e1a17bf61d4df64ca866a1c9a913874b4e9bdc131ec689a0ad013fb36/certifi-2024.7.4-py3-none-any.whl", hash = "sha256:c198e21b1289c2ab85ee4e67bb4b4ef3ead0892059901a8d5b622f24a1101e90", size = 162960 },
-]
-
-[[package]]
-name = "click"
-version = "7.0"
-source = { registry = "https://pypi.org/simple" }
-sdist = { url = "https://files.pythonhosted.org/packages/f8/5c/f60e9d8a1e77005f664b76ff8aeaee5bc05d0a91798afd7f53fc998dbc47/Click-7.0.tar.gz", hash = "sha256:5b94b49521f6456670fdb30cd82a4eca9412788a93fa6dd6df72c94d5a8ff2d7", size = 286192 }
-wheels = [
-    { url = "https://files.pythonhosted.org/packages/fa/37/45185cb5abbc30d7257104c434fe0b07e5a195a6847506c074527aa599ec/Click-7.0-py2.py3-none-any.whl", hash = "sha256:2335065e6395b9e67ca716de5f7526736bfa6ceead690adf616d925bdc622b13", size = 81299 },
-]
-
-[[package]]
 name = "colorama"
 version = "0.4.6"
 source = { registry = "https://pypi.org/simple" }
@@ -249,7 +231,6 @@ dependencies = [
     { name = "markupsafe" },
     { name = "pyyaml" },
     { name = "validators" },
-    { name = "xsd-download" },
     { name = "yattag" },
 ]
 
@@ -266,7 +247,6 @@ requires-dist = [
     { name = "markupsafe", specifier = ">=2.1.1" },
     { name = "pyyaml", specifier = ">=6.0.1" },
     { name = "validators", specifier = "==0.20.0" },
-    { name = "xsd-download", git = "https://github.com/cioos-siooc/XML-Schema-Downloader.git" },
     { name = "yattag", specifier = "==1.14.0" },
 ]
 
@@ -437,15 +417,6 @@ dependencies = [
     { name = "decorator" },
 ]
 sdist = { url = "https://files.pythonhosted.org/packages/95/14/ed0af6865d378cfc3c504aed0d278a890cbefb2f1934bf2dbe92ecf9d6b1/validators-0.20.0.tar.gz", hash = "sha256:24148ce4e64100a2d5e267233e23e7afeb55316b47d30faae7eb6e7292bc226a", size = 30665 }
-
-[[package]]
-name = "xsd-download"
-version = "0.1"
-source = { git = "https://github.com/cioos-siooc/XML-Schema-Downloader.git#674dd34498f0cb0efbd1fbebb4e882644976b69e" }
-dependencies = [
-    { name = "certifi" },
-    { name = "click" },
-]
 
 [[package]]
 name = "yattag"
