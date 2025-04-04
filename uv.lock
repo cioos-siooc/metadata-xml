@@ -301,6 +301,7 @@ dev = [
 requires-dist = [
     { name = "jinja2", specifier = ">=3.1.2" },
     { name = "markupsafe", specifier = ">=2.1.1" },
+    { name = "metadata-xml", virtual = "." },
     { name = "pyyaml", specifier = ">=6.0.1" },
     { name = "validators", specifier = "==0.20.0" },
     { name = "xsd-download", git = "https://github.com/cioos-siooc/XML-Schema-Downloader.git" },
