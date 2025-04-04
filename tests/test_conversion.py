@@ -35,3 +35,24 @@ def test_sample_records(record_file):
     # Validate against cioos-schema
     schema = etree.XMLSchema(file=CIOOS_SCHEMA)
     schema.assertValid(xml_doc)
+
+external_sample_files = list(Path("metadata").glob("**/*.yaml"))
+
+
+@pytest.mark.skipif(not external_sample_files, reason="No external sample files found")
+@pytest.mark.parametrize("record", external_sample_files)
+def test_external_records(record):
+    """Test that external records can be converted to XML."""
+    with open(record) as stream:
+        record = yaml.safe_load(stream)
+
+    xml_string = metadata_to_xml(record)
+    assert xml_string.strip(), "XML string is empty"
+
+    xml_doc = etree.XML(xml_string.encode("utf-8"))
+    assert xml_doc is not None, "XML document is None"
+    assert isinstance(xml_doc, etree._Element), "XML document is not an Element"
+
+    # Validate against cioos-schema
+    schema = etree.XMLSchema(file=CIOOS_SCHEMA)
+    schema.assertValid(xml_doc)

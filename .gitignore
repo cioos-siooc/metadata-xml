@@ -11,4 +11,4 @@ notforrepo
 *.xml
 cioos-schema
 build
-xsd
+metadata
