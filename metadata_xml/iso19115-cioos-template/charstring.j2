@@ -2,22 +2,23 @@
    but you can specify the element's namespace, and alternate language code
 #}
 {% macro get_freetext(element, language_alternate, myvars) -%}
-{% if language_alternate is none or myvars[1] is none %}
-      {% if myvars[0]|trim != "None" %}
-      <{{ element }}>
-        <gco:CharacterString>{{ myvars[0]|trim|e }}</gco:CharacterString>
-      </{{ element }}>
-      {% endif %}
-{% else %}
-      {% if myvars[0]|trim != "None" %}
+{% set primary = (myvars[0] | default('')) %}
+{% set alt = (myvars[1] | default('')) %}
+{% set has_primary = (primary|string)|trim and (primary|string)|trim != 'None' %}
+{% set has_alt = (language_alternate is not none) and (alt is not none) and (alt|string)|trim and (alt|string)|trim != 'None' %}
+
+{% if has_alt and has_primary %}
       <{{ element }} xsi:type="lan:PT_FreeText_PropertyType">
-        <gco:CharacterString>{{ myvars[0]|trim|e }}</gco:CharacterString>
+        <gco:CharacterString>{{ primary|trim|e }}</gco:CharacterString>
           <lan:PT_FreeText>
             <lan:textGroup>
-              <lan:LocalisedCharacterString locale="#{{language_alternate}}">{{ myvars[1]|trim|e }}</lan:LocalisedCharacterString>
+              <lan:LocalisedCharacterString locale="#{{language_alternate}}">{{ alt|trim|e }}</lan:LocalisedCharacterString>
             </lan:textGroup>
           </lan:PT_FreeText>
       </{{ element }}>
-    {% endif %}
+{% elif has_primary %}
+    <{{ element }}>
+      <gco:CharacterString>{{ primary|trim|e }}</gco:CharacterString>
+    </{{ element }}>
 {% endif %}
 {% endmacro %}

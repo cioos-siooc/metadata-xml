@@ -16,10 +16,20 @@
       {% if value[lang]|trim != "None" %}
         <gco:CharacterString>{{- value[lang]|e -}}</gco:CharacterString>
     {% endif %}
+        {# Only include PT_FreeText if at least one non-empty secondary translation exists #}
+        {% set translations = value.get("translations", {})%}
+        {% set ns = namespace(has_secondary=false) %}
+        {% for secondary_lang,val in value.items() %}
+        {% if secondary_lang != lang and secondary_lang != 'translations' and (val|string)|trim and (val|string)|trim !=
+        'None' %}
+        {% set ns.has_secondary = true %}
+        {% endif %}
+        {% endfor %}
+
+        {% if ns.has_secondary %}
           <lan:PT_FreeText>
-          {% set translations = value.get("translations", {})%}
-          {% for secondary_lang,val in value.items() %}
-          {% if secondary_lang != lang and secondary_lang != 'translations'%}
+          {% for secondary_lang,val in value.items()%}
+          {% if secondary_lang != lang and secondary_lang != 'translations' and (val|string)|trim and (val|string)|trim != 'None' %}
           {% set translationMessage = translations.get(secondary_lang,{}).get("message")%}
           {% if translationMessage %}
             <lan:textGroup xlink:href="https://cioos.ca/translation_method" xlink:role="translation" xlink:title="{{translationMessage}}">
@@ -31,6 +41,7 @@
           {% endif %}
           {% endfor %}
           </lan:PT_FreeText>
+      {% endif %}
       </{{ element }}>
 {% endif %}
 {% endmacro %}
