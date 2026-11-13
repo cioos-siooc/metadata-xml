@@ -64,3 +64,25 @@ def test_external_records(record):
     # Validate against cioos-schema
     schema = etree.XMLSchema(file=CIOOS_SCHEMA)
     schema.assertValid(xml_doc)
+
+
+def test_identical_translated_keywords_not_duplicated():
+    """Keywords identical across languages (e.g. taxa) are only listed once (#116)."""
+    record = yaml.safe_load((SAMPLE_RECORDS_DIR / "record.yml").read_text())
+    taxa = ["Animalia", "Apis mellifera"]
+    record["identification"]["keywords"] = {
+        "taxa": {"en": taxa, "fr": taxa},
+        "eov": {"en": ["oxygen"], "fr": ["oxygène"]},
+    }
+
+    xml_doc = etree.XML(metadata_to_xml(record).encode("utf-8"))
+    keyword_texts = [
+        "".join(kw.itertext()).strip()
+        for kw in xml_doc.iter("{*}keyword")
+    ]
+
+    for name in taxa:
+        assert keyword_texts.count(name) == 1
+    # Real translations are still included
+    assert "oxygen" in keyword_texts
+    assert "oxygène" in keyword_texts

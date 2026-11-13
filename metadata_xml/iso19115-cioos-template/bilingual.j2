@@ -68,7 +68,8 @@
           
         {% for secondary_lang,list_of_keywords in section_items.items() %}
           {% if secondary_lang !=  lang %}
-            {% for keyword in list_of_keywords %}
+            {# Skip keywords identical to a default-language keyword (e.g. taxa names) to avoid duplicates #}
+            {% for keyword in list_of_keywords if keyword not in default_lang_list %}
                 <mri:keyword xsi:type="lan:PT_FreeText_PropertyType">
                   <lan:PT_FreeText>
                     <lan:textGroup>
