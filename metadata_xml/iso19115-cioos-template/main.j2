@@ -1,15 +1,14 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no" ?>
 
 {% set lang = record['metadata']['language'] %}
-{% set lang_alt = record['metadata']['language_alternate'] %}
 {% set language_codes = {"en":"eng",
                          "fr":"fra",
                         }
 %}
 {% set lang_code = language_codes[lang] %}
-
-{% set lang_alt_code = language_codes[lang_alt] %}
 {% set languages_used = list_all_languages_in_record(record) %}
+{% set resource_lang_code = language_codes[record['identification']['language']] %}
+{% set resource_lang_alt_code = language_codes[record['identification']['language_alternate']] %}
 
 {% import 'bilingual.j2' as bl with context %}
 {% import 'contact.j2' as contact with context %}
@@ -672,6 +671,59 @@
 				</mri:MD_AssociatedResource>
 			</mri:associatedResource>
       {% endfor %}
+
+      {% if record['identification']['language'] and resource_lang_code %}
+        {# defaultLocale: mandatory #}
+        <mri:defaultLocale>
+          <lan:PT_Locale>
+            {# language: mandatory #}
+            <lan:language>
+              <lan:LanguageCode codeList="http://standards.iso.org/iso/19115/resources/Codelist/lan/LanguageCode.xml" codeListValue="{{- resource_lang_code  -}}">
+                {# CIOOS core mandatory element #}
+                {# MI_Metadata/defaultLocale/PT_Locale/language/LanguageCode (ISO639-2) #}
+              </lan:LanguageCode>
+            </lan:language>
+            {# country: mandatory #}
+            <lan:country>
+              <lan:CountryCode codeList="http://standards.iso.org/iso/19115/resources/Codelists/cat/codelists.xml" codeListValue="CAN">
+                {# CIOOS core mandatory element #}
+                {# MI_Metadata/defaultLocale/PT_Locale/country/CountryCode (ISO3166-1) #}
+              </lan:CountryCode>
+            </lan:country>
+            {# characterEncoding: mandatory #}
+            <lan:characterEncoding>
+              <lan:MD_CharacterSetCode codeList="http://standards.iso.org/iso/19115/resources/Codelist/lan/CharacterSetCode.xml" codeListValue="utf8" />
+              {# CIOOS core mandatory element #}
+                {# MI_Metadata/defaultLocale/PT_Locale/characterEncoding/MD_CharacterSetCode (UTF-8) #}
+            </lan:characterEncoding>
+          </lan:PT_Locale>
+        </mri:defaultLocale>
+        {% endif %}
+        {% if record['identification']['language_alternate'] and resource_lang_alt_code %}
+          <mri:otherLocale>
+            <lan:PT_Locale>
+              {# language: mandatory #}
+              <lan:language>
+                <lan:LanguageCode codeList="http://standards.iso.org/iso/19115/resources/Codelist/lan/LanguageCode.xml" codeListValue="{{- resource_lang_alt_code -}}">
+                  {# CIOOS core mandatory element #}
+                  {# MI_Metadata/otherLocale/PT_Locale/language/LanguageCode (ISO639-2) #}
+                </lan:LanguageCode>
+              </lan:language>
+              {# country: mandatory #}
+              <lan:country>
+                <lan:CountryCode codeList="http://standards.iso.org/iso/19115/resources/Codelists/cat/codelists.xml" codeListValue="CAN">
+                  {# CIOOS core mandatory element #}
+                  {# MI_Metadata/otherLocale/PT_Locale/country/CountryCode (ISO3166-1) #}
+                </lan:CountryCode>
+              </lan:country>
+              <lan:characterEncoding>
+                <lan:MD_CharacterSetCode codeList="http://standards.iso.org/iso/19115/resources/Codelist/lan/CharacterSetCode.xml" codeListValue="utf8" />
+                {# CIOOS core mandatory element #}
+                {# MI_Metadata/otherLocale/PT_Locale/characterEncoding/MD_CharacterSetCode (UTF-8) #}
+              </lan:characterEncoding>
+            </lan:PT_Locale>
+          </mri:otherLocale>
+          {% endif %}
 
       {{- bl.bilingual('mri:supplementalInformation', 'comment', record['metadata']) -}}
     </mri:MD_DataIdentification>
