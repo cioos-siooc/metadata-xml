@@ -86,3 +86,39 @@ def test_identical_translated_keywords_not_duplicated():
     # Real translations are still included
     assert "oxygen" in keyword_texts
     assert "oxygène" in keyword_texts
+
+
+def _resource_locales(xml_doc):
+    """Language codes of the resource (dataset) default and other locales."""
+    ns = {
+        "mri": "http://standards.iso.org/iso/19115/-3/mri/1.0",
+        "lan": "http://standards.iso.org/iso/19115/-3/lan/1.0",
+    }
+    path = "//mri:MD_DataIdentification/mri:{}/lan:PT_Locale/lan:language/lan:LanguageCode/@codeListValue"
+    return (
+        xml_doc.xpath(path.format("defaultLocale"), namespaces=ns),
+        xml_doc.xpath(path.format("otherLocale"), namespaces=ns),
+    )
+
+
+def test_resource_locale_defaults_to_metadata_language():
+    """Resource language falls back to the metadata language (#108)."""
+    record = yaml.safe_load((SAMPLE_RECORDS_DIR / "record.yml").read_text())
+    record["identification"].pop("language", None)
+    record["identification"].pop("language_alternate", None)
+
+    xml_doc = etree.XML(metadata_to_xml(record).encode("utf-8"))
+
+    assert _resource_locales(xml_doc) == (["eng"], [])
+
+
+def test_resource_locale_from_identification():
+    """Explicit resource languages are used when given (#108)."""
+    record = yaml.safe_load((SAMPLE_RECORDS_DIR / "record.yml").read_text())
+    record["identification"]["language"] = "fr"
+    record["identification"]["language_alternate"] = "en"
+
+    xml_doc = etree.XML(metadata_to_xml(record).encode("utf-8"))
+
+    assert _resource_locales(xml_doc) == (["fra"], ["eng"])
+    etree.XMLSchema(file=CIOOS_SCHEMA).assertValid(xml_doc)

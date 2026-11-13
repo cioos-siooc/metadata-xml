@@ -1,0 +1,20 @@
+{# PT_Locale wrapped in `element` (e.g. mdb:defaultLocale, mri:otherLocale).
+   language_code is an ISO 639-2 code (eng, fra). #}
+{% macro locale(element, language_code) -%}
+  <{{ element }}>
+    <lan:PT_Locale>
+      {# language: mandatory #}
+      <lan:language>
+        <lan:LanguageCode codeList="http://standards.iso.org/iso/19115/resources/Codelist/lan/LanguageCode.xml" codeListValue="{{- language_code -}}"/>
+      </lan:language>
+      {# country: mandatory #}
+      <lan:country>
+        <lan:CountryCode codeList="http://standards.iso.org/iso/19115/resources/Codelists/cat/codelists.xml" codeListValue="CAN"/>
+      </lan:country>
+      {# characterEncoding: mandatory #}
+      <lan:characterEncoding>
+        <lan:MD_CharacterSetCode codeList="http://standards.iso.org/iso/19115/resources/Codelist/lan/CharacterSetCode.xml" codeListValue="utf8"/>
+      </lan:characterEncoding>
+    </lan:PT_Locale>
+  </{{ element }}>
+{%- endmacro %}
