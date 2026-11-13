@@ -486,13 +486,13 @@
               <gex:extent>
                 <gml:TimePeriod gml:id="time_period">
                   {% if record['identification']['temporal_begin'] %}
-                  <gml:beginPosition>{{- record['identification']['temporal_begin'] -}}</gml:beginPosition>
+                  <gml:beginPosition>{{- record['identification']['temporal_begin']|normalize_datestring -}}</gml:beginPosition>
                   {% else %}
                   <gml:beginPosition indeterminatePosition="unknown" />
                   {% endif %}
 
-                  {% if record['identification']['temporal_end'] %}
-                  <gml:endPosition>{{- record['identification']['temporal_end'] -}}</gml:endPosition>
+                  {% if record['identification']['temporal_end'] and not record['identification']['progress_code'] == 'onGoing' %}
+                  <gml:endPosition>{{- record['identification']['temporal_end']|normalize_datestring -}}</gml:endPosition>
                   {% elif not record['identification']['progress_code'] or record['identification']['progress_code'] == 'onGoing' %}
                   <gml:endPosition indeterminatePosition="now" />
                   {% else %}
